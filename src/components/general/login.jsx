@@ -1,21 +1,61 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { API_URL, doApiMethod } from '../services/apiService'
+import { API_URL, TOKEN_NAME, doApiMethod } from '../../services/apiService'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
 
   const { register, handleSubmit, formState: { errors }, getValues } = useForm()
+  const nav = useNavigate();
+
   const emailRef = register("email", { required: true })
   const passRef = register("password", { required: true });
 
   const onSub = (data) => {
 
     console.log(data)
+    doApiLogin(data)
 
   }
 
+  const doApiLogin = async (bodyData) => {
+    let url = API_URL + "/users/login"
+    try {
+      let resp = await doApiMethod(url, "POST", bodyData);
+      console.log(resp.data)
+  
+      if (resp.data.active == false) {
+  
+        alert("Your account is blocked. Please contact the site administrator")
+        nav("/")
+      }
+  
+      else {
+  
+        alert("you are log-in")
+        localStorage.removeItem(TOKEN_NAME);
+        // לשמור את הטוקן
+        localStorage.setItem(TOKEN_NAME, resp.data.token);
+        if (resp.data.role == "user") {
+          nav("/user")
+        } else if (resp.data.role == "admin") {
+          nav("/admin")
+        }
+      }
+    }
+    catch (err) {
+  
+      console.log(err.response);
+      alert("there was aproblem to log-in")
+  
+    }
+  }
+
+
+
+
   return (
-    <section className="py-5" style={{ backgroundImage: `url(${require('../images/background.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+    <section className="py-5" style={{ backgroundImage: `url(${require('../../images/background.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
       <div className="container h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-lg-12 col-xl-11">
@@ -51,7 +91,7 @@ const Login = () => {
 
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4 mt-2">
                         <button className="btn btn-warning btn-lg">
-                       כניסה
+                          כניסה
                         </button>
                       </div>
                     </form>

@@ -1,13 +1,18 @@
 import React, { useContext } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 const Header = () => {
+
+    const nav = useNavigate()
+    const onClickLogo = () => {
+        nav("/")
+    }
 
     return (
         <>
             <header className='bg-warning text-white p-3'>
                 <div className="container d-flex justify-content-between">
-                    <div className="logo d-flex">
+                    <div className="logo d-flex" onClick={onClickLogo}>
                         <i className="fa fa-car fa-2x" aria-hidden="true"></i>
                         <h2 className='lead mr-3'>לוגו</h2>
                     </div>

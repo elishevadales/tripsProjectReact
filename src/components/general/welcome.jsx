@@ -10,8 +10,8 @@ const Welcome = () => {
 
     return (
         <div className='text-center'>
-            <p className='display-3 text-primary text-center m-5'>wellcome!</p>
-            <div onClick={start} className='btn btn-primary px-5 py-3 display-5'>start</div>
+            <p className='display-3 text-warning text-center m-5'>welcome!</p>
+            <div onClick={start} className='btn btn-dark text-white px-5 py-3 display-5'>start</div>
         </div>
     )
 }

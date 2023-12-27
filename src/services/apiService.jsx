@@ -1,9 +1,11 @@
 
-
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
 
 export const API_URL = "http://localhost:3001"
-export const TOKEN_NAME = "PLANTS_TOKEN"
+export const TOKEN_NAME = "TRIPS_TOKEN"
 
 export const doApiGet = async(_url) => {
   try{
@@ -39,4 +41,6 @@ export const doApiMethod = async(_url,_method,_body = {}) => {
     throw err;
   }
 }
+
+
 

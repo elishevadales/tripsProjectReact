@@ -1,13 +1,13 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import Header from './components/header';
-import Welcome from './components/welcome';
-import Login from './components/login';
-import SignUp from './components/signUp';
-import HeaderUser from './components/headerUser';
+import Header from './components/general/header';
+import Welcome from './components/general/welcome';
+import Login from './components/general/login';
+import SignUp from './components/general/signUp';
 import HeaderAdmin from './components/headerAdmin';
-import Page404 from './components/404page';
+import Page404 from './components/general/404page';
+import HeaderUser from './components/HeaderUser';
 
 
 function App() {

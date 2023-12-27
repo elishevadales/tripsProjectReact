@@ -1,33 +1,74 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { API_URL, doApiMethod } from '../services/apiService'
+import { API_URL, TOKEN_NAME, doApiMethod } from '../../services/apiService'
+import { useNavigate } from 'react-router-dom'
 
 const SignUp = () => {
 
   const { register, handleSubmit, formState: { errors }, getValues } = useForm()
+  const nav = useNavigate()
 
   const onSub = (data) => {
     delete data.passwordAgain;
     console.log(data)
-    alert("hey")
-    doApiForm(data)
+   doApiSignUp(data)
+
   }
 
-  const doApiForm = async (bodyData) => {
+  const doApiSignUp = async (bodyData) => {
     let url = API_URL + "/users"
-    try{
+    try {
       let resp = await doApiMethod(url, "POST", bodyData);
       console.log(resp)
-alert("acount created")
+      alert('acount created')
+
+      delete bodyData.gender;
+      delete bodyData.name;
+      await doApiLogin(bodyData);
+
     }
     catch (err) {
-      if(err.response.data.code == 11000){
+      if (err.response.data.code == 11000) {
         alert("you allready have an acount. please try login");
       }
       console.log(err.response);
-
     }
   }
+
+
+  const doApiLogin = async (bodyData) => {
+    let url = API_URL + "/users/login"
+    try {
+      let resp = await doApiMethod(url, "POST", bodyData);
+      console.log(resp.data)
+  
+      if (resp.data.active == false) {
+  
+        alert("Your account is blocked. Please contact the site administrator")
+        nav("/")
+      }
+  
+      else {
+  
+        alert("you are log-in")
+        localStorage.removeItem(TOKEN_NAME);
+        // לשמור את הטוקן
+        localStorage.setItem(TOKEN_NAME, resp.data.token);
+        if (resp.data.role == "user") {
+          nav("/user")
+        } else if (resp.data.role == "admin") {
+          nav("/admin")
+        }
+      }
+    }
+    catch (err) {
+  
+      console.log(err.response);
+      alert("there was aproblem to log-in")
+  
+    }
+  }
+
 
   const nameRef = register("name", { required: true, minLength: 2, maxLength: 50 })
   const emailRef = register("email", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })
@@ -43,7 +84,7 @@ alert("acount created")
   return (
 
 
-    <section className="py-5" style={{ backgroundImage: `url(${require('../images/background.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+    <section className="py-5" style={{ backgroundImage: `url(${require('../../images/background.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
       <div className="container h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-lg-12 col-xl-11">

@@ -1,25 +1,28 @@
 import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 const HeaderUser = () => {
 
-
+const nav = useNavigate()
+const onClickLogo = () => {
+    nav("/")
+}
 
     return (
         <>
-        <header className='bg-primary text-white p-2'>
-            <div className="container d-flex justify-content-between">
-                <div className="logo">
-                    <h2 className='lead display-5'>My Resume</h2>
+            <header className='bg-warning text-white p-3'>
+                <div className="container d-flex justify-content-between">
+                    <div className="logo d-flex"  onClick={onClickLogo}>
+                        <i className="fa fa-car fa-2x" aria-hidden="true"></i>
+                        <h2 className='lead mr-3'>לוגו</h2>
+                    </div>
+                    <div className="nav d-flex align-items-center">
+                        <Link to='/login' className='text-white text-decoration-none mx-3 lead'>כניסה</Link>
+                        <Link to='/signUp' className='text-white text-decoration-none mx-3 lead'>רישום</Link>
+                    </div>
                 </div>
-                <div className="nav d-flex align-items-center">
-                    <Link to='/user/createResume' className='text-white text-decoration-none mx-3 lead'>create-resume</Link>
-                    <Link to='/user/myResumes' className='text-white text-decoration-none mx-3 lead'>my-resumes</Link>
-                    <button className='lead p-2' style={{border:"none", borderRadius:"10px"}}>log-out</button>
-                </div>
-            </div>
-        </header>
-        <Outlet/>
+            </header>
+            <Outlet />
         </>
     )
 }
