@@ -5,9 +5,11 @@ import Header from './components/general/header';
 import Welcome from './components/general/welcome';
 import Login from './components/general/login';
 import SignUp from './components/general/signUp';
-import HeaderAdmin from './components/headerAdmin';
+import HeaderAdmin from './components/admin/headerAdmin';
 import Page404 from './components/general/404page';
-import HeaderUser from './components/HeaderUser';
+import HeaderUser from './components/user/headerUser';
+import HomeUser from './components/user/homeUser';
+import HomeAdmin from './components/admin/homeAdmin';
 
 
 function App() {
@@ -24,10 +26,11 @@ function App() {
         </Route>
 
         <Route path='/user' element={<HeaderUser />}>
-
+          <Route path='/user/home' element={<HomeUser />} />
         </Route>
 
         <Route path='/admin' element={<HeaderAdmin />}>
+          <Route path='/admin/home' element={<HomeAdmin />} />
 
         </Route>
         <Route path="/*" element={<Page404 />} />

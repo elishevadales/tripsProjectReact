@@ -37,9 +37,9 @@ const Login = () => {
         // לשמור את הטוקן
         localStorage.setItem(TOKEN_NAME, resp.data.token);
         if (resp.data.role == "user") {
-          nav("/user")
+          nav("/user/home")
         } else if (resp.data.role == "admin") {
-          nav("/admin")
+          nav("/admin/home")
         }
       }
     }
