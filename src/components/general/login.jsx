@@ -2,11 +2,21 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { API_URL, TOKEN_NAME, doApiMethod } from '../../services/apiService'
 import { useNavigate } from 'react-router-dom'
+import { updateUserInfo } from '../reducer/userInfoSlice'
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const Login = () => {
 
+
   const { register, handleSubmit, formState: { errors }, getValues } = useForm()
   const nav = useNavigate();
+  const dispatch = useDispatch();
+
+  const userInfo = useSelector((myStore) => 
+    myStore.userInfoSlice
+  )
+
 
   const emailRef = register("email", { required: true })
   const passRef = register("password", { required: true });
@@ -33,9 +43,17 @@ const Login = () => {
       else {
   
         alert("you are log-in")
+        //delete old token from localStorage
         localStorage.removeItem(TOKEN_NAME);
-        // לשמור את הטוקן
+        //save new token in localStorage
         localStorage.setItem(TOKEN_NAME, resp.data.token);
+        //save new token in redux
+        dispatch(updateUserInfo({
+          update: resp.data
+        }))
+
+
+
         if (resp.data.role == "user") {
           nav("/user/home")
         } else if (resp.data.role == "admin") {

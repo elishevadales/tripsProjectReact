@@ -1,4 +1,5 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 const Header = () => {
@@ -7,6 +8,14 @@ const Header = () => {
     const onClickLogo = () => {
         nav("/")
     }
+
+    const userInfo = useSelector((myStore) =>
+    myStore.userInfoSlice
+)
+
+    useEffect(() => {
+        console.log(userInfo)
+    })
 
     return (
         <>

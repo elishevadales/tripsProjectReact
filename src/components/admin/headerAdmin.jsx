@@ -19,8 +19,7 @@ const HeaderAdmin = () => {
                         <h2 className='lead mr-3'>לוגו</h2>
                     </div>
                     <div className="nav d-flex align-items-center">
-                        <Link to='/login' className='text-white text-decoration-none mx-3 lead'>כניסה</Link>
-                        <Link to='/signUp' className='text-white text-decoration-none mx-3 lead'>רישום</Link>
+                        <Link to='/admin/usersList' className='text-white text-decoration-none mx-3 lead'>משתמשים</Link>
                     </div>
                 </div>
             </header>

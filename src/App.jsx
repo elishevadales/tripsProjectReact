@@ -7,16 +7,27 @@ import Login from './components/general/login';
 import SignUp from './components/general/signUp';
 import HeaderAdmin from './components/admin/headerAdmin';
 import Page404 from './components/general/404page';
-import HeaderUser from './components/user/headerUser';
+import HeaderUser from './components/user/HeaderUser';
 import HomeUser from './components/user/homeUser';
 import HomeAdmin from './components/admin/homeAdmin';
 
+// redux
+import { configureStore } from "@reduxjs/toolkit"
+import { Provider } from 'react-redux';
+import userInfoSlice from './components/reducer/userInfoSlice';
+import UsersListAdmin from './components/admin/usersListAdmin';
 
 function App() {
 
+  const myStore = configureStore({
+    reducer: {
+      userInfoSlice
+    }
+  })
+
   return (
     <BrowserRouter>
-
+<Provider store={myStore}>
       <Routes>
 
         <Route path="/" element={<Header />}>
@@ -31,12 +42,13 @@ function App() {
 
         <Route path='/admin' element={<HeaderAdmin />}>
           <Route path='/admin/home' element={<HomeAdmin />} />
+          <Route path='/admin/usersList' element={<UsersListAdmin />} />
 
         </Route>
         <Route path="/*" element={<Page404 />} />
 
       </Routes>
-
+      </Provider>
     </BrowserRouter>
   );
 }
