@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { API_URL, doApiGet } from '../../services/apiService';
+import UserItem from './userItem';
 
 const UsersListAdmin = () => {
 
@@ -7,6 +8,7 @@ const UsersListAdmin = () => {
 
   useEffect(() => {
     doApi();
+    console.log(ar)
   },[])
 
   const doApi = async() => {
@@ -14,7 +16,7 @@ const UsersListAdmin = () => {
     try{
       let resp = await doApiGet(url);
       console.log(resp.data);
-      setAr(resp.data.data);
+      setAr(resp.data);
 
     }
     catch(err){
@@ -25,7 +27,31 @@ const UsersListAdmin = () => {
   }
 
   return (
-    <div className=''>UsersListAdmin</div>
+    <div className='container'>
+      <h1 className='display-4' style={{textAlign:"center"}}>רשימת המשתמשים במערכת</h1>
+      <table className='table table-striped table-hover'>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>_Id</th>
+            <th>Email</th>
+            <th>Date-created</th>
+            <th>Role</th>
+            <th>Active</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ar.map((item,i) => {
+            return(
+              <UserItem key={item._id} doApi={doApi} index={i} item={item}/>
+            )
+          })}
+        </tbody>
+      </table>
+
+    </div>
   )
 }
 
