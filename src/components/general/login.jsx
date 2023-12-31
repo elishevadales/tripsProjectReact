@@ -1,30 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { API_URL, TOKEN_NAME, doApiMethod } from '../../services/apiService'
+import { API_URL, TOKEN_NAME, doApiGet, doApiMethod } from '../../services/apiService'
 import { useNavigate } from 'react-router-dom'
+import InfoPopUp from './infoPopUp'
+import { useDispatch } from 'react-redux'
 import { updateUserInfo } from '../reducer/userInfoSlice'
-import { useSelector, useDispatch } from 'react-redux';
 
 
 const Login = () => {
 
+  const [showPopup, setPopup] = useState(false);
+  const [textPopUp, setTextPopUp] = useState();
+  const dispatch = useDispatch();
+
+  const handleCancelPopUp = () => {
+    setPopup(false)
+  }
 
   const { register, handleSubmit, formState: { errors }, getValues } = useForm()
   const nav = useNavigate();
-  const dispatch = useDispatch();
-
-  const userInfo = useSelector((myStore) => 
-    myStore.userInfoSlice
-  )
 
 
   const emailRef = register("email", { required: true })
   const passRef = register("password", { required: true });
 
-  const onSub = (data) => {
+  const onSub = async (data) => {
 
-    console.log(data)
-    doApiLogin(data)
+    await doApiLogin(data);
+    await doApiMyInfo();
 
   }
 
@@ -33,39 +36,54 @@ const Login = () => {
     try {
       let resp = await doApiMethod(url, "POST", bodyData);
       console.log(resp.data)
-  
-      if (resp.data.active == false) {
-  
-        alert("Your account is blocked. Please contact the site administrator")
-        nav("/")
+
+      //delete old token from localStorage
+      localStorage.removeItem(TOKEN_NAME);
+      //save new token in localStorage
+      localStorage.setItem(TOKEN_NAME, resp.data.token);
+
+      if (resp.data.role == "user") {
+        nav("/user/home")
+      } else if (resp.data.role == "admin") {
+        nav("/admin/home")
       }
-  
-      else {
-  
-        alert("you are log-in")
-        //delete old token from localStorage
-        localStorage.removeItem(TOKEN_NAME);
-        //save new token in localStorage
-        localStorage.setItem(TOKEN_NAME, resp.data.token);
-        //save new token in redux
-        dispatch(updateUserInfo({
-          update: resp.data
-        }))
 
-
-
-        if (resp.data.role == "user") {
-          nav("/user/home")
-        } else if (resp.data.role == "admin") {
-          nav("/admin/home")
-        }
-      }
     }
     catch (err) {
-  
-      console.log(err.response);
-      alert("there was aproblem to log-in")
-  
+
+      console.log(err);
+      if (err.response?.data?.code == 1 || err.response?.data?.code == 2) {
+        setTextPopUp("המייל או הסיסמה שגויים")
+        setPopup(true)
+      }
+      else if (err.response?.data?.code == 3) {
+        setTextPopUp("החשבון שלך חסום. פנה למנהל האתר")
+        setPopup(true)
+      }
+      else {
+        setTextPopUp("היתה בעיה להיכנס למערכת. נסו שוב מאוחר יותר")
+        setPopup(true)
+      }
+    }
+  }
+
+
+  const doApiMyInfo = async () => {
+
+    let url = API_URL + "/users/myInfo";
+
+    try {
+      let resp = await doApiGet(url);
+      console.log(resp.data)
+
+      dispatch(updateUserInfo({
+        update: resp.data
+      }))
+    }
+
+    catch (err) {
+      console.log(err);
+      alert("there is a problem ,try again later")
     }
   }
 
@@ -120,6 +138,13 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {showPopup && (
+        <InfoPopUp
+          show={showPopup}
+          message={textPopUp}
+          onCancel={handleCancelPopUp}
+        />
+      )}
     </section>
   )
 }

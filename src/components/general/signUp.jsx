@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { API_URL, TOKEN_NAME, doApiMethod } from '../../services/apiService'
 import { useNavigate } from 'react-router-dom'
+import InfoPopUp from './infoPopUp'
 
 const SignUp = () => {
 
+  const [showPopup, setPopup] = useState(false);
+  const [textPopUp, setTextPopUp] = useState();
   const { register, handleSubmit, formState: { errors }, getValues } = useForm()
   const nav = useNavigate()
 
@@ -15,59 +18,34 @@ const SignUp = () => {
 
   }
 
+  const handleCancelPopUp = () => {
+    setPopup(false)
+    nav("/login")
+  }
+
   const doApiSignUp = async (bodyData) => {
     let url = API_URL + "/users"
     try {
       let resp = await doApiMethod(url, "POST", bodyData);
       console.log(resp)
-      alert('acount created')
+
+      setTextPopUp("החשבון נוצר בהצלחה")
+      setPopup(true)
 
       delete bodyData.gender;
       delete bodyData.name;
-      await doApiLogin(bodyData);
+
 
     }
     catch (err) {
       if (err.response.data.code == 11000) {
-        alert("you allready have an acount. please try login");
+        setTextPopUp("קיים כבר משתמש עם המייל הזה")
+        setPopup(true)
       }
       console.log(err.response);
     }
   }
 
-
-  const doApiLogin = async (bodyData) => {
-    let url = API_URL + "/users/login"
-    try {
-      let resp = await doApiMethod(url, "POST", bodyData);
-      console.log(resp.data)
-  
-      if (resp.data.active == false) {
-  
-        alert("Your account is blocked. Please contact the site administrator")
-        nav("/")
-      }
-  
-      else {
-  
-        alert("you are log-in")
-        localStorage.removeItem(TOKEN_NAME);
-        // לשמור את הטוקן
-        localStorage.setItem(TOKEN_NAME, resp.data.token);
-        if (resp.data.role == "user") {
-          nav("/user")
-        } else if (resp.data.role == "admin") {
-          nav("/admin")
-        }
-      }
-    }
-    catch (err) {
-  
-      console.log(err.response);
-      alert("there was aproblem to log-in")
-  
-    }
-  }
 
 
   const nameRef = register("name", { required: true, minLength: 2, maxLength: 50 })
@@ -199,6 +177,13 @@ const SignUp = () => {
           </div>
         </div>
       </div>
+      {showPopup && (
+        <InfoPopUp
+          show={showPopup}
+          message={textPopUp}
+          onCancel={handleCancelPopUp}
+        />
+      )}
     </section>
   )
 }

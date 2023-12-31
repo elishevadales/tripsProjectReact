@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import ConfirmPopUp from '../general/confirmPopUp';
 import { updateUserInfo } from '../reducer/userInfoSlice';
-import { TOKEN_NAME } from '../../services/apiService';
+import { API_URL, TOKEN_NAME, doApiGet } from '../../services/apiService';
 
 const HeaderUser = () => {
 
     const [showLogOutPopup, setShowLogOutPopup] = useState(false);
-
-
-
     const nav = useNavigate()
     const dispatch = useDispatch();
 
-    const userInfo = useSelector((myStore) =>
-        myStore.userInfoSlice
-    )
 
     const onClickLogo = () => {
         nav("/")
@@ -28,7 +22,7 @@ const HeaderUser = () => {
         localStorage.removeItem(TOKEN_NAME);
         dispatch(updateUserInfo({
             update: {}
-          }))
+        }))
         setShowLogOutPopup(false)
         nav('/')
     }
@@ -37,9 +31,7 @@ const HeaderUser = () => {
     }
 
 
-    useEffect(() => {
-        console.log(userInfo)
-    })
+
 
     return (
         <>
@@ -50,8 +42,7 @@ const HeaderUser = () => {
                         <h2 className='lead mr-3'>לוגו</h2>
                     </div>
                     <div className="nav d-flex align-items-center">
-                        <Link to='/login' className='text-white text-decoration-none mx-3 lead'>כניסה</Link>
-                        <Link to='/signUp' className='text-white text-decoration-none mx-3 lead'>רישום</Link>
+                        <Link to='/user/myInfo' className='text-white text-decoration-none mx-3 lead'>עדכון-פרופיל</Link>
                         <button onClick={handleLogOutClick} className='btn btn-dark'>יציאה</button>
                     </div>
                 </div>

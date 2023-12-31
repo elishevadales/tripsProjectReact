@@ -21,7 +21,7 @@ const UsersListAdmin = () => {
     }
     catch(err){
       console.log(err);
-      alert("there problem ,try again later")
+      alert("יש בעיה בשליפת הנתונים. נסה שוב מאוחר יותר")
     }
 
   }
@@ -29,6 +29,7 @@ const UsersListAdmin = () => {
   return (
     <div className='container'>
       <h1 className='display-4' style={{textAlign:"center"}}>רשימת המשתמשים במערכת</h1>
+      <div className="table-responsive">
       <table className='table table-striped table-hover'>
         <thead>
           <tr>
@@ -50,7 +51,7 @@ const UsersListAdmin = () => {
           })}
         </tbody>
       </table>
-
+      </div>
     </div>
   )
 }

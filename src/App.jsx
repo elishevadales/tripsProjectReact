@@ -16,6 +16,7 @@ import { configureStore } from "@reduxjs/toolkit"
 import { Provider } from 'react-redux';
 import userInfoSlice from './components/reducer/userInfoSlice';
 import UsersListAdmin from './components/admin/usersListAdmin';
+import MyInfo from './components/general/myInfo';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
 
         <Route path='/user' element={<HeaderUser />}>
           <Route path='/user/home' element={<HomeUser />} />
+          <Route path='/user/myInfo' element={<MyInfo />} />
         </Route>
 
         <Route path='/admin' element={<HeaderAdmin />}>

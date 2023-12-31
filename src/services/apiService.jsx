@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-export const API_URL = "http://localhost:3001"
+export const API_URL = "http://localhost:3000"
 export const TOKEN_NAME = "TRIPS_TOKEN"
 
 export const doApiGet = async(_url) => {
@@ -38,6 +38,7 @@ export const doApiMethod = async(_url,_method,_body = {}) => {
     return resp;
   }
   catch(err){
+    alert("something is wrong")
     throw err;
   }
 }
