@@ -83,7 +83,6 @@ const Login = () => {
 
     catch (err) {
       console.log(err);
-      alert("there is a problem ,try again later")
     }
   }
 

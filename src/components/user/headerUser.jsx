@@ -43,10 +43,12 @@ const HeaderUser = () => {
                     </div>
                     <div className="nav d-flex align-items-center">
                         <Link to='/user/myInfo' className='text-white text-decoration-none mx-3 lead'>עדכון-פרופיל</Link>
+                        <Link to='/user/events' className='text-white text-decoration-none mx-3 lead'>פוסטים</Link>
                         <button onClick={handleLogOutClick} className='btn btn-dark'>יציאה</button>
                     </div>
                 </div>
             </header>
+            
             <Outlet />
             {showLogOutPopup && (
                 <ConfirmPopUp

@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { API_URL, doApiMethod } from '../../services/apiService';
+import ConfirmPopUp from '../general/confirmPopUp';
 
 const UserItem = (props) => {
+    const [showDeletePopup, setShowDeletePopup] = useState(false);
+    const [textDeletePopup, setTextDeletePopup] = useState();
+
     let item = props.item;
     let date = item.date_created.slice(8, 10) + "/" + item.date_created.slice(5, 7) + "/" + item.date_created.slice(0, 4);
 
@@ -53,7 +57,14 @@ const UserItem = (props) => {
     }
 
 
-    const onXClick = async() => {
+    const onXClick = async () => {
+        setTextDeletePopup(`האם אתה בטוח שברצונך למחוק את ${item.name} ממערכת המשתמשים?`)
+        setShowDeletePopup(true)
+
+
+    }
+
+    const deleteUser = async() => {
         try {
             let url = API_URL + "/users/" + item._id;
             let resp = await doApiMethod(url, "DELETE");
@@ -66,10 +77,19 @@ const UserItem = (props) => {
             console.log(err.response);
             alert(err.response.data.msg || "there is problem");
         }
-}
+    }
 
-  return (
-           <tr>
+    const handleConfirmDelete = () => {
+
+        setShowDeletePopup(false)
+        deleteUser();
+    }
+    const handleCancelDelete = () => {
+        setShowDeletePopup(false)
+    }
+
+    return (
+        <tr>
 
             <td>{props.index + 1}</td>
             <td>{item.name}</td>
@@ -104,8 +124,16 @@ const UserItem = (props) => {
                 <button className='btn btn-danger' onClick={onXClick}>X</button>
 
             </td>
+            {showDeletePopup && (
+                <ConfirmPopUp
+                    show={showDeletePopup}
+                    message={textDeletePopup}
+                    onConfirm={handleConfirmDelete}
+                    onCancel={handleCancelDelete}
+                />
+            )}
         </tr>
-  )
+    )
 }
 
 export default UserItem

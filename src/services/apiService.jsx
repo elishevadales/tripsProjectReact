@@ -17,7 +17,7 @@ export const doApiGet = async(_url) => {
     return resp;
   }
   catch(err){
-    alert("something is wrong")
+    console.log(err)
     throw err;
 
   }
@@ -38,7 +38,7 @@ export const doApiMethod = async(_url,_method,_body = {}) => {
     return resp;
   }
   catch(err){
-    alert("something is wrong")
+    console.log(err)
     throw err;
   }
 }

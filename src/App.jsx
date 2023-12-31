@@ -17,6 +17,7 @@ import { Provider } from 'react-redux';
 import userInfoSlice from './components/reducer/userInfoSlice';
 import UsersListAdmin from './components/admin/usersListAdmin';
 import MyInfo from './components/general/myInfo';
+import Posts from './components/general/posts';
 
 function App() {
 
@@ -40,12 +41,13 @@ function App() {
         <Route path='/user' element={<HeaderUser />}>
           <Route path='/user/home' element={<HomeUser />} />
           <Route path='/user/myInfo' element={<MyInfo />} />
+          <Route path='/user/events' element={<Posts />} />
         </Route>
 
         <Route path='/admin' element={<HeaderAdmin />}>
           <Route path='/admin/home' element={<HomeAdmin />} />
           <Route path='/admin/usersList' element={<UsersListAdmin />} />
-
+          <Route path='/admin/events' element={<Posts />} />
         </Route>
         <Route path="/*" element={<Page404 />} />
 

@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import InfoPopUp from './infoPopUp'
+import { Form } from 'react-bootstrap';
+import { API_URL, doApiGet, doApiMethod } from '../../services/apiService';
 
 const MyInfo = () => {
+
+
+
+
+
+
     const userInfo = useSelector((myStore) =>
         myStore.userInfoSlice
     )
@@ -12,9 +20,10 @@ const MyInfo = () => {
     const [textPopUp, setTextPopUp] = useState();
 
     const nameRef = register("name", { required: true, minLength: 2, maxLength: 50 })
+    const nickNameRef = register("nick_name", { minLength: 2, maxLength: 50 })
     const genderRef = register("gender", { required: true })
     const ageRef = register("age", { min: 1, max: 120 })
-    const addressRef = register("age", { minLength: 2, maxLength: 100 })
+    const addressRef = register("district_address", { minLength: 2, maxLength: 100 })
     const aboutRef = register("about", { minLength: 2, maxLength: 1000 })
 
 
@@ -28,6 +37,21 @@ const MyInfo = () => {
 
     const onSub = (data) => {
         console.log(data)
+        doApiUpdateUserInfo(data)
+    }
+
+    const doApiUpdateUserInfo = async(data) => {
+        let url = API_URL + "/users/changeMyInfo";
+
+        try {
+          let resp = await doApiMethod(url,"PUT",data);
+          console.log(resp.data)
+    
+        }
+    
+        catch (err) {
+          console.log(err);
+        }
     }
 
     return (
@@ -36,13 +60,42 @@ const MyInfo = () => {
                 <div className="container h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
                         <div className="col-lg-12 col-xl-11">
-                            <div className="card text-black" style={{ borderRadius: '25px' }}>
+
+                            <div className="card text-black" style={{ borderRadius: '25px', border: "none" }}>
+
+                                <div style={{
+                                    height: "200px",
+                                    borderTopLeftRadius: '25px',
+                                    borderTopRightRadius: '25px',
+                                    backgroundImage: `url(${userInfo.user.background_image})`,
+                                    backgroundPosition: 'center',
+                                    backgroundSize: 'cover',
+                                    backgroundRepeat: 'no-repeat',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    <div style={{
+                                        height: "150px",
+                                        width: "150px",
+                                        borderRadius: '100px',
+                                        backgroundImage: `url(${userInfo.user.profile_image})`,
+                                        backgroundPosition: 'center',
+                                        backgroundSize: 'cover',
+                                        backgroundRepeat: 'no-repeat'
+                                    }}>
+
+                                    </div>
+                                </div>
+
                                 <div className="card-body p-md-5">
                                     <div className="row justify-content-center">
                                         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                                            <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">עדכון פרופיל</p>
-
+                                            <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4">עדכון פרופיל</p>
                                             <form onSubmit={handleSubmit(onSub)} className="mx-1 mx-md-4">
+
+
+
                                                 <div className="d-flex flex-row align-items-center mb-4">
                                                     <i className="fa fa-user fa-lg ms-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
@@ -51,6 +104,16 @@ const MyInfo = () => {
                                                         </label>
                                                         <input defaultValue={userInfo.user.name} {...nameRef} type="text" id="form3Example1c" className="form-control" />
                                                         {errors.name && <div className='text-danger'>* השם צריך להיות בין 2 ל50 תווים</div>}
+                                                    </div>
+                                                </div>
+                                                <div className="d-flex flex-row align-items-center mb-4">
+                                                    <i className="fa fa-user fa-lg ms-3 fa-fw"></i>
+                                                    <div className="form-outline flex-fill mb-0">
+                                                        <label className="form-label" htmlFor="form3Example1c">
+                                                            כינוי
+                                                        </label>
+                                                        <input defaultValue={userInfo.user.nick_name} {...nickNameRef} type="text" id="form3Example9c" className="form-control" />
+                                                        {errors.nick_name && <div className='text-danger'>* השם צריך להיות בין 2 ל50 תווים</div>}
                                                     </div>
                                                 </div>
 
@@ -105,15 +168,11 @@ const MyInfo = () => {
                                                     <i className="fa fa-user fa-lg ms-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
                                                         <label className="form-label" htmlFor="form3Example1c">
-                                                            פרטים עליי                                                        </label>
+                                                            קצת עליי                                                        </label>
                                                         <textarea defaultValue={userInfo.user.about} {...aboutRef} type="text" id="form3Example35c" className="form-control" />
                                                         {errors.about && <div className='text-danger'>* יש להזין בין 2 ל1000 תווים</div>}
                                                     </div>
                                                 </div>
-
-
-
-
 
                                                 <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                                     <button className="btn btn-warning btn-lg">
