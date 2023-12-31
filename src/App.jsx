@@ -5,7 +5,6 @@ import Header from './components/general/header';
 import Welcome from './components/general/welcome';
 import Login from './components/general/login';
 import SignUp from './components/general/signUp';
-import HeaderAdmin from './components/admin/headerAdmin';
 import Page404 from './components/general/404page';
 import HeaderUser from './components/user/HeaderUser';
 import HomeUser from './components/user/homeUser';
@@ -29,29 +28,45 @@ function App() {
 
   return (
     <BrowserRouter>
-<Provider store={myStore}>
-      <Routes>
+      <Provider store={myStore}>
+        <Routes>
 
-        <Route path="/" element={<Header />}>
-          <Route path="/" element={<Welcome />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signUp" element={<SignUp />} />
-        </Route>
+          <Route path="/" element={<Header />}>
+            <Route path="/" element={<Welcome />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signUp" element={<SignUp />} />
+          </Route>
 
-        <Route path='/user' element={<HeaderUser />}>
-          <Route path='/user/home' element={<HomeUser />} />
-          <Route path='/user/myInfo' element={<MyInfo />} />
-          <Route path='/user/events' element={<Posts />} />
-        </Route>
+          <Route path='/user' element={<HeaderUser
+            links={[
+              { title: 'פוסטים', path: '/user/events' },
+              { title: 'עדכון-פרופיל', path: '/user/myInfo' },
+            ]}
+            color={"bg-warning"}
+           />
+          }>
+            <Route path='/user/home' element={<HomeUser />} />
+            <Route path='/user/myInfo' element={<MyInfo />} />
+            <Route path='/user/events' element={<Posts />} />
+          </Route>
 
-        <Route path='/admin' element={<HeaderAdmin />}>
-          <Route path='/admin/home' element={<HomeAdmin />} />
-          <Route path='/admin/usersList' element={<UsersListAdmin />} />
-          <Route path='/admin/events' element={<Posts />} />
-        </Route>
-        <Route path="/*" element={<Page404 />} />
+          <Route path='/admin' element={<HeaderUser
+            links={[
+              { title: 'פוסטים', path: '/admin/events' },
+              { title: 'עדכון-פרופיל', path: '/admin/myInfo' },
+              { title: 'משתמשים', path: '/admin/usersList' },
+            ]}
+            color={"bg-dark"}
+           />}>
+            <Route path='/admin/home' element={<HomeAdmin />} />
+            <Route path='/admin/usersList' element={<UsersListAdmin />} />
+            <Route path='/admin/events' element={<Posts />} />
+            <Route path='/admin/myInfo' element={<MyInfo />} />
 
-      </Routes>
+          </Route>
+          <Route path="/*" element={<Page404 />} />
+
+        </Routes>
       </Provider>
     </BrowserRouter>
   );
