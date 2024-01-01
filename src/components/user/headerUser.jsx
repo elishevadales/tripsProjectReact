@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import ConfirmPopUp from '../general/confirmPopUp';
 import { updateUserInfo } from '../reducer/userInfoSlice';
-import { API_URL, TOKEN_NAME, doApiGet } from '../../services/apiService';
+import { TOKEN_NAME } from '../../services/apiService';
 
 const HeaderUser = (props) => {
 
