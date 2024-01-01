@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import InfoPopUp from './infoPopUp'
-import { Form } from 'react-bootstrap';
 import { API_URL, doApiGet, doApiMethod } from '../../services/apiService';
+import EditAvatar from './myInfo/editAvatar';
 
 const MyInfo = () => {
 
@@ -18,6 +18,8 @@ const MyInfo = () => {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm()
     const [showPopup, setPopup] = useState(false);
     const [textPopUp, setTextPopUp] = useState();
+    const [showPopupAvatar, setPopupAvatar] = useState(false);
+    const [textPopUpAvatar, setTextPopUpAvatar] = useState();
 
     const nameRef = register("name", { required: true, minLength: 2, maxLength: 50 })
     const nickNameRef = register("nick_name", { minLength: 2, maxLength: 50 })
@@ -40,18 +42,26 @@ const MyInfo = () => {
         doApiUpdateUserInfo(data)
     }
 
-    const doApiUpdateUserInfo = async(data) => {
+    const doApiUpdateUserInfo = async (data) => {
         let url = API_URL + "/users/changeMyInfo";
 
         try {
-          let resp = await doApiMethod(url,"PUT",data);
-          console.log(resp.data)
-    
+            let resp = await doApiMethod(url, "PUT", data);
+            console.log(resp.data)
+
         }
-    
+
         catch (err) {
-          console.log(err);
+            console.log(err);
         }
+    }
+
+    const onClickAvatar = () => {
+        setPopupAvatar(true);
+
+    }
+    const handleCancelPopUpAvatar = () => {
+        setPopupAvatar(false);
     }
 
     return (
@@ -75,9 +85,11 @@ const MyInfo = () => {
                                     alignItems: 'center',
                                     justifyContent: 'center'
                                 }}>
-                                    <div style={{
-                                        height: "150px",
-                                        width: "150px",
+                                    <div onClick={onClickAvatar} style={{
+                                        cursor:'pointer',
+                                        height: "170px",
+                                        border: "8px solid white",
+                                        width: "170px",
                                         borderRadius: '100px',
                                         backgroundImage: `url(${userInfo.user.profile_image})`,
                                         backgroundPosition: 'center',
@@ -192,6 +204,12 @@ const MyInfo = () => {
                         show={showPopup}
                         message={textPopUp}
                         onCancel={handleCancelPopUp}
+                    />
+                )}
+                {showPopupAvatar && (
+                    <EditAvatar 
+                    show={showPopupAvatar}
+                    onCancel={handleCancelPopUpAvatar}
                     />
                 )}
             </section>

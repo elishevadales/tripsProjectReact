@@ -1,9 +1,10 @@
-import {createSlice} from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
+
 
 const initValue = {
     user: {
 
-
+        image_profile: ""
     }
 }
 
@@ -11,15 +12,21 @@ const userInfoSlice = createSlice({
     name: "userInfo",
     initialState: initValue,
     reducers: {
-        updateUserInfo: (state, actions) => {
-            state.user = { ...actions.payload.update }
+        updateUserInfo: (state, action) => {
+            state.user = { ...action.payload.update }
         },
-        resetUserInfo: (state, actions) => {
+        resetUserInfo: (state, action) => {
             state.user = {}
-        }
+        },
+        updateProfileImg: (state, action) => {
+            state.user = {
+              ...state.user,
+              profile_image: action.payload.profile_image
+            };
+          },
     }
 })
 
 
-export const { updateUserInfo ,resetUserInfo } = userInfoSlice.actions;
+export const { updateUserInfo, resetUserInfo, updateProfileImg } = userInfoSlice.actions;
 export default userInfoSlice.reducer;
