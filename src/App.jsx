@@ -6,9 +6,11 @@ import Welcome from './components/general/welcome';
 import Login from './components/general/login';
 import SignUp from './components/general/signUp';
 import Page404 from './components/general/404page';
-import HeaderUser from './components/user/HeaderUser';
+import HeaderUser from './components/user/headerUser';
 import HomeUser from './components/user/homeUser';
 import HomeAdmin from './components/admin/homeAdmin';
+
+import EventCard from './components/general/eventCard/eventCard'
 
 // redux
 import { configureStore } from "@reduxjs/toolkit"
@@ -28,9 +30,9 @@ function App() {
 
   return (
     <BrowserRouter>
+    <EventCard/>
       <Provider store={myStore}>
         <Routes>
-
           <Route path="/" element={<Header />}>
             <Route path="/" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
