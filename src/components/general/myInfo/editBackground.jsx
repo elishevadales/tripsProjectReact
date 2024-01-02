@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -7,19 +6,19 @@ import { storage } from '../../../firebase/config';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { API_URL, doApiMethod } from '../../../services/apiService';
 import { useDispatch } from 'react-redux'
-import { updateProfileImg } from '../../reducer/userInfoSlice'
+import { updateBackgroundImg } from '../../reducer/userInfoSlice'
 import { useSelector } from 'react-redux'
 import ConfirmPopUp from '../confirmPopUp';
-import { defaultAvatar } from '../../../constants/imagesUrls';
+import { defaultBackground } from '../../../constants/imagesUrls';
 
-const EditAvatar = ({ show, onCancel }) => {
 
+const EditBackground = ({ show, onCancel }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [previewURL, setPreviewURL] = useState(null);
     const [showDeletePopup, setShowDeletePopup] = useState(false);
     const [textDeletePopup, setTextDeletePopup] = useState();
+    const [previewURL, setPreviewURL] = useState(null);
     const [image, setImage] = useState(null);
-    const imgRef = register("avatar", { required: true })
+    const imgRef = register("background", { required: true })
     const dispatch = useDispatch();
     const userInfo = useSelector((myStore) =>
         myStore.userInfoSlice
@@ -27,22 +26,22 @@ const EditAvatar = ({ show, onCancel }) => {
 
     const onSub = async () => {
         try {
+
             //save new image in firebase
-            const storageRef = ref(storage, `avatars/${userInfo.user._id}`);
+            const storageRef = ref(storage, `backgrounds/${userInfo.user._id}`);
             await uploadBytes(storageRef, image);
             const imageURL = await getDownloadURL(storageRef);
 
             //delete old image from firebase
-            //const oldImageRef = ref(storage, userInfo.user.profile_image);
+            //const oldImageRef = ref(storage, userInfo.user.background_image);
             //await deleteObject(oldImageRef);
-
 
             // save the new url in mongo
             doApiUpdateMyInfo(imageURL);
 
             //update redux with the new image
-            dispatch(updateProfileImg({
-                profile_image: imageURL
+            dispatch(updateBackgroundImg({
+                background_image: imageURL
             }));
 
 
@@ -57,7 +56,7 @@ const EditAvatar = ({ show, onCancel }) => {
 
     // save the new url in mongo
     const doApiUpdateMyInfo = async (imageURL) => {
-        const data = { profile_image: imageURL }
+        const data = { background_image: imageURL }
         let url = API_URL + "/users/changeMyInfo";
 
         try {
@@ -83,25 +82,25 @@ const EditAvatar = ({ show, onCancel }) => {
         reader.readAsDataURL(selectedImage);
     };
 
-    const handleDeleteAvatar = () => {
-        setTextDeletePopup(`האם אתה בטוח שברצונך למחוק את תמונת הפרופיל שלך?`)
+
+    const handleDeleteBackground = () => {
+        setTextDeletePopup(`האם אתה בטוח שברצונך למחוק את תמונת האווירה שלך?`)
         setShowDeletePopup(true)
     }
 
-    const handleConfirmDelete = async () => {
+    const handleConfirmDelete = async() => {
         setShowDeletePopup(false)
-
+        
         // save the new url in mongo
-        await doApiUpdateMyInfo(defaultAvatar);
+        await doApiUpdateMyInfo(defaultBackground);
 
         //update redux with the new image
-        dispatch(updateProfileImg({
-            profile_image: defaultAvatar
+        dispatch(updateBackgroundImg({
+            background_image: defaultBackground
         }));
 
 
-        console.log(defaultAvatar);
-        alert('image deleted')
+        console.log(defaultBackground);
         onCancel();
     }
 
@@ -123,10 +122,10 @@ const EditAvatar = ({ show, onCancel }) => {
                             <div
                                 className="placeholder-image"
                                 style={{
-                                    width: '150px',
+                                    width: '100%',
                                     height: '150px',
-                                    borderRadius: '50%',
-                                    backgroundImage: `url(${userInfo.user.profile_image})`,
+                                    
+                                    backgroundImage: `url(${userInfo.user.background_image})`,
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     display: 'flex',
@@ -138,6 +137,7 @@ const EditAvatar = ({ show, onCancel }) => {
                     )}
 
                     {previewURL && (
+
                         <div className='d-flex justify-content-center'>
                             <div
                                 className="placeholder-image"
@@ -167,14 +167,14 @@ const EditAvatar = ({ show, onCancel }) => {
                             onChange={handleImageChange}
                         />
                     </label>
-                    {errors.avatar && <p className='text-danger'>בחר תמונה</p>}
+                    {errors.background && <p className='text-danger'>בחר תמונה</p>}
 
                     <div className="buttons row justify-content-center mt-4">
 
                         <button type='button' className="btn btn-secondary col-sm-3 m-2" onClick={onCancel}>
                             סגור
                         </button>
-                        <button type='button' className="btn btn-danger col-sm-3 m-2" onClick={handleDeleteAvatar}>
+                        <button type='button' className="btn btn-danger col-sm-3 m-2" onClick={handleDeleteBackground}>
                             הסר תמונה
                         </button>
                         <button type="submit" className="btn btn-warning col-sm-3 m-2">
@@ -182,7 +182,6 @@ const EditAvatar = ({ show, onCancel }) => {
                         </button>
                     </div>
                 </form>
-
                 {showDeletePopup && (
                     <ConfirmPopUp
                         show={showDeletePopup}
@@ -194,6 +193,6 @@ const EditAvatar = ({ show, onCancel }) => {
             </Modal.Body>
         </Modal>
     );
-};
+}
 
-export default EditAvatar;
+export default EditBackground

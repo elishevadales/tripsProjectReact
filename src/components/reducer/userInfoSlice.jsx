@@ -4,7 +4,6 @@ import { createSlice } from "@reduxjs/toolkit"
 const initValue = {
     user: {
 
-        image_profile: ""
     }
 }
 
@@ -20,13 +19,19 @@ const userInfoSlice = createSlice({
         },
         updateProfileImg: (state, action) => {
             state.user = {
-              ...state.user,
-              profile_image: action.payload.profile_image
+                ...state.user,
+                profile_image: action.payload.profile_image
             };
-          },
+        },
+        updateBackgroundImg: (state, action) => {
+            state.user = {
+                ...state.user,
+                background_image: action.payload.background_image
+            };
+        },
     }
 })
 
 
-export const { updateUserInfo, resetUserInfo, updateProfileImg } = userInfoSlice.actions;
+export const { updateUserInfo, resetUserInfo, updateProfileImg,updateBackgroundImg } = userInfoSlice.actions;
 export default userInfoSlice.reducer;

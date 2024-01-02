@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
-import InfoPopUp from './infoPopUp'
-import { API_URL, doApiGet, doApiMethod } from '../../services/apiService';
-import EditAvatar from './myInfo/editAvatar';
+import InfoPopUp from '../infoPopUp'
+import { API_URL, doApiGet, doApiMethod } from '../../../services/apiService';
+import EditAvatar from './editAvatar';
+import EditBackground from './editBackground';
 
 const MyInfo = () => {
 
@@ -19,7 +20,7 @@ const MyInfo = () => {
     const [showPopup, setPopup] = useState(false);
     const [textPopUp, setTextPopUp] = useState();
     const [showPopupAvatar, setPopupAvatar] = useState(false);
-    const [textPopUpAvatar, setTextPopUpAvatar] = useState();
+    const [showPopupBackground, setPopupBackground] = useState(false);
 
     const nameRef = register("name", { required: true, minLength: 2, maxLength: 50 })
     const nickNameRef = register("nick_name", { minLength: 2, maxLength: 50 })
@@ -64,9 +65,18 @@ const MyInfo = () => {
         setPopupAvatar(false);
     }
 
+
+    const onClickBackground = () => {
+        setPopupBackground(true);
+
+    }
+    const handleCancelPopUpBackground = () => {
+        setPopupBackground(false);
+    }
+
     return (
         <div>
-            <section className="py-5" style={{ backgroundImage: `url(${require('../../images/background.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+            <section className="py-5" style={{ backgroundImage: `url(${require('../../../images/background.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
                 <div className="container h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
                         <div className="col-lg-12 col-xl-11">
@@ -96,7 +106,7 @@ const MyInfo = () => {
                                         backgroundSize: 'cover',
                                         backgroundRepeat: 'no-repeat'
                                     }}/>
-                                    <i style={{background:'white',cursor:"pointer", padding:'12px',borderRadius:"50%", position:"absolute", left:"10px",bottom:"10px"}} class="fa fa-pencil"></i>
+                                    <i onClick={onClickBackground} style={{background:'white',cursor:"pointer", padding:'12px',borderRadius:"50%", position:"absolute", left:"10px",bottom:"10px"}} className="fa fa-pencil"></i>
 
                                 </div>
 
@@ -210,6 +220,12 @@ const MyInfo = () => {
                     <EditAvatar 
                     show={showPopupAvatar}
                     onCancel={handleCancelPopUpAvatar}
+                    />
+                )}
+                {showPopupBackground && (
+                    <EditBackground 
+                    show={showPopupBackground}
+                    onCancel={handleCancelPopUpBackground}
                     />
                 )}
             </section>
