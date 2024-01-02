@@ -72,10 +72,10 @@ const MyInfo = () => {
                         <div className="col-lg-12 col-xl-11">
 
                             <div className="card text-black" style={{ borderRadius: '25px', border: "none" }}>
-
                                 <div style={{
                                     height: "200px",
                                     borderTopLeftRadius: '25px',
+                                    position:'relative',
                                     borderTopRightRadius: '25px',
                                     backgroundImage: `url(${userInfo.user.background_image})`,
                                     backgroundPosition: 'center',
@@ -87,17 +87,17 @@ const MyInfo = () => {
                                 }}>
                                     <div onClick={onClickAvatar} style={{
                                         cursor:'pointer',
-                                        height: "170px",
+                                        height: "150px",
                                         border: "8px solid white",
-                                        width: "170px",
+                                        width: "150px",
                                         borderRadius: '100px',
                                         backgroundImage: `url(${userInfo.user.profile_image})`,
                                         backgroundPosition: 'center',
                                         backgroundSize: 'cover',
                                         backgroundRepeat: 'no-repeat'
-                                    }}>
+                                    }}/>
+                                    <i style={{background:'white',cursor:"pointer", padding:'12px',borderRadius:"50%", position:"absolute", left:"10px",bottom:"10px"}} class="fa fa-pencil"></i>
 
-                                    </div>
                                 </div>
 
                                 <div className="card-body p-md-5">

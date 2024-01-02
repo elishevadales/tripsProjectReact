@@ -14,25 +14,25 @@ const EditAvatar = ({ show, onCancel }) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [previewURL, setPreviewURL] = useState(null);
-    const [image, setImage] = useState(null);  
+    const [image, setImage] = useState(null);
     const imgRef = register("avatar", { required: true })
     const dispatch = useDispatch();
     const userInfo = useSelector((myStore) =>
         myStore.userInfoSlice
     )
 
-    const onSub = async (data) => {
+    const onSub = async () => {
         try {
 
-            console.log(data.avatar[0]);
-            const image = data.avatar[0];
             const storageRef = ref(storage, `avatars/${image.name}`);
             await uploadBytes(storageRef, image);
             const imageURL = await getDownloadURL(storageRef);
 
             //delete old image from firebase
-            const oldImageRef = ref(storage, userInfo.user.profile_image);
-            await deleteObject(oldImageRef);
+            if (userInfo.user.profile_image != "https://firebasestorage.googleapis.com/v0/b/tripsproject-de869.appspot.com/o/avatars%2FdefaultAvatar.png?alt=media&token=c9b52448-9c6e-4d7a-9743-5b5115767781") {
+                const oldImageRef = ref(storage, userInfo.user.profile_image);
+                await deleteObject(oldImageRef);
+            }
 
             // Do something with the imageURL, for example, save it in the database
             doApiUpdateMyInfo(imageURL);
@@ -57,9 +57,6 @@ const EditAvatar = ({ show, onCancel }) => {
         try {
             let resp = await doApiMethod(url, "PUT", data);
             console.log(resp.data)
-
-
-
         }
 
         catch (err) {
@@ -68,6 +65,7 @@ const EditAvatar = ({ show, onCancel }) => {
     }
 
     const handleImageChange = (e) => {
+        console.log(e.target.files[0])
         const selectedImage = e.target.files[0];
         setImage(selectedImage);
 
@@ -82,43 +80,70 @@ const EditAvatar = ({ show, onCancel }) => {
     return (
         <Modal show={show} onHide={onCancel} backdrop="static" keyboard={false} centered>
             <Modal.Body className='text-center'>
-                <form onSubmit={handleSubmit(onSub)}>
-                    <input type="file" accept="image/*" {...imgRef} onChange={handleImageChange}/>
-                    {errors.avatar && <p className='text-danger'>Please select an image</p>}
+                <form onSubmit={handleSubmit(onSub)} className='d-flex text-center justify-content-center flex-column p-3'>
+
 
                     {!previewURL && (
-                  <div
-                    className="placeholder-image"
-                    style={{
-                      width: '150px',
-                      height: '150px',
-                      borderRadius: '50%',
-                      backgroundImage: `url(${userInfo.user.profile_image})`,
-                      backgroundSize: 'cover',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      marginBottom: '20px',
-                    }}
-                  ></div>
-                )}
+                        <div className='d-flex justify-content-center'>
+                            <div
+                                className="placeholder-image"
+                                style={{
+                                    width: '150px',
+                                    height: '150px',
+                                    borderRadius: '50%',
+                                    backgroundImage: `url(${userInfo.user.profile_image})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            ></div>
+                        </div>
+                    )}
 
                     {previewURL && (
-                        <img
-                            id="image-preview"
-                            alt="Preview"
-                            src={previewURL}
-                            style={{ maxWidth: '100%', maxHeight: '200px', margin: '10px 0' }}
-                        />
-                    )}
-                    <br></br>
 
-                    <button type='button' className="btn btn-secondary col-3" onClick={onCancel}>
-                        סגור
-                    </button>
-                    <button type="submit" className="btn btn-warning col-3">
-                        עדכן תמונה
-                    </button>
+                        <div className='d-flex justify-content-center'>
+                            <div
+                                className="placeholder-image"
+                                style={{
+                                    width: '150px',
+                                    height: '150px',
+                                    borderRadius: '50%',
+                                    backgroundImage: `url(${previewURL})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            ></div>
+                        </div>
+
+                    )}
+
+                    <label htmlFor={"file-input"} style={{ cursor: 'pointer' }}>שנה תמונה <i class="fa fa-pencil" aria-hidden="true"></i>
+                        <input
+                            id='file-input'
+                            className='d-none'
+                            type="file"
+                            accept="image/*"
+                            {...imgRef}
+                            onChange={handleImageChange}
+                        />
+                    </label>
+                    {errors.avatar && <p className='text-danger'>בחר תמונה</p>}
+
+                    <div className="buttons row justify-content-center mt-4">
+
+                        <button type='button' className="btn btn-secondary col-sm-3 m-2" onClick={onCancel}>
+                            סגור
+                        </button>
+                        <button type="submit" className="btn btn-warning col-sm-3 m-2">
+                            עדכן תמונה
+                        </button>
+                    </div>
                 </form>
             </Modal.Body>
         </Modal>
