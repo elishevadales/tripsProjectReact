@@ -5,6 +5,7 @@ import InfoPopUp from '../infoPopUp'
 import { API_URL, doApiGet, doApiMethod } from '../../../services/apiService';
 import EditAvatar from './editAvatar';
 import EditBackground from './editBackground';
+import loadingImage from'../../../images/loading.gif'
 
 const MyInfo = () => {
 
@@ -28,6 +29,7 @@ const MyInfo = () => {
     const ageRef = register("age", { min: 1, max: 120 })
     const addressRef = register("district_address", { minLength: 2, maxLength: 100 })
     const aboutRef = register("about", { minLength: 2, maxLength: 1000 })
+    
 
 
     useEffect(() => {

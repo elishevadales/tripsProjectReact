@@ -101,7 +101,6 @@ const EditAvatar = ({ show, onCancel }) => {
 
 
         console.log(defaultAvatar);
-        alert('image deleted')
         onCancel();
     }
 
@@ -133,7 +132,9 @@ const EditAvatar = ({ show, onCancel }) => {
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                 }}
-                            ></div>
+                            >
+                            </div>
+
                         </div>
                     )}
 
