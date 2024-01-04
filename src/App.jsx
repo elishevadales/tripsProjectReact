@@ -20,6 +20,11 @@ import UsersListAdmin from './components/admin/usersListAdmin';
 import MyInfo from './components/general/myInfo';
 import Posts from './components/general/posts';
 
+import socketIO from 'socket.io-client'
+
+import { API_URL } from './services/apiService'
+
+const  socket = socketIO.connect(API_URL)
 function App() {
 
   const myStore = configureStore({
@@ -30,7 +35,6 @@ function App() {
 
   return (
     <BrowserRouter>
-    <EventCard/>
       <Provider store={myStore}>
         <Routes>
           <Route path="/" element={<Header />}>
@@ -50,6 +54,7 @@ function App() {
             <Route path='/user/home' element={<HomeUser />} />
             <Route path='/user/myInfo' element={<MyInfo />} />
             <Route path='/user/events' element={<Posts />} />
+            <Route path='/user/events/eventCard' element={<EventCard socket={socket} />} />
           </Route>
 
           <Route path='/admin' element={<HeaderUser
@@ -64,6 +69,7 @@ function App() {
             <Route path='/admin/usersList' element={<UsersListAdmin />} />
             <Route path='/admin/events' element={<Posts />} />
             <Route path='/admin/myInfo' element={<MyInfo />} />
+            <Route path='/admin/events/eventCard' element={<EventCard socket={socket} />} />
 
           </Route>
           <Route path="/*" element={<Page404 />} />

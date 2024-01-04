@@ -53,7 +53,6 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
     };
 
     const handleStarClick = (clickedStars) => {
-        console.log(clickedStars)
         setHoveredStars(clickedStars);
         setStars(clickedStars)
         //  setOnEdit(false);
@@ -123,12 +122,12 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
                 <IonRow>
                     <IonCol size="3">
                         <img
-                            src={review?.profile_image}
-                            alt={review?.nick_name}
+                            src={review?.user_id?.profile_image}
+                            alt={review?.user_id?.nick_name }
                             style={{ width: '80px', height: '80px', borderRadius: '50%' , boxShadow: '0 4px 8px rgba(137,137,137,0.75)'}}
                         />
                     </IonCol>
-                    {!onEdit && <IonCol size="9">{review?.comment}</IonCol>}
+                    {!onEdit && <IonCol size="9">{review.comment}</IonCol>}
                     {onEdit && (
                         <IonCol size="9">
                             <textarea style={{ width: '250px', height: '80px' }}

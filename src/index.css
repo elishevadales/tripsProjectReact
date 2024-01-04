@@ -134,11 +134,8 @@ ion-card-header {
 }
 
 
-.example {
-  background-color: #eee;
-  width: 200px;
-  height: 100px;
-  border: 1px dotted black;
+.example  {
+  /* width: 700px; */
   overflow-y: scroll; /* Add the ability to scroll */
 }
 
@@ -149,6 +146,32 @@ ion-card-header {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .example {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+.align-left {
+  align-self: flex-start;
+}
+
+.align-right {
+  align-self: flex-end;
+}
+
+
+.chat {
+  /* width: 700px; */
+  overflow-y: scroll; /* Add the ability to scroll */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.chat::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.chat {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }

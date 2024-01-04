@@ -23,17 +23,17 @@ const ReviewCard = ({ review }) => {
       <IonGrid>
         <IonRow>
           <IonCol size="10">{renderStars()}</IonCol>
-          <IonCol size="2">{review?.nick_name}</IonCol>
+          <IonCol size="2">{review?.user_id?.nick_name}</IonCol>
         </IonRow>
         <IonRow>
           <IonCol size="3">
             <img
-              src={review?.profile_image}
-              alt={review?.nick_name}
+              src={review?.user_id?.profile_image? review.user_id.profile_image:"https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"}
+              alt={review?.user_id?.nick_name}
               style={{ width: '80px', height: '80px', borderRadius: '50%' , boxShadow: '0 4px 8px rgba(137,137,137,0.75)'}}
             />
           </IonCol>
-          <IonCol size="9">{review?.comment}</IonCol>
+          <IonCol size="9">{review.comment}</IonCol>
         </IonRow>
       </IonGrid>
     </div>
