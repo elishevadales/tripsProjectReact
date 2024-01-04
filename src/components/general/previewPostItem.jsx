@@ -18,6 +18,8 @@ import { useSelector } from 'react-redux'
 const PreviewPostItem = (props) => {
 
     const eventId = props.event._id;
+    console.log("eventId",eventId)
+
     const [event, setEvent] = useState(props.event);
     const nav = useNavigate()
     const userInfo = useSelector((myStore) =>
@@ -61,13 +63,15 @@ const PreviewPostItem = (props) => {
     const onClickCard = () => {
         // alert("hey")
         if (userInfo.user.role == "admin") {
-            nav("/admin/events/eventCard", {
+            nav("/admin/events/eventCard",
+             {
                 state: {
                     event: event
                 }
             })
         }
         else {
+            console.log(event)
             nav("/user/events/eventCard", {
                 state: {
                     event: event

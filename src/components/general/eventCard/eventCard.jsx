@@ -9,23 +9,29 @@ import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom';
 
 
-const EventCard = ({socket}) => {
+const EventCard = ({ socket }) => {
 
-    const {state} =useLocation();
-    const event = state.event
+    // Get the location object using the useLocation hook
+    const location = useLocation();
+    // Access the state object from the location
+    const { state } = location;
+
+    // Now, state should contain the data you passed during navigation
+    const [event , setEvent] = useState() 
+
 
     const userInfo = useSelector((myStore) =>
-    myStore.userInfoSlice
-)
+        myStore.userInfoSlice
+    )
 
-    const user_id =    userInfo.user._id;
+    const user_id = userInfo.user._id;
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [reviews, setReviews] = useState([{ _id: "659140813b4581ace66c003f", rate: 4, nick_name: "tamii", profile_image: "https://www.masa.co.il/MASA/_fck_uploads/1-david.jpg", comment: "rtfg rtfygh rytgyu tythunuyn yghu yuh " }, { _id: "111", nick_name: "tamii", profile_image: "https://www.masa.co.il/MASA/_fck_uploads/1-david.jpg", comment: "rtfg rtfygh rytgyu tythunuyn yghu yuh " },
     { _id: "111", nick_name: "tamii", profile_image: "https://www.masa.co.il/MASA/_fck_uploads/1-david.jpg", comment: "rtfg rtfygh rytgyu tythunuyn yghu yuhyuhyuhyuh yuh ", rate: 3 }]);
     const [hasReview, setHasReview] = useState(false);
     const [displayReviews, setDisplayReviews] = useState(false)
     const [hasLike, setHasLike] = useState(false)
-    const [likes, setLikes] = useState(event.like_list.length)
+    const [likes, setLikes] = useState(event?.like_list.length)
 
     //const [onReviewEdit, setOnReviewEdit] = useState(false)
 
@@ -33,11 +39,11 @@ const EventCard = ({socket}) => {
 
         try {
             if (hasLike) {
-                const data = await doApiMethod(API_URL + `/events/removeLike/${event._id}`, "patch")
+                const data = await doApiMethod(API_URL + `/events/removeLike/${event?._id}`, "patch")
                 setLikes(likes - 1)
             }
             else {
-                const data = await doApiMethod(API_URL + `/events/addLike/${event._id}`, "patch")
+                const data = await doApiMethod(API_URL + `/events/addLike/${event?._id}`, "patch")
                 setLikes(likes + 1)
             }
             setHasLike(!hasLike)
@@ -55,26 +61,26 @@ const EventCard = ({socket}) => {
         const reviewBody = {
             rate: 1,
             comment: "",
-            event_id: event._id,
+            event_id: event?._id,
             user_id: user_id
         }
         try {
-       // setOnReviewEdit(true)
-         const review = await doApiMethod(API_URL + `/reviews/addReview/${event._id}`, "post", reviewBody)
-        const updatedReviews = [...reviews];
-        updatedReviews.push(review.review)
-        setReviews(updatedReviews);
-    } catch (err) {
-        console.log(err);
-        alert("יש בעיה בשליפת הנתונים. נסה שוב מאוחר יותר")
-    }
+            // setOnReviewEdit(true)
+            const review = await doApiMethod(API_URL + `/reviews/addReview/${event?._id}`, "post", reviewBody)
+            const updatedReviews = [...reviews];
+            updatedReviews.push(review.review)
+            setReviews(updatedReviews);
+        } catch (err) {
+            console.log(err);
+            alert("יש בעיה בשליפת הנתונים. נסה שוב מאוחר יותר")
+        }
     }
 
 
     const removeReviews = async (index) => {
         try {
             const review = reviews[index]
-            const data = await doApiMethod(API_URL + `/reviews/deleteReview/${event._id}`, "delete")
+            const data = await doApiMethod(API_URL + `/reviews/deleteReview/${event?._id}`, "delete")
             const updatedReviews = [...reviews];
             updatedReviews.splice(index, 1);
             setReviews(updatedReviews);
@@ -106,15 +112,15 @@ const EventCard = ({socket}) => {
     }
 
     const doApiReview = async () => {
-        let url = API_URL + `/reviews/checkReview/${event._id}`;
+        let url = API_URL + `/reviews/checkReview/${event?._id}`;
         try {
             //let resp = await doApiGet(url);
             //console.log("ji",resp.data.hasReview)
             //setHasReview(resp.data.hasReview)
 
 
-             url = API_URL + `/reviews/eventReviews/${event._id}`
-             let resp = await doApiGet(url)
+            url = API_URL + `/reviews/eventReviews/${event?._id}`
+            let resp = await doApiGet(url)
             setReviews(resp.data)
 
         }
@@ -125,20 +131,21 @@ const EventCard = ({socket}) => {
     }
 
     useEffect(() => {
+        setEvent(state.event)
         doApiReview()
-        if (event.like_list.includes(user_id)) {
+        if (event?.like_list.includes(user_id)) {
             setHasLike(true)
         }
         const interval = setInterval(() => {
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % event.images.length);
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % event?.images.length);
         }, 20000);
         return () => clearInterval(interval);
     }, []);
-// }, [event.images]);
+    // }, [event.images]);
 
     return (
         <>
-            <div className='container card p-0 ' style={{ backgroundImage: `url(${event.images[currentImageIndex]})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out' }}>
+            <div className='container card p-0 ' style={{ backgroundImage: `url(${event?.images[currentImageIndex]})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out' }}>
 
                 {/* <div className='image-container'>
                     <IonImg alt="Silhouette of mountains" src={event.images[currentImageIndex]} />
@@ -148,12 +155,12 @@ const EventCard = ({socket}) => {
                         color: ' rgba(0, 0, 0, 0.651)',
                         fontSize: '100px',
                         fontWeight: 'bold',
-                    }}>{event.event_name}</p>
+                    }}>{event?.event_name}</p>
                     <p style={{
                         color: ' black',
                         fontSize: '20px',
                         fontWeight: 'bold',
-                    }}>{event.place_info}</p>
+                    }}>{event?.place_info}</p>
                 </div>
                 <div className='custom-background p-5  text-white' style={{ position: "relative" }}>
 
@@ -163,19 +170,19 @@ const EventCard = ({socket}) => {
                             <IonCol size="5">
                                 <IonRow>
                                     <IonCol >
-                                        {!event.price.free ? (
+                                        {!event?.price.free ? (
                                             <>
                                                 <IonRow>
                                                     <IonCol size="3"> <i className="fa fa-users fa-2x"></i></IonCol>
-                                                    <IonCol size="9"> {event.price.adult} ש"ח</IonCol>
+                                                    <IonCol size="9"> {event?.price.adult} ש"ח</IonCol>
                                                 </IonRow>
                                                 <IonRow>
                                                     <IonCol size="3"> <i className="fa fa-graduation-cap fa-2x"></i></IonCol>
-                                                    <IonCol size="9">  {event.price.studentOrSoldier} ש"ח</IonCol>
+                                                    <IonCol size="9">  {event?.price.studentOrSoldier} ש"ח</IonCol>
                                                 </IonRow>
                                                 <IonRow>
                                                     <IonCol size="3"> <i className="fa fa-child fa-2x"></i></IonCol>
-                                                    <IonCol size="9">  {event.price.child} ש"ח</IonCol>
+                                                    <IonCol size="9">  {event?.price.child} ש"ח</IonCol>
                                                 </IonRow>
                                             </>
                                         ) : (
@@ -190,25 +197,25 @@ const EventCard = ({socket}) => {
                                         <IonCol>
                                             <IonRow>
                                                 <IonCol size="3"> <i className="fa  fa-map-signs fa-2x"></i></IonCol>
-                                                <IonCol size="9"> {event.required_equipment} </IonCol>
+                                                <IonCol size="9"> {event?.required_equipment} </IonCol>
                                             </IonRow>
                                             <IonRow>
                                                 <IonCol size="3"> <i className="fa fa-car fa-2x"></i></IonCol>
-                                                <IonCol size="9"> {event.parking ? "יש חניה במקום" : "אין חניה במקום"} </IonCol>
+                                                <IonCol size="9"> {event?.parking ? "יש חניה במקום" : "אין חניה במקום"} </IonCol>
                                             </IonRow>
                                             <IonRow>
                                                 <IonCol size="3"> <i className="fa fa-wheelchair-alt fa-2x"></i></IonCol>
-                                                <IonCol size="9">  {event.accessibility ? "המקום מונגש" : "המקום לא מונגש"}</IonCol>
+                                                <IonCol size="9">  {event?.accessibility ? "המקום מונגש" : "המקום לא מונגש"}</IonCol>
                                             </IonRow>
                                             <IonRow>
                                                 <IonCol size="3"> <i className="fa fa-clock-o fa-2x"></i></IonCol>
-                                                <IonCol size="9">  {event.during}</IonCol>
+                                                <IonCol size="9">  {event?.during}</IonCol>
                                             </IonRow>
                                         </IonCol>
                                     </IonCol>
                                 </IonRow>
                                 <IonRow>
-                                    {event.trip_details}
+                                    {event?.trip_details}
                                 </IonRow>
                             </IonCol>
                             <IonCol size="5">
@@ -220,10 +227,10 @@ const EventCard = ({socket}) => {
                                         SAVE THE DATE
                                     </div>
                                     <div style={{ fontSize: '70px', fontWeight: 'bold' }}>
-                                        {new Date(event.date_and_time).toLocaleDateString('en-GB')}
+                                        {new Date(event?.date_and_time).toLocaleDateString('en-GB')}
                                     </div>
                                     <div style={{ fontSize: '50px' }}>
-                                        {new Date(event.date_and_time).toLocaleTimeString('en-GB', {
+                                        {new Date(event?.date_and_time).toLocaleTimeString('en-GB', {
                                             hour: '2-digit',
                                             minute: '2-digit',
                                         })}
@@ -320,7 +327,7 @@ const EventCard = ({socket}) => {
                     ))}
                 </div>
                 <div>
-                    <ChatScreen eventId={event._id} userId={user_id} socket={socket}/>
+                    <ChatScreen eventId={event?._id} userId={user_id} socket={socket} />
                 </div>
             </div>
 
