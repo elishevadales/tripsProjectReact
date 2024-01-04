@@ -11,11 +11,18 @@ import IconButton from '@mui/joy/IconButton';
 import Link from '@mui/joy/Link';
 import Favorite from '@mui/icons-material/Favorite';
 import { API_URL, doApiGet, doApiMethod } from '../../services/apiService';
+import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux'
+
 
 const PreviewPostItem = (props) => {
 
     const eventId = props.event._id;
     const [event, setEvent] = useState(props.event);
+    const nav = useNavigate()
+    const userInfo = useSelector((myStore) =>
+        myStore.userInfoSlice
+    )
 
     useEffect(() => {
         console.log(event)
@@ -51,10 +58,30 @@ const PreviewPostItem = (props) => {
         }
     }
 
+    const onClickCard = () => {
+        // alert("hey")
+        if (userInfo.user.role == "admin") {
+            nav("/admin/events/eventCard", {
+                state: {
+                    event: event
+                }
+            })
+        }
+        else {
+            nav("/user/events/eventCard", {
+                state: {
+                    event: event
+                }
+            })
+        }
+
+
+    }
+
     return (
         <div className='m-3 col-md-5 ' >
 
-            <Card variant="outlined" sx={{ width: '100%' }}>
+            <Card onClick={onClickCard} variant="outlined" sx={{ width: '100%' }}>
                 <Box sx={{ display: 'flex', gap: 1.5, mt: 'auto', alignItems: 'center' }}>
                     <Avatar variant="soft" color="neutral" src={event.user_id.profile_image} />
 
@@ -68,7 +95,7 @@ const PreviewPostItem = (props) => {
                     <AspectRatio ratio="2">
                         {/* זו תמונה של "עדיין אין תמונה":
                         "https://inature.info/w/images/0/0e/No_image.jpg"*/}
-                        <img 
+                        <img
                             src={event.images.length > 0 ? event.images[0] : "https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}
                             loading="lazy"
                             alt=""
