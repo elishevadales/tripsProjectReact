@@ -5,7 +5,7 @@ import InfoPopUp from '../infoPopUp'
 import { API_URL, doApiGet, doApiMethod } from '../../../services/apiService';
 import EditAvatar from './editAvatar';
 import EditBackground from './editBackground';
-import loadingImage from'../../../images/loading.gif'
+import loadingImage from '../../../images/loading.gif'
 
 const MyInfo = () => {
 
@@ -29,12 +29,9 @@ const MyInfo = () => {
     const ageRef = register("age", { min: 1, max: 120 })
     const addressRef = register("district_address", { minLength: 2, maxLength: 100 })
     const aboutRef = register("about", { minLength: 2, maxLength: 1000 })
-    
 
 
-    useEffect(() => {
-        console.log(userInfo)
-    }, [])
+
 
     const handleCancelPopUp = () => {
         setPopup(false)
@@ -77,17 +74,17 @@ const MyInfo = () => {
     }
 
     return (
-        <div>
-            <section className="py-5" style={{ backgroundImage: `url(${require('../../../images/background.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
-                <div className="container h-100">
-                    <div className="row d-flex justify-content-center align-items-center h-100">
+        <div style={{ backgroundImage: `url(${require('../../../images/background.jpg')})`, backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+            <section className="py-5">
+                <div className="container h-100 ">
+                    <div className="row d-flex justify-content-center align-items-center h-100 ">
                         <div className="col-lg-12 col-xl-11">
 
-                            <div className="card text-black" style={{ borderRadius: '25px', border: "none" }}>
+                            <div className="border shadow text-black  bg-white" style={{ borderRadius: '25px', border: "none" }}>
                                 <div style={{
                                     height: "200px",
                                     borderTopLeftRadius: '25px',
-                                    position:'relative',
+                                    position: 'relative',
                                     borderTopRightRadius: '25px',
                                     backgroundImage: `url(${userInfo.user.background_image})`,
                                     backgroundPosition: 'center',
@@ -98,7 +95,7 @@ const MyInfo = () => {
                                     justifyContent: 'center'
                                 }}>
                                     <div onClick={onClickAvatar} style={{
-                                        cursor:'pointer',
+                                        cursor: 'pointer',
                                         height: "150px",
                                         border: "8px solid white",
                                         width: "150px",
@@ -106,19 +103,20 @@ const MyInfo = () => {
                                         backgroundImage: `url(${userInfo.user.profile_image})`,
                                         backgroundPosition: 'center',
                                         backgroundSize: 'cover',
-                                        backgroundRepeat: 'no-repeat'
-                                    }}/>
-                                    <i onClick={onClickBackground} style={{background:'white',cursor:"pointer", padding:'12px',borderRadius:"50%", position:"absolute", left:"10px",bottom:"10px"}} className="fa fa-pencil"></i>
+                                        backgroundRepeat: 'no-repeat',
+                                        position: 'absolute',
+                                        right: '75px',
+                                        bottom: '-65px'
+                                    }} />
+                                    <i onClick={onClickBackground} style={{ background: 'white', cursor: "pointer", padding: '12px', borderRadius: "50%", position: "absolute", left: "10px", bottom: "10px" }} className="fa fa-pencil"></i>
 
                                 </div>
 
                                 <div className="card-body p-md-5">
                                     <div className="row justify-content-center">
                                         <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                                            <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4">עדכון פרופיל</p>
+                                            <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-md-5" style={{ marginTop: "65px" }}>עדכון פרופיל</p>
                                             <form onSubmit={handleSubmit(onSub)} className="mx-1 mx-md-4">
-
-
 
                                                 <div className="d-flex flex-row align-items-center mb-4">
                                                     <i className="fa fa-user fa-lg ms-3 fa-fw"></i>
@@ -219,15 +217,15 @@ const MyInfo = () => {
                     />
                 )}
                 {showPopupAvatar && (
-                    <EditAvatar 
-                    show={showPopupAvatar}
-                    onCancel={handleCancelPopUpAvatar}
+                    <EditAvatar
+                        show={showPopupAvatar}
+                        onCancel={handleCancelPopUpAvatar}
                     />
                 )}
                 {showPopupBackground && (
-                    <EditBackground 
-                    show={showPopupBackground}
-                    onCancel={handleCancelPopUpBackground}
+                    <EditBackground
+                        show={showPopupBackground}
+                        onCancel={handleCancelPopUpBackground}
                     />
                 )}
             </section>

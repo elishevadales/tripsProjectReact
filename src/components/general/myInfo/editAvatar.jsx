@@ -32,10 +32,6 @@ const EditAvatar = ({ show, onCancel }) => {
             await uploadBytes(storageRef, image);
             const imageURL = await getDownloadURL(storageRef);
 
-            //delete old image from firebase
-            //const oldImageRef = ref(storage, userInfo.user.profile_image);
-            //await deleteObject(oldImageRef);
-
 
             // save the new url in mongo
             doApiUpdateMyInfo(imageURL);

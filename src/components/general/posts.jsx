@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { API_URL, doApiGet } from '../../services/apiService';
+import { API_URL, doApiGet, doApiMethod } from '../../services/apiService';
+
+import PreviewPostItem from './previewPostItem';
+
 
 const Posts = () => {
 
-const [eventsAr,setEventsAr] = useState([]);
+  const [eventsAr, setEventsAr] = useState([]);
 
-useEffect(() => {
 
-doApiGetEvents();
 
-},[])
+  useEffect(() => {
 
-const doApiGetEvents = async() => {
+    doApiGetEvents();
+
+  }, [])
+
+  const doApiGetEvents = async () => {
     let url = API_URL + "/events/eventList";
 
     try {
@@ -23,27 +28,26 @@ const doApiGetEvents = async() => {
     catch (err) {
       console.log(err);
     }
-}
+  }
+
+  
 
   return (
-    <div className='row'>
-        {
-            eventsAr.map((event,i) =>{
-                return(
-                    <div key={i} className='shadow m-3 col-md-5'>
-                        <p>{event.category}</p>
-                        <p>{event.parking}</p>
-                        <p>{event.district}</p>
-                        <p>{event.accessibility}</p>
-                        <p>{event.place_info}</p>
-                        <p>{event.date_and_time}</p>
-                        <p>{event.during}</p>
-                        <p>{event.date_created}</p>
-                    </div>
-                )
+    <div style={{ backgroundImage: `url(${require('../../images/background.jpg')})`, backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+      <div className="container">
+        <div className='row my-3 mt-0 justify-content-around align-item-center mb-0'>
+          {
+            eventsAr.map((event, i) => {
+              return (
+                <PreviewPostItem event={event} key={i}/>
+                
+              )
             })
-        }
+          }
+        </div>
+      </div>
     </div>
+
   )
 }
 
