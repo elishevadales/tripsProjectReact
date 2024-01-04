@@ -17,7 +17,7 @@ import { configureStore } from "@reduxjs/toolkit"
 import { Provider } from 'react-redux';
 import userInfoSlice from './components/reducer/userInfoSlice';
 import UsersListAdmin from './components/admin/usersListAdmin';
-import MyInfo from './components/general/myInfo';
+import MyInfo from './components/general/myInfo/myInfo';
 import Posts from './components/general/posts';
 
 import socketIO from 'socket.io-client'
