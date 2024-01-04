@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -103,7 +101,6 @@ const EditAvatar = ({ show, onCancel }) => {
 
     const handleCancelDelete = () => {
         setShowDeletePopup(false)
-        alert("cancel")
 
     }
 

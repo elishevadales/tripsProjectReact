@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch,useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import ConfirmPopUp from '../general/confirmPopUp';
 import { updateUserInfo } from '../reducer/userInfoSlice';
@@ -11,21 +11,19 @@ const HeaderUser = (props) => {
     const nav = useNavigate()
     const dispatch = useDispatch();
     const userInfo = useSelector((myStore) =>
-    myStore.userInfoSlice
-)
-   
+        myStore.userInfoSlice
+    )
+
 
     useEffect(() => {
         const token = localStorage.getItem(TOKEN_NAME);
-        if(!token){
+        if (!token) {
             nav('/')
         }
-        else{
+        else {
             doApiMyInfo();
         }
         
-
-       
     }, [])
 
     const onClickLogo = () => {
@@ -50,22 +48,22 @@ const HeaderUser = (props) => {
     const doApiMyInfo = async () => {
         let url = API_URL + "/users/myInfo";
         try {
-          // console.clear();
-          let resp = await doApiGet(url);
-          console.log(resp.data);
-          dispatch(updateUserInfo({
-            update: resp.data
-    
-          }))
-    
-    
+
+            let resp = await doApiGet(url);
+            console.log(resp.data);
+            dispatch(updateUserInfo({
+                update: resp.data
+
+            }))
+
+
         }
         catch (err) {
-          console.log(err);
-          alert("there is a problem ,try again later")
+            console.log(err);
+            alert("there is a problem ,try again later")
         }
-    
-      }
+
+    }
 
 
     return (

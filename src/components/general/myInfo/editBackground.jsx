@@ -103,7 +103,6 @@ const EditBackground = ({ show, onCancel }) => {
 
     const handleCancelDelete = () => {
         setShowDeletePopup(false)
-        alert("cancel")
 
     }
 
