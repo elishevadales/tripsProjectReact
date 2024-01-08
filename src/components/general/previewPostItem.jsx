@@ -17,58 +17,69 @@ import { useSelector } from 'react-redux'
 
 const PreviewPostItem = (props) => {
 
-    const eventId = props.event._id;
-    console.log("eventId",eventId)
-
-    const [event, setEvent] = useState(props.event);
-    const nav = useNavigate()
     const userInfo = useSelector((myStore) =>
         myStore.userInfoSlice
     )
+    const eventId = props.event._id;
+    const imageInLeft = props.imageInLeft;
 
-    useEffect(() => {
-        console.log(event)
-    }, [])
+    const [event, setEvent] = useState(props.event);
+    const [isLiked, setIsLiked] = useState(event.like_list.includes(userInfo.user._id))
+
+    const nav = useNavigate()
+
 
     const onClickLikeIcon = async () => {
         await doApiAddLike();
-        await doApiGetEvent()
     }
 
+
+
     const doApiAddLike = async () => {
-        let url = API_URL + "/events/addLike/" + eventId
+        let url = API_URL + "/events/addOrRemoveLike/" + eventId
 
         try {
             let resp = await doApiMethod(url, "PATCH");
-            console.log(resp.data)
+            console.log("Updated event data:", resp.data.event);
+            console.log("User ID:", userInfo.user._id);
+            console.log("Like List:", resp.data.event.like_list);
+            setEvent(resp.data.event)
+            setIsLiked(resp.data.event.like_list.includes(userInfo.user._id));
+
         }
         catch (err) {
             console.log(err);
         }
     }
 
-    const doApiGetEvent = async () => {
-        let url = API_URL + "/events/getEventById/" + eventId;
-
-        try {
-            let resp = await doApiGet(url);
-            console.log(resp.data)
-            setEvent(resp.data)
+    const onClickNickName = () => {
+        if (userInfo.user.role == "admin") {
+            nav("/admin/userInfo",
+                {
+                    state: {
+                        userId: event.user_id
+                    }
+                })
         }
-        catch (err) {
-            console.log(err);
+        else {
+            console.log(event)
+            nav("/user/userInfo",
+                {
+                    state: {
+                        userId: event.user_id
+                    }
+                })
         }
     }
 
     const onClickCard = () => {
-        // alert("hey")
         if (userInfo.user.role == "admin") {
             nav("/admin/events/eventCard",
-             {
-                state: {
-                    event: event
-                }
-            })
+                {
+                    state: {
+                        event: event
+                    }
+                })
         }
         else {
             console.log(event)
@@ -77,74 +88,67 @@ const PreviewPostItem = (props) => {
                     event: event
                 }
             })
+
         }
+        localStorage.setItem("event", JSON.stringify(event));
+
 
 
     }
 
     return (
-        <div className='m-3 col-md-5 ' >
-
-            <Card onClick={onClickCard} variant="outlined" sx={{ width: '100%' }}>
-                <Box sx={{ display: 'flex', gap: 1.5, mt: 'auto', alignItems: 'center' }}>
-                    <Avatar variant="soft" color="neutral" src={event.user_id.profile_image} />
+        <div className='col-md-6 p-0'>
 
 
-                    <div>
-                        <Typography level="body-xs">{event.date_created && typeof event.date_created === 'string' ? event.date_created.split('T')[0] : 'N/A'}</Typography>
-                        <Typography level="body-sm">{event.user_id.nick_name}</Typography>
-                    </div>
-                </Box>
-                <CardOverflow>
-                    <AspectRatio ratio="2">
-                        {/* זו תמונה של "עדיין אין תמונה":
-                        "https://inature.info/w/images/0/0e/No_image.jpg"*/}
-                        <img
-                            src={event.images.length > 0 ? event.images[0] : "https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}
-                            loading="lazy"
-                            alt=""
-                        />
-                    </AspectRatio>
-                    <IconButton
-                        onClick={onClickLikeIcon}
-                        aria-label="Like minimal photography"
-                        size="md"
-                        variant="solid"
-                        color="danger"
-                        sx={{
-                            position: 'absolute',
-                            zIndex: 2,
-                            borderRadius: '50%',
-                            left: '1rem',
-                            bottom: 0,
-                            transform: 'translateY(50%)',
-                        }}
-                    >
-                        <Favorite />
-                        {event.like_list.length < 1 ? "" : event.like_list.length}
-                    </IconButton>
-                </CardOverflow>
-                <CardContent>
-                    <Typography level="title-md">
-                        <Link href="#multiple-actions" overlay underline="none">
-                            {event.event_name}
-                        </Link>
-                    </Typography>
-                    <Typography level="body-sm">
-                        <Link href="#multiple-actions">{event.district ? event.district : 'ישראל'}</Link>
-                    </Typography>
-                </CardContent>
-                <CardOverflow variant="soft">
-                    <Divider inset="context" />
-                    <CardContent orientation="horizontal">
-                        <Typography level="body-xs">{event.participants.length} משתתפים</Typography>
-                        <Divider orientation="vertical" />
-                        <Typography level="body-xs">נקבע לתאריך:<br></br> {event.date_and_time && typeof event.date_and_time === 'string' ? event.date_and_time.split('T')[0] : 'N/A'}</Typography>
-                    </CardContent>
-                </CardOverflow>
+            <div className=' border shadow d-flex m-3 p-0 row' >
+                <div onClick={onClickCard} className="image col-12 col-sm-6 p-0" style={{ order: imageInLeft ? 1 : 2, position: "relative", cursor: 'pointer' }}>
+                    <img
+                        src={event.images.length > 0 ? event.images[0] : "https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}
+                        loading="lazy"
+                        alt="trip image"
+                        style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+                    <i
+                        style={{ position: "absolute", left: 0, bottom: 0, color: isLiked ? "red" : "black", borderRadius: "100%", fontSize: '24px', background: "white" }}
+                        className={isLiked ? "fa fa-heart p-2 m-2" : "fa fa-heart-o p-2 m-2"}
+                        aria-hidden="true"
+                        onClick={(e) => {
+                            e.stopPropagation(); // Prevent the click event from propagating to the container
+                            onClickLikeIcon();
+                        }}>
+                        {/* {event.like_list.length < 1 ? "" : event.like_list.length} */}
+                    </i>
+                </div>
+                <div className="text col-12 col-sm-6 p-4" style={{ order: imageInLeft ? 2 : 1, background: "rgb(206, 220, 223)" }}>
+                    <Box className="mb-3" sx={{ color: "grey", display: 'flex', gap: 1.5, mt: 'auto', alignItems: 'center' }}>
+                        <Avatar variant="soft" color="neutral" src={event.user_id.profile_image} />
+                        <div>
+                            <Typography level="body-xs">
+                                {event.date_created && typeof event.date_created === 'string' ? event.date_created.split('T')[0] : 'N/A'}
+                            </Typography>
+                            <Typography
+                                level="body-sm"
+                                onClick={onClickNickName}
+                                style={{
+                                    textDecoration: 'underline',
+                                    transition: 'blue 0.3s ease',  // Add a smooth color transition
+                                    cursor: 'pointer'
+                                }}
+                                className="hover-underline"
+                            >
+                                {event?.user_id?.nick_name}
+                            </Typography>
+                        </div>
+                    </Box>
 
-            </Card>
+                    <p className='display-5'>{event.event_name}</p>
+                    <p className='lead'>{event.category ? event.category : 'קטגוריה'}</p>
+                    <p className='lead'>{event.participants.length} משתתפים</p>
+                    <p className='lead' style={{ fontSize: "14px" }}>תאריך יציאה: {event.date_and_time && typeof event.date_and_time === 'string' ? event.date_and_time.split('T')[0] : 'N/A'}</p>
+
+                </div>
+            </div>
         </div>
+
     )
 }
 
