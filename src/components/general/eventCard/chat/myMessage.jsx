@@ -2,7 +2,6 @@
 import React from 'react';
 
 const MyMessage = ({ message, last, alignLeft }) => {
-    // console.log(last,"last");
   return (
     <>
       {!last ? (
@@ -20,7 +19,7 @@ const MyMessage = ({ message, last, alignLeft }) => {
          //   overflowWrap: 'break-word', // Wrap at word boundaries
           }}
         >
-          {message.text}
+          {message?.text}
         </div>
       ) : (
         <div
@@ -35,9 +34,9 @@ const MyMessage = ({ message, last, alignLeft }) => {
             whiteSpace: 'pre-wrap', // Preserve new lines
          //   overflowWrap: 'break-word', // Wrap at word boundaries
           }}
-        > {message.text}
+        > {message?.text}
                              
-        <span className='text-muted' style={{fontSize:'13px'}}> <br/> {new Date( message.time_stamp).getUTCHours()}:{new Date( message.time_stamp).getUTCMinutes()}</span>
+        <span className='text-muted' style={{fontSize:'13px'}}> <br/> {new Date( message?.time_stamp).getUTCHours()}:{new Date( message?.time_stamp).getUTCMinutes()}</span>
 
         </div>
       )}

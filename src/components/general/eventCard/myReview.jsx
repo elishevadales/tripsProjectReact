@@ -5,13 +5,14 @@ import React, { useState, useEffect } from 'react';
 const MyReview = ({ index, review, removeReviews, editReview }) => {
 
     const [onEdit, setOnEdit] = useState(false);
-    const [editedComment, setEditedComment] = useState(review.comment);
-    const [hoveredStars, setHoveredStars] = useState(review.rate);
-    const [stars, setStars] = useState(review.rate);
+    const [editedComment, setEditedComment] = useState();
+    const [hoveredStars, setHoveredStars] = useState();
+    const [stars, setStars] = useState();
 
     useEffect(() => {
-        //setOnEdit(onEditProp)
-    });
+        setHoveredStars(review?.rate)
+        setStars(review?.rate)
+    },[]);
 
     const edit = () => {
         editReview(index, { ...review, comment: editedComment, rate: stars })
@@ -19,12 +20,12 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
     }
 
     const renderStarsOnEdit = () => {
-        const stars = [];
-        const yellowStars = hoveredStars || review.rate;
+        const starsArr = [];
+        const yellowStars = hoveredStars || stars;
         const blackStars = 5 - yellowStars;
-
+    
         for (let i = 0; i < yellowStars; i++) {
-            stars.push(
+            starsArr.push(
                 <i
                     key={i}
                     className="fa fa-star fa-2x ps-1"
@@ -35,9 +36,9 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
                 />
             );
         }
-
+    
         for (let i = 0; i < blackStars; i++) {
-            stars.push(
+            starsArr.push(
                 <i
                     key={i + yellowStars}
                     className="fa fa-star-o fa-2x ps-1"
@@ -48,23 +49,23 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
                 />
             );
         }
-
-        return stars;
+    
+        return starsArr;
     };
-
+    
+    
     const handleStarClick = (clickedStars) => {
         setHoveredStars(clickedStars);
         setStars(clickedStars)
-        //  setOnEdit(false);
-        // setEditedComment(review.comment);
-        // Update the review rate in your state or wherever it's stored
-        // For example, you can call editReview(index, { ...review, rate: clickedStars });
+         // setOnEdit(false);
+        // setEditedComment(review?.comment);
+
     };
 
 
     const renderStars = () => {
         const stars = [];
-        const yellowStars = review.rate > 0 ? review.rate : 0;
+        const yellowStars = review?.rate > 0 ? review?.rate : 1;
         const blackStars = 5 - yellowStars;
 
         for (let i = 0; i < yellowStars; i++) {
@@ -98,8 +99,8 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
                         type="button"
                         className="btn  btn-rounded btn-icon"
                         style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-                                onMouseEnter={(e) => (e.target.style.color = 'blue')}
-                                onMouseLeave={(e) => (e.target.style.color = 'black')}
+                        onMouseEnter={(e) => (e.target.style.color = 'blue')}
+                        onMouseLeave={(e) => (e.target.style.color = 'black')}
                         onClick={() => edit()}
                     >
                         <i className="fa  fa-check fa-2x"></i>
@@ -123,20 +124,22 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
                     <IonCol size="3">
                         <img
                             src={review?.user_id?.profile_image}
-                            alt={review?.user_id?.nick_name }
-                            style={{ width: '80px', height: '80px', borderRadius: '50%' , boxShadow: '0 4px 8px rgba(137,137,137,0.75)'}}
+                            alt={review?.user_id?.nick_name}
+                            style={{ width: '80px', height: '80px', borderRadius: '50%', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }}
                         />
                     </IonCol>
-                    {!onEdit && <IonCol size="9">{review.comment}</IonCol>}
+                    {!onEdit && <IonCol size="9">{review?.comment}</IonCol>}
                     {onEdit && (
                         <IonCol size="9">
-                            <textarea style={{ width: '250px', height: '80px' }}
+                            <textarea
+                                style={{ width: '250px', height: '80px' }}
                                 value={editedComment}
                                 onChange={(e) => setEditedComment(e.target.value)}
                                 maxLength={300}
                             />
                         </IonCol>
                     )}
+
                 </IonRow>
             </IonGrid>
         </div>

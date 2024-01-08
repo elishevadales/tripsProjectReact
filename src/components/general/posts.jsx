@@ -21,7 +21,6 @@ const Posts = () => {
 
     try {
       let resp = await doApiGet(url);
-      console.log(resp.data)
       setEventsAr(resp.data)
     }
 

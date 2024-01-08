@@ -22,8 +22,7 @@ const ChatBody = ({ socket, userId, oldMessages }) => {
           height: '500px',
           display: 'flex',
           flexDirection: 'column',
-          backgroundImage: `url('https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/Resources/art/bg_initial.jpg')`,
-          backgroundSize: 'cover', // Adjust to your needs
+          backgroundSize: 'cover', 
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
         }}
@@ -59,7 +58,6 @@ const ChatBody = ({ socket, userId, oldMessages }) => {
         ))}
 
 
- ___________________________________________________________________________________
 {oldMessages.map((message, index) => (
   message?.user_id._id  === userId ? (
     <MyMessage
