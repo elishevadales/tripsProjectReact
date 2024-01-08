@@ -62,10 +62,10 @@ const SignUp = () => {
   return (
 
 
-    <section className="py-4 my-5" >
+    <section className="py-4" >
       <div className='background-signup'></div>
       <div className="container h-100 my-5 py-5 ">
-        <div className='row '>
+        <div className='row pt-5'>
           <div className='col-12 col-md-5' style={{ backgroundImage: `url(${require('../../images/kids.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}></div>
           <div className='col-12 col-md-7 m-0  p-5 bg-white py-3' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
 

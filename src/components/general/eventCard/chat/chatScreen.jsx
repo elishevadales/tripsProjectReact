@@ -50,10 +50,11 @@ const ChatScreen = ({ eventId, userId, socket }) => {
                 height: '650px',
                 display: 'flex',
                 flexDirection: 'column',
-                backgroundImage: `url('https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/Resources/art/bg_initial.jpg')`,
+                // backgroundImage: `url('https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/Resources/art/bg_initial.jpg')`,
                 backgroundSize: 'cover', // Adjust to your needs
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
+                background:'rgba(255, 255, 255, 0.505)'
             }}
         >
             <div
@@ -78,7 +79,7 @@ const ChatScreen = ({ eventId, userId, socket }) => {
                 <ChatBody socket={socket} userId={userId} oldMessages={messages} eventId={eventId} />
             </div>
 
-            <div className='mt-auto d-flex justify-content-center border flex-row align-items-center'>
+            <div className='mt-auto d-flex justify-content-center flex-row align-items-center'>
                 <ChatInput onSendMessage={onSendMessage} />
             </div>
         </div>

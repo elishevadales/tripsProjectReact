@@ -118,7 +118,7 @@ const PreviewPostItem = (props) => {
                         {/* {event.like_list.length < 1 ? "" : event.like_list.length} */}
                     </i>
                 </div>
-                <div className="text col-12 col-sm-6 p-4" style={{ order: imageInLeft ? 2 : 1, background: "rgb(206, 220, 223)" }}>
+                <div className="text col-12 col-sm-6 p-4" style={{ order: imageInLeft ? 2 : 1, background: "#BBE4E2" }}>
                     <Box className="mb-3" sx={{ color: "grey", display: 'flex', gap: 1.5, mt: 'auto', alignItems: 'center' }}>
                         <Avatar variant="soft" color="neutral" src={event.user_id.profile_image} />
                         <div>

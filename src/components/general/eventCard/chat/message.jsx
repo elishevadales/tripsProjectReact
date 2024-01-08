@@ -17,14 +17,15 @@ console.log(index)
                 <div className="col d-flex p-0 ">
                         {last ? (
                         <div
-                            className={`bg-primary d-flex text-white p-2 mb-3 justify-content-center px-3 ${alignLeft ? 'align-left' : 'align-right'
+                            className={` d-flex text-white p-2 mb-3 justify-content-center px-3 ${alignLeft ? 'align-left' : 'align-right'
                                 }`}
                             style={{
                                 borderRadius: '20px 20px 0px 20px',
                                 maxWidth: '500px',
                                 minWidth: 'min-content',
                                 whiteSpace: 'pre-wrap',
-                                boxShadow: '0 4px 8px rgba(137,137,137,0.75)'
+                                boxShadow: '0 4px 8px rgba(137,137,137,0.75)',
+                                background:'#077F7A'
                             }}
                         >
                             {message?.text}
@@ -35,14 +36,15 @@ console.log(index)
                         </div>
                         ) : (
                             <div
-                                className={`bg-dark d-flex text-white p-1 justify-content-center px-3 mb-0 ${alignLeft ? 'align-left' : 'align-right'
+                                className={` d-flex text-white p-1 justify-content-center px-3 mb-0 ${alignLeft ? 'align-left' : 'align-right'
                                     }`}
                                 style={{
                                     borderRadius: '20px 20px 20px 20px',
                                     maxWidth: '500px',
                                     minWidth: 'min-content',
                                     whiteSpace: 'pre-wrap',
-                                    boxShadow: '0 4px 8px rgba(137,137,137,0.75)'
+                                    boxShadow: '0 4px 8px rgba(137,137,137,0.75)',
+                                    background:'#077F7A'
                                 }}
                             >
                                 {message?.text}

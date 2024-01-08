@@ -6,7 +6,7 @@ const MyMessage = ({ message, last, alignLeft }) => {
     <>
       {!last ? (
         <div
-          className={`bg-secondary d-flex text-white p-1 justify-content-center px-3 mt-1 ${
+          className={`d-flex text-dark p-1 justify-content-center px-3 mt-1 ${
             alignLeft ? 'align-left' : 'align-right'
           }`}
           style={{
@@ -14,7 +14,8 @@ const MyMessage = ({ message, last, alignLeft }) => {
             maxWidth: '500px',
             minWidth: 'min-content',
             whiteSpace: 'pre-wrap', 
-            boxShadow: '0 4px 8px rgba(137,137,137,0.75)'
+            boxShadow: '0 4px 8px rgba(137,137,137,0.75)',
+            background:'#BBE4E2'
             // Preserve new lines
          //   overflowWrap: 'break-word', // Wrap at word boundaries
           }}
@@ -23,7 +24,7 @@ const MyMessage = ({ message, last, alignLeft }) => {
         </div>
       ) : (
         <div
-          className={`bg-warning  d-flex text-white p-1 justify-content-center px-3 mt-1 ${
+          className={`  d-flex text-dark p-1 justify-content-center px-3 mt-1 ${
             alignLeft ? 'align-left' : 'align-right'
           }`}
           style={{
@@ -32,6 +33,7 @@ const MyMessage = ({ message, last, alignLeft }) => {
             maxWidth: '500px',
             minWidth: 'min-content',
             whiteSpace: 'pre-wrap', // Preserve new lines
+            background:'#BBE4E2'
          //   overflowWrap: 'break-word', // Wrap at word boundaries
           }}
         > {message?.text}

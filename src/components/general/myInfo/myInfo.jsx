@@ -89,7 +89,8 @@ const MyInfo = () => {
     };
 
     return (
-        <div style={{ backgroundImage: `url(${require('../../../images/background.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}>
+        <div >
+        {/* <div style={{ backgroundImage: `url(${require('../../../images/background.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}> */}
             <section className="py-5">
                 <div className="container h-100 ">
                     <div className="row d-flex justify-content-center align-items-center h-100 ">

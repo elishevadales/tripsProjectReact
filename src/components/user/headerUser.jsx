@@ -69,12 +69,24 @@ const HeaderUser = (props) => {
     return (
         <>
             {/* <div style={{ height: "220px", backgroundImage: `url(${require('../../images/background.jpg')})`, backgroundSize: 'cover', backgroundPosition: "center" }}> */}
-            <header className={`${props.color} text-white p-3`}>
+            <header
+        className='container-fluid m-0 pt-5'
+        style={{
+            boxShadow:"-4px 7px 13px -2px rgba(0,0,0,0.75)",
+          background: '#ffffff24',
+        //   position: visible ? 'fixed' : 'absolute',
+          width: '100%',
+          top: 0,
+          transition: 'top 0.3s',
+           height: '100px',
+          zIndex: 1000, 
+        }}
+      >
                 {/* <header className={`text-white p-3`} style={{background:"rgba(255, 193, 7, 0.3)", position:"sticky", top: 0, zIndex: 1000}}> */}
                 <div className="container d-flex justify-content-between">
                     <div className="logo d-flex" onClick={onClickLogo}>
-                        <i className="fa fa-car fa-2x" aria-hidden="true"></i>
-                        <h2 className='lead mr-3'>לוגו</h2>
+                        <i className="fa fa-car fa-2x text-white" aria-hidden="true"></i>
+                        <h2 className='lead mr-3'> </h2>
                     </div>
                     <div className="nav d-flex align-items-center">
                         {
@@ -84,7 +96,7 @@ const HeaderUser = (props) => {
                                 )
                             })
                         }
-                        <button onClick={handleLogOutClick} className='btn btn-danger'>יציאה</button>
+                        <button onClick={handleLogOutClick} className='btn' style={{background:'#077F7A'}}>יציאה</button>
                     </div>
                 </div>
             </header>

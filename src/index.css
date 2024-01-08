@@ -5,7 +5,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url('./images/bg.jpg') center center fixed; 
+  background-size: cover; 
+  backdrop-filter: blur(20px); 
 }
+
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -85,7 +90,7 @@ ion-card-header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: red;
+  color: rgba(255, 255, 255, 0.248);
   width:100px;
   height:150px;
   background-color: white;

@@ -35,13 +35,13 @@ const Header = () => {
           top: 0,
           transition: 'top 0.3s',
            height: '100px',
-          zIndex: 1000, // Adjust the z-index value as needed
+          zIndex: 1000, 
         }}
       >
         <div className='container  d-flex justify-content-between align-items-center'>
           <div className='logo d-flex' onClick={onClickLogo}>
-            <i className='fa fa-car fa-2x' aria-hidden='true'></i>
-            <h2 className='lead mr-3'>לוגו</h2>
+            <i className='fa fa-car fa-2x  text-white' aria-hidden='true'></i>
+            <h2 className='lead mr-3'> </h2>
           </div>
           <div className='nav d-flex align-items-center'>
             <Link to='/login' className='text-white text-decoration-none mx-3 lead'>

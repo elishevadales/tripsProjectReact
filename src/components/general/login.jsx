@@ -43,9 +43,9 @@ const Login = () => {
       localStorage.setItem(TOKEN_NAME, resp.data.token);
 
       if (resp.data.role == "user") {
-        nav("/user/home")
+        nav("/user/events")
       } else if (resp.data.role == "admin") {
-        nav("/admin/home")
+        nav("/admin/events")
       }
 
     }
@@ -91,10 +91,10 @@ const Login = () => {
 
   return (
     // <section className="py-5" style={{ backgroundImage: `url(${require('../../images/background.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
-    <section className="py-5 my-5" >
+    <section className="py-5" >
       <div className='background-login'></div>
       <div className="container h-100 my-5 py-5 ">
-        <div className='row '>
+        <div className='row pt-5'>
           <div className='col-12 col-md-5' style={{ backgroundImage: `url(${require('../../images/group2.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'right', backgroundRepeat: 'no-repeat' }}></div>
           <div className='col-12 col-md-7 m-0 p-0 py-5 bg-white' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
             <div className="text-black px-5" >

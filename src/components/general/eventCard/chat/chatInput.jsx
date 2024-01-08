@@ -21,7 +21,7 @@ const ChatInput = ({ onSendMessage }) => {
   };
 
   return (
-    <div className={`container ${isFocused ? 'focused' : ''} border d-flex m-0 d-flex`} style={{ borderRadius: '30px 30px 30px 30px' }}>
+    <div className={`container ${isFocused ? 'focused' : ''}  d-flex m-0 d-flex`} style={{ borderRadius: '30px 30px 30px 30px' }}>
       <div className="row d-danger p-1 d-flex">
         <div className="col-3"></div>
         <div className="col-8 d-flex justify-content-start p-0 pe-5 py-2">
@@ -31,7 +31,7 @@ const ChatInput = ({ onSendMessage }) => {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onKeyDown={handleKeyDown}
-            className="form-control border-0 shadow-none example px-3 py-2"
+            className="form-control border-0 shadow-none example px-3 py-2 bg-white"
             style={{
               borderRadius: "30px",
               width: '550px',
@@ -39,7 +39,6 @@ const ChatInput = ({ onSendMessage }) => {
               minHeight: '20px',
               maxHeight: '100px',
               resize: 'none',
-              background: "rgba(22, 1, 255, 0.34)",
             }}
             placeholder="Type your message..."
             id="chatTextarea"
@@ -57,10 +56,10 @@ const ChatInput = ({ onSendMessage }) => {
               borderRadius: '50%', border: 'none',
               textAlign: 'left'
             }}
-            onMouseEnter={(e) => (e.target.style.color = 'blue')}
+            // onMouseEnter={(e) => (e.target.style.color = 'blue')}
             onClick={handleSendMessage}
           >
-            <i className="fa fa-paper-plane fa-2x" aria-hidden="true" style={{ color: "rgba(22, 1, 255, 0.34)", transform: "scaleX(-1)" }}></i>
+            <i className="fa fa-paper-plane fa-2x" aria-hidden="true" style={{ color: "#077F7A", transform: "scaleX(-1)" }}></i>
           </button>
         </div>
       </div>

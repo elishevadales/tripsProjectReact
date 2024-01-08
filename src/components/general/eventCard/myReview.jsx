@@ -79,7 +79,7 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
         return stars;
     };
     return (
-        <div className='border my-2 p-2' style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', width: '400px' }}>
+        <div className='border my-2 p-2 bg-white' style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
             <IonGrid>
                 <IonRow>
                     {onEdit && <IonCol size="8">{renderStarsOnEdit()}</IonCol>}

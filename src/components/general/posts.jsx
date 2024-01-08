@@ -72,7 +72,7 @@ const Posts = () => {
   return (
     <div style={{ position: "relative" }}>
       <div className="container">
-        <div className="search d-flex border shadow my-4">
+        <div className="search d-flex border shadow my-4 bg-white">
           <div className="filters col-9 d-flex justify-content-around" style={{ color: "grey" }}>
             <div className=' col p-2 my-2' style={{ borderLeft: "solid rgb(206, 220, 223) 1px" }}>
               <p className='lead my-0 px-2' style={{ fontSize: "16px" }}> שם</p>
@@ -120,7 +120,7 @@ const Posts = () => {
 
             </div>
           </div>
-          <div onClick={handleSearch} className="button text-white display-6 p-4 col-3 d-flex alignItems-center justify-content-center" style={{ background: "rgb(76, 116, 126)", cursor: "pointer" }}>
+          <div onClick={handleSearch} className="button text-white display-6 p-4 col-3 d-flex alignItems-center justify-content-center" style={{ background: "#077F7A", cursor: "pointer" }}>
             חיפוש
           </div>
         </div>
@@ -138,7 +138,7 @@ const Posts = () => {
         </div>
       </div>
       <Link to={userInfo.user.role == "admin" ? "http://localhost:3001/admin/newEvent" : "http://localhost:3001/user/newEvent"}>
-        <i class="fa fa-plus p-5 text-white" aria-hidden="true" style={{ background: "rgb(76, 116, 126)", fontSize: "32px", borderRadius: "100%", border: "solid white 2 px", position: "sticky", right: "50px", bottom: "50px", cursor: "pointer" }}></i>
+        <i class="fa fa-plus p-5 text-white" aria-hidden="true" style={{ background: "#077F7A", fontSize: "32px", borderRadius: "100%", border: "solid white 2 px", position: "sticky", right: "50px", bottom: "50px", cursor: "pointer" }}></i>
       </Link>
     </div>
 
