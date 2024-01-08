@@ -8,9 +8,9 @@ console.log(index)
             <div className="row  mt-1">
                 <div className="col-md-1  d-flex justify-content-end ">
                     {last ? (<img className='mt-auto'
-                        src={message.user_id.profile_image ? message.user_id.profile_image : "https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"}
-                        alt={message.user_id.nick_name}
-                        title={message.user_id.nick_name}
+                        src={message?.user_id?.profile_image ? message?.user_id?.profile_image : "https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"}
+                        alt={message?.user_id?.nick_name}
+                        title={message?.user_id?.nick_name}
                         style={{ width: '40px', height: '40px', borderRadius: '50%', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }}
                     />) : null}
                 </div>
@@ -27,9 +27,9 @@ console.log(index)
                                 boxShadow: '0 4px 8px rgba(137,137,137,0.75)'
                             }}
                         >
-                            {message.text}
+                            {message?.text}
                              
-                            <span className='text-muted' style={{fontSize:'13px'}}> <br/> {new Date( message.time_stamp).getUTCHours()}:{new Date( message.time_stamp).getUTCMinutes()}</span>
+                            <span className='text-muted' style={{fontSize:'13px'}}> <br/> {new Date( message?.time_stamp).getUTCHours()}:{new Date( message.time_stamp).getUTCMinutes()}</span>
 
                            
                         </div>
@@ -45,7 +45,7 @@ console.log(index)
                                     boxShadow: '0 4px 8px rgba(137,137,137,0.75)'
                                 }}
                             >
-                                {message.text}
+                                {message?.text}
                             </div>)
                         }
 

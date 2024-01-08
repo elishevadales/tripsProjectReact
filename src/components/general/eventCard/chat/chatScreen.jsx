@@ -9,10 +9,12 @@ const ChatScreen = ({ eventId, userId, socket }) => {
     const [messages, setMessages] = useState([])
 
     const doApiMessages = async () => {
-        let url = API_URL + `/messages/byEventId/${eventId}`;
+        let url
         try {
+            if (eventId)
+                url = API_URL + `/messages/byEventId/${eventId}`;
+
             let resp = await doApiGet(url);
-            // console.log("🔥",resp.data.messages)
             setMessages(resp.data.messages)
         }
 
@@ -35,7 +37,6 @@ const ChatScreen = ({ eventId, userId, socket }) => {
     // 1 get all the mesagges to the event , connect to socket 
     useEffect(() => {
         socket.emit("join-room", eventId)
-        console.log("⚡:")
         doApiMessages()
     }, []);
 
@@ -50,9 +51,9 @@ const ChatScreen = ({ eventId, userId, socket }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundImage: `url('https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/Resources/art/bg_initial.jpg')`,
-          backgroundSize: 'cover', // Adjust to your needs
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
+                backgroundSize: 'cover', // Adjust to your needs
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
             }}
         >
             <div
@@ -71,14 +72,14 @@ const ChatScreen = ({ eventId, userId, socket }) => {
                     //     <Message message={message} last={true} alignLeft={true} key={index} />
 
                 })} */}
-            
-            </div>
-<div>
-<ChatBody socket={socket} userId={userId} oldMessages={messages} eventId={eventId}/>
-</div>
 
-            <div className='mt-auto'>
-                <ChatInput  onSendMessage={onSendMessage} />
+            </div>
+            <div>
+                <ChatBody socket={socket} userId={userId} oldMessages={messages} eventId={eventId} />
+            </div>
+
+            <div className='mt-auto d-flex justify-content-center border flex-row align-items-center'>
+                <ChatInput onSendMessage={onSendMessage} />
             </div>
         </div>
     );
