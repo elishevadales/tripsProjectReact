@@ -118,7 +118,7 @@ const Login = () => {
                     </div>
                   </div>
                   <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4 mt-2">
-                    <button className="btn  btn-lg" style={{ borderRadius: 0, background:"#5C7D84", boxShadow:"9px 9px 55px -12px rgba(0,0,0,0.75)" }}>
+                    <button className="btn  btn-lg" style={{ borderRadius: 0, background: "#5C7D84", boxShadow: "9px 9px 55px -12px rgba(0,0,0,0.75)" }}>
                       כניסה
                     </button>
                   </div>

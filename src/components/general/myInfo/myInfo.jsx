@@ -20,6 +20,7 @@ const MyInfo = () => {
 
     useEffect(() => {
         // Fetch user information and set default values
+        console.log("userId",userInfo.user._id)
         const fetchData = async () => {
             try {
                 // Fetch user information
@@ -89,7 +90,7 @@ const MyInfo = () => {
     };
 
     return (
-        <div >
+        <div style={{backdropFilter: "blur(20px)"}}>
         {/* <div style={{ backgroundImage: `url(${require('../../../images/background.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}> */}
             <section className="py-5">
                 <div className="container h-100 ">
