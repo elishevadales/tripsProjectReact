@@ -6,7 +6,7 @@ import { API_URL, doApiGet, doApiMethod } from '../../../services/apiService'
 import MyReview from './myReview';
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom';
-
+import Notification from '../notification/notification';
 
 const EventCard = ({ socket }) => {
 
@@ -17,19 +17,30 @@ const EventCard = ({ socket }) => {
 
     // Now, state should contain the data you passed during navigation
     const [event, setEvent] = useState()
-
-
-    const userInfo = useSelector((myStore) =>
-        myStore.userInfoSlice
-    )
-
-    const user_id = userInfo.user._id;
+    const [openEvent, setOpenEvent] = useState(false)
+    const [praticipant, setPraticipant] = useState(false)
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [reviews, setReviews] = useState([]);
     const [hasReview, setHasReview] = useState(false);
     const [displayReviews, setDisplayReviews] = useState(false)
     const [hasLike, setHasLike] = useState(false)
+    const [hasJoinRequest, setHasJoinRequest] = useState(false)
     const [likes, setLikes] = useState(event?.like_list?.length)
+    const [showNotification, setShowNotification] = useState(false)
+    const [myEvent, setMyEvent] = useState(false)
+    const [user_id, setUserId] = useState("")
+
+    const [notificationMessage, setNotificationMessage] = useState(" ")
+
+    const userInfo = useSelector((myStore) =>
+        myStore.userInfoSlice
+    )
+
+
+    const handleNotificationClose = () => {
+        setShowNotification(false);
+    };
+
 
     const handleLike = async () => {
 
@@ -50,6 +61,30 @@ const EventCard = ({ socket }) => {
         }
     }
 
+    const sendJoinRequest = async () => {
+        try {
+            const data = await doApiMethod(API_URL + `/events/addJoinRequest/${event?._id}`, "patch")
+            setHasJoinRequest(true)
+            setShowNotification(true)
+            setNotificationMessage("בקשת ההצטרפות נשלחה וממתינה לאישור")
+            socket.emit("send-notification", event.user_id._id)
+        } catch (err) {
+            console.log(err);
+            alert("יש בעיה בשליפת הנתונים. נסה שוב מאוחר יותר")
+        }
+    }
+
+    const addPraticipent = async () => {
+        try {
+            const data = await doApiMethod(API_URL + `/events/addParticipant/${event?._id}/${user_id}`, "patch")
+            setPraticipant(true)
+            setShowNotification(true)
+            setNotificationMessage("אישור ההצטרפות שלך נקלט, מחכים לראות אותך")
+        } catch (err) {
+            console.log(err);
+            alert("יש בעיה בשליפת הנתונים. נסה שוב מאוחר יותר")
+        }
+    }
 
     const addReview = async () => {
         setHasReview(true)
@@ -108,15 +143,13 @@ const EventCard = ({ socket }) => {
         }
     }
 
-    const doApiReview = async () => {
+    const doApiReview = async (eventId) => {
         try {
             let url
-            if (event?._id) {
-                url = API_URL + `/reviews/checkReview/${event?._id}`;
-                url = API_URL + `/reviews/eventReviews/${event?._id}`
-                let resp = await doApiGet(url)
-                setReviews(resp.data)
-            }
+            url = API_URL + `/reviews/checkReview/${eventId}`;
+            url = API_URL + `/reviews/eventReviews/${eventId}`
+            let resp = await doApiGet(url)
+            setReviews(resp.data)
         }
 
         catch (err) {
@@ -124,44 +157,81 @@ const EventCard = ({ socket }) => {
         }
     }
 
-    useEffect(() => {
-        setEvent(JSON.parse(localStorage.getItem("event")))
-        doApiReview()
-        if (event?.like_list.includes(user_id)) {
-            setHasLike(true)
+    const doApiGetEvent = async () => {
+        try {
+
+            const event_id = localStorage.getItem("eventId")
+            let url = API_URL + `/events/getEventById/${event_id}`;
+            let resp = await doApiGet(url)
+            setEvent(resp.data)
+
+            if (resp.data?.like_list?.includes(userInfo?.user?._id)) {
+                setHasLike(true)
+            }
+
+            if (resp.data?.join_requests?.includes(userInfo?.user?._id)) {
+                setHasJoinRequest(true)
+            }
+
+
+            if (resp.data?.participants?.includes(userInfo?.user?._id)) {
+                setPraticipant(true)
+            }
+
+            if (resp.data?.user_id?._id === userInfo?.user?._id) {
+                setMyEvent(true)
+            }
+
+            setOpenEvent(resp.data?.open_event)
+            doApiReview(resp.data?._id)
+
         }
+
+        catch (err) {
+            console.log(err);
+        }
+
+    }
+
+    useEffect(() => {
+        setUserId(userInfo?.user?._id);
+        doApiGetEvent()
         const interval = setInterval(() => {
             setCurrentImageIndex((prevIndex) => (prevIndex + 1) % event?.images?.length);
         }, 20000);
         return () => clearInterval(interval);
-    }, []);
+
+    }, [userInfo]);
 
     return (
         <>
+            {showNotification && (
+                <Notification
+                    message={notificationMessage}
+                    onClose={handleNotificationClose}
+                />
+            )}
             {/* <div className='container card p-0 ' style={{ backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out' }}> */}
             <div style={{ position: "relative" }} className='container-fluid d-flex flex-column justify-content-center align-items-center'>
                 <div className=' container d-flex justify-content-center align-items-center' style={{ position: "relative" }}>
 
 
-                    
-                <div className='content m-0' style={{position:"absolute",top:0}}>
-                            <p style={{
-                                color: ' rgba(0, 0, 0, 0.651)',
-                                fontSize: '100px',
-                                fontWeight: 'bold',
-                            }}>{event?.event_name}</p>
-                            <p style={{
-                                color: ' black',
-                                fontSize: '20px',
-                                fontWeight: 'bold',
-                            }}>{event?.place_info}</p>
-                        </div>
-                    
+
+                    <div className='content m-0' style={{ position: "absolute", top: 0 }}>
+                        <p style={{
+                            color: ' rgba(0, 0, 0, 0.651)',
+                            fontSize: '100px',
+                            fontWeight: 'bold',
+                        }}>{event?.event_name}</p>
+                        <p style={{
+                            color: ' black',
+                            fontSize: '20px',
+                            fontWeight: 'bold',
+                        }}>{event?.place_info}</p>
+                    </div>
+
                     <div className='row mt-5' style={{ width: "70%" }}>
-
-
-
-                        <div className='custom-background p-5  text-white' style={{ position: "relative",marginTop:"68px" }}>
+                        <div className='custom-background px-5 py-3 text-white' style={{ position: "relative", marginTop: "68px" }}>
 
                             {/* <div className='ribbon'>
                                 <div>
@@ -173,13 +243,12 @@ const EventCard = ({ socket }) => {
 
                             <IonGrid>
                                 <IonRow>
-
-                                    <IonCol size="5">
-                                        <IonRow>
+                                    <IonCol size="7">
+                                        <IonRow >
                                             <IonCol >
                                                 {!event?.price?.free ? (
                                                     <>
-                                                        <IonRow>
+                                                        <IonRow className='pt-4'>
                                                             <IonCol size="3"> <i className="fa fa-users fa-2x"></i></IonCol>
                                                             <IonCol size="9"> {event?.price?.adult} ש"ח</IonCol>
                                                         </IonRow>
@@ -193,7 +262,7 @@ const EventCard = ({ socket }) => {
                                                         </IonRow>
                                                     </>
                                                 ) : (
-                                                    <IonRow>
+                                                    <IonRow className='pt-4'>
                                                         <IonCol size="3"> <i className="fa fa-pagelines fa-2x"></i></IonCol>
                                                         <IonCol size="9"> הכניסה חופשית</IonCol>
                                                     </IonRow>
@@ -230,7 +299,7 @@ const EventCard = ({ socket }) => {
 
                                         </IonRow>
                                         <IonCol style={{ textAlign: 'center' }}>
-                                            <div style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                            <div style={{ fontSize: '20px', fontWeight: 'bold' }} className='pt-4'>
                                                 SAVE THE DATE
                                             </div>
                                             <div style={{ fontSize: '50px', fontWeight: 'bold' }}>
@@ -246,7 +315,66 @@ const EventCard = ({ socket }) => {
                                     </IonCol>
                                 </IonRow>
                                 <IonRow>
-                                    <IonCol size='8'> </IonCol>
+
+                                    {myEvent ?
+                                        <> <IonCol size="2">
+                                            <button
+                                                type="button"
+                                                className="btn  btn-rounded btn-icon"
+                                                style={{ transition: 'color 0.3s', color: 'white', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                onMouseEnter={(e) => (e.target.style.color = 'yellow')}
+                                                onMouseLeave={(e) => (e.target.style.color = 'white')}
+                                                onClick={() => setDisplayReviews(!displayReviews)}
+                                            >
+                                                <i className="fa  fa-pencil fa-2x"></i>
+                                            </button>
+                                        </IonCol>
+                                        </> :
+                                        <>
+                                            {!praticipant &&
+                                                <>
+                                                    {!openEvent && !hasJoinRequest && <IonCol size="2"> <span style={{ fontSize: "small" }}>בקשת הצטרפות</span><button
+                                                        type="button"
+                                                        className="btn  btn-rounded btn-icon"
+                                                        style={{ transition: 'color 0.3s', color: 'white', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                        onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                                        onMouseLeave={(e) => (e.target.style.color = 'white')}
+                                                        onClick={() => sendJoinRequest()}
+                                                    >
+                                                        <i className="fa  fa-envelope fa-2x"></i>
+                                                    </button>
+                                                    </IonCol>
+                                                    }
+
+                                                    {!openEvent && hasJoinRequest && <IonCol size="2">
+                                                        <i className="fa  fa-info fa-2x mx-2" style={{ transform: "scaleX(-1)" }}></i>
+                                                        בקשת ההצטרפות שלך ממתינה לאישור
+                                                    </IonCol>
+                                                    }
+
+                                                    {openEvent && <IonCol size="2"> <button
+                                                        type="button"
+                                                        className="btn  btn-rounded btn-icon"
+                                                        style={{ transition: 'color 0.3s', color: 'white', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                        onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                                        onMouseLeave={(e) => (e.target.style.color = 'white')}
+                                                        onClick={() => addPraticipent()}
+                                                    >
+                                                        <i className="fa   fa-hand-peace-o fa-2x"> </i>
+                                                        <span style={{ fontSize: "small" }}>אני רוצה לבוא</span>
+                                                    </button>
+                                                    </IonCol>
+                                                    }</>
+                                            }
+                                            {praticipant && <IonCol size="2">
+                                                <i className="fa  fa-smile-o fa-2x mx-2" ></i>
+                                                {userInfo?.gender === "female" ? <span>אני באה</span> : <span>אני בא</span>}
+
+                                            </IonCol>}
+                                        </>
+                                    }
+
+                                    <IonCol size='6'> </IonCol>
                                     <IonCol size="1"> <button
                                         type="button"
                                         className="btn  btn-rounded btn-icon"
@@ -292,6 +420,7 @@ const EventCard = ({ socket }) => {
                                         <i className="fa  fa-users fa-2x"></i>
                                     </button>
                                     </IonCol>
+
 
                                 </IonRow>
                             </IonGrid>

@@ -138,7 +138,7 @@ const Posts = () => {
         </div>
       </div>
       <Link to={userInfo.user.role == "admin" ? "http://localhost:3001/admin/newEvent" : "http://localhost:3001/user/newEvent"}>
-        <i class="fa fa-plus p-5 text-white" aria-hidden="true" style={{ background: "#077F7A", fontSize: "32px", borderRadius: "100%", border: "solid white 2 px", position: "sticky", right: "50px", bottom: "50px", cursor: "pointer" }}></i>
+        <i className="fa fa-plus p-4 text-white fa-3x " aria-hidden="true" style={{ boxShadow: '0 4px 8px rgba(137,137,137,0.75)',background: "#077F7A", borderRadius: "100%", border: "solid white 2 px", position: "sticky", right: "50px", bottom: "50px", cursor: "pointer" }}></i>
       </Link>
     </div>
 

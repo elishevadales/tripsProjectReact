@@ -1,8 +1,15 @@
-import React from 'react'
 import { Modal } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import notificationSound from '../../sounds/alert.mp3';
 
 const InfoPopUp = ({ show, message, onCancel }) => {
-    
+    const [audio] = useState(new Audio(notificationSound));
+
+    useEffect(() => {
+        audio.play()
+
+    }, []);
+
     return (
         <Modal show={show} onHide={onCancel} backdrop="static" keyboard={false} centered>
             <Modal.Body className='text-center'>
@@ -16,3 +23,4 @@ const InfoPopUp = ({ show, message, onCancel }) => {
 };
 
 export default InfoPopUp
+

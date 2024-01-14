@@ -90,7 +90,8 @@ const PreviewPostItem = (props) => {
             })
 
         }
-        localStorage.setItem("event", JSON.stringify(event));
+        localStorage.setItem("eventId", event._id);
+        // localStorage.setItem("eventId", JSON.stringify(event._id));
 
 
 

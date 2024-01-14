@@ -45,7 +45,7 @@ function App() {
             <Route path="/signUp" element={<SignUp />} />
           </Route>
 
-          <Route path='/user' element={<HeaderUser
+          <Route path='/user' element={<HeaderUser socket={socket}
             links={[
               { title: 'פוסטים', path: '/user/events' },
               { title: 'עדכון-פרופיל', path: '/user/myInfo' },
