@@ -73,9 +73,10 @@ const Posts = () => {
 
 
   return (
-    <div style={{ position: "relative" }}>
-      <div className="container">
-        <div className="search d-flex border shadow my-4 bg-white">
+    <div style={{ position: "relative", backdropFilter: "blur(20px)" }}>
+      
+      <div className="container pt-4">
+        <div className="search d-flex border shadow bg-white">
           <div className="filters col-9 d-flex justify-content-around" style={{ color: "grey" }}>
             <div className=' col p-2 my-2' style={{ borderLeft: "solid rgb(206, 220, 223) 1px" }}>
               <p className='lead my-0 px-2' style={{ fontSize: "16px" }}> שם</p>
