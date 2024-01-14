@@ -107,8 +107,10 @@ const EditBackground = ({ show, onCancel }) => {
     }
 
     return (
-        <Modal show={show} onHide={onCancel} backdrop="static" keyboard={false} centered>
-            <Modal.Body className='text-center'>
+        
+
+        <Modal  show={show} onHide={onCancel} backdrop="static" keyboard={false} centered>
+            <Modal.Body className='text-center' >
                 <form onSubmit={handleSubmit(onSub)} className='d-flex text-center justify-content-center flex-column p-3'>
 
 
@@ -119,7 +121,6 @@ const EditBackground = ({ show, onCancel }) => {
                                 style={{
                                     width: '100%',
                                     height: '150px',
-                                    
                                     backgroundImage: `url(${userInfo.user.background_image})`,
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
