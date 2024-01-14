@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { API_URL, doApiGet, doApiMethod } from '../../services/apiService';
 import { useSelector } from 'react-redux'
-
+import CalendarView from './calendarView'
 
 import PreviewPostItem from './previewPostItem';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const Posts = () => {
 
   const [eventsAr, setEventsAr] = useState([]);
-
+  const [viewType, setViewType] = useState('list');
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('');
@@ -20,8 +20,8 @@ const Posts = () => {
   const [openEvent, setOpenEvent] = useState(false);
 
   const userInfo = useSelector((myStore) =>
-  myStore.userInfoSlice
-)
+    myStore.userInfoSlice
+  )
 
   useEffect(() => {
 
@@ -51,6 +51,9 @@ const Posts = () => {
   };
 
 
+  const toggleView = (type) => {
+    setViewType(type);
+  };
 
 
 
@@ -120,25 +123,40 @@ const Posts = () => {
 
             </div>
           </div>
-          <div onClick={handleSearch} className="button text-white display-6 p-4 col-3 d-flex alignItems-center justify-content-center" style={{ background: "#077F7A", cursor: "pointer" }}>
+          <div onClick={handleSearch} className="text-white display-6 col-1 d-flex flex-column alignItems-center justify-content-center" style={{ background: "#BBE4E2", cursor: "pointer" }}>
+            <button
+              className={`btn `}
+              onClick={() => toggleView('list')}
+            >
+              <i className="fa fa-list-alt fa-2x" aria-hidden="true"></i>
+            </button>
+            <button
+              className={`btn`}
+              onClick={() => toggleView('calendar')}
+            >
+              <i className="fa fa-calendar fa-2x" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div onClick={handleSearch} className="button text-white display-6 p-3 col-2 d-flex alignItems-center justify-content-center" style={{ background: "#077F7A", cursor: "pointer" }}>
             חיפוש
           </div>
-        </div>
-        <div className='row my-3 mt-0 justify-content-around align-item-center mb-0'>
-          {eventsAr.length < 1 && <p className='display-4 text-center'>לא נמצאו אירועים</p>}
-          {
-            eventsAr.map((event, i) => {
 
-              return (
-                <PreviewPostItem event={event} key={i} imageInLeft={i % 2 === 0} />
-
-              )
-            })
-          }
         </div>
+        {viewType === 'list' ? (
+          <div className='row my-3 mt-0 justify-content-around align-item-center mb-0'>
+            {eventsAr.length < 1 && <p className='display-4 text-center'>לא נמצאו אירועים</p>}
+            {eventsAr.map((event, i) => (
+              <PreviewPostItem event={event} key={i} imageInLeft={i % 2 === 0} />
+            ))}
+          </div>
+        ) : (
+          <CalendarView events={eventsAr} />
+        )}
+
       </div>
       <Link to={userInfo.user.role == "admin" ? "http://localhost:3001/admin/newEvent" : "http://localhost:3001/user/newEvent"}>
-        <i className="fa fa-plus p-4 text-white fa-3x " aria-hidden="true" style={{ boxShadow: '0 4px 8px rgba(137,137,137,0.75)',background: "#077F7A", borderRadius: "100%", border: "solid white 2 px", position: "sticky", right: "50px", bottom: "50px", cursor: "pointer" }}></i>
+        <i className="fa fa-plus p-4 text-white fa-3x " aria-hidden="true" style={{ boxShadow: '0 4px 8px rgba(137,137,137,0.75)', background: "#077F7A", borderRadius: "100%", border: "solid white 2 px", position: "sticky", right: "50px", bottom: "50px", cursor: "pointer" }}></i>
       </Link>
     </div>
 

@@ -62,7 +62,6 @@ const PreviewPostItem = (props) => {
                 })
         }
         else {
-            console.log(event)
             nav("/user/userInfo",
                 {
                     state: {
@@ -82,7 +81,6 @@ const PreviewPostItem = (props) => {
                 })
         }
         else {
-            console.log(event)
             nav("/user/events/eventCard", {
                 state: {
                     event: event
@@ -91,10 +89,6 @@ const PreviewPostItem = (props) => {
 
         }
         localStorage.setItem("eventId", event._id);
-        // localStorage.setItem("eventId", JSON.stringify(event._id));
-
-
-
     }
 
     return (

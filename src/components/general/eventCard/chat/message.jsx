@@ -2,7 +2,6 @@
 import React from 'react';
 
 const Message = ({ message, last, alignLeft , index}) => {
-console.log(index)
     return (
         <div className="container p-0 m-0 ">
             <div className="row  mt-1">

@@ -89,7 +89,7 @@ const EventCard = ({ socket }) => {
     const addReview = async () => {
         setHasReview(true)
         const reviewBody = {
-            rate: 2,
+            rate: 5,
             comment: " ",
             event_id: event?._id,
             user_id: user_id
@@ -97,10 +97,8 @@ const EventCard = ({ socket }) => {
         try {
             let review = await doApiMethod(API_URL + `/reviews/addReview/${event?._id}`, "post", reviewBody)
             review = review.data
-            console.log("rfftgyhj", review)
             const updatedReviews = [...reviews];
             updatedReviews.push(review)
-            console.log("review", review, "user_id", user_id)
             setReviews(updatedReviews);
         } catch (err) {
             console.log(err);
@@ -149,6 +147,8 @@ const EventCard = ({ socket }) => {
             url = API_URL + `/reviews/checkReview/${eventId}`;
             url = API_URL + `/reviews/eventReviews/${eventId}`
             let resp = await doApiGet(url)
+            console.log("review", resp.data)
+
             setReviews(resp.data)
         }
 
@@ -211,6 +211,207 @@ const EventCard = ({ socket }) => {
                     onClose={handleNotificationClose}
                 />
             )}
+
+            <div className='container-fluid'>
+                <div className='container'>
+                    <div className='row border m-5'>
+                        <div className='col-8 border'>
+                        <IonGrid>
+                                <IonRow>
+                                    <IonCol size="7">
+                                        <IonRow >
+                                            <IonCol >
+                                                {!event?.price?.free ? (
+                                                    <>
+                                                        <IonRow className='pt-4'>
+                                                            <IonCol size="3"> <i className="fa fa-users fa-2x"></i></IonCol>
+                                                            <IonCol size="9"> {event?.price?.adult} ש"ח</IonCol>
+                                                        </IonRow>
+                                                        <IonRow>
+                                                            <IonCol size="3"> <i className="fa fa-graduation-cap fa-2x"></i></IonCol>
+                                                            <IonCol size="9">  {event?.price?.studentOrSoldier} ש"ח</IonCol>
+                                                        </IonRow>
+                                                        <IonRow>
+                                                            <IonCol size="3"> <i className="fa fa-child fa-2x"></i></IonCol>
+                                                            <IonCol size="9">  {event?.price?.child} ש"ח</IonCol>
+                                                        </IonRow>
+                                                    </>
+                                                ) : (
+                                                    <IonRow className='pt-4'>
+                                                        <IonCol size="3"> <i className="fa fa-pagelines fa-2x"></i></IonCol>
+                                                        <IonCol size="9"> הכניסה חופשית</IonCol>
+                                                    </IonRow>
+                                                )}
+                                            </IonCol>
+
+                                            <IonCol>
+                                                <IonCol>
+                                                    <IonRow>
+                                                        <IonCol size="3"> <i className="fa  fa-map-signs fa-2x"></i></IonCol>
+                                                        <IonCol size="9"> {event?.required_equipment} </IonCol>
+                                                    </IonRow>
+                                                    <IonRow>
+                                                        <IonCol size="3"> <i className="fa fa-car fa-2x"></i></IonCol>
+                                                        <IonCol size="9"> {event?.parking ? "יש חניה במקום" : "אין חניה במקום"} </IonCol>
+                                                    </IonRow>
+                                                    <IonRow>
+                                                        <IonCol size="3"> <i className="fa fa-wheelchair-alt fa-2x"></i></IonCol>
+                                                        <IonCol size="9">  {event?.accessibility ? "המקום מונגש" : "המקום לא מונגש"}</IonCol>
+                                                    </IonRow>
+                                                    <IonRow>
+                                                        <IonCol size="3"> <i className="fa fa-clock-o fa-2x"></i></IonCol>
+                                                        <IonCol size="9">  {event?.during}</IonCol>
+                                                    </IonRow>
+                                                </IonCol>
+                                            </IonCol>
+                                        </IonRow>
+                                        <IonRow>
+                                            {event?.trip_details}
+                                        </IonRow>
+                                    </IonCol>
+                                    <IonCol size="5">
+                                        <IonRow>
+
+                                        </IonRow>
+                                        <IonCol style={{ textAlign: 'center' }}>
+                                            <div style={{ fontSize: '20px', fontWeight: 'bold' }} className='pt-4'>
+                                                SAVE THE DATE
+                                            </div>
+                                            <div style={{ fontSize: '50px', fontWeight: 'bold' }}>
+                                                {new Date(event?.date_and_time).toLocaleDateString('en-GB')}
+                                            </div>
+                                            <div style={{ fontSize: '30px' }}>
+                                                {new Date(event?.date_and_time).toLocaleTimeString('en-GB', {
+                                                    hour: '2-digit',
+                                                    minute: '2-digit',
+                                                })}
+                                            </div>
+                                        </IonCol>
+                                    </IonCol>
+                                </IonRow>
+                                <IonRow>
+
+                                    {myEvent ?
+                                        <> <IonCol size="2">
+                                            <button
+                                                type="button"
+                                                className="btn  btn-rounded btn-icon"
+                                                style={{ transition: 'color 0.3s', color: 'white', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                onMouseEnter={(e) => (e.target.style.color = 'yellow')}
+                                                onMouseLeave={(e) => (e.target.style.color = 'white')}
+                                                onClick={() => setDisplayReviews(!displayReviews)}
+                                            >
+                                                <i className="fa  fa-pencil fa-2x"></i>
+                                            </button>
+                                        </IonCol>
+                                        </> :
+                                        <>
+                                            {!praticipant &&
+                                                <>
+                                                    {!openEvent && !hasJoinRequest && <IonCol size="2"> <span style={{ fontSize: "small" }}>בקשת הצטרפות</span><button
+                                                        type="button"
+                                                        className="btn  btn-rounded btn-icon"
+                                                        style={{ transition: 'color 0.3s', color: 'white', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                        onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                                        onMouseLeave={(e) => (e.target.style.color = 'white')}
+                                                        onClick={() => sendJoinRequest()}
+                                                    >
+                                                        <i className="fa  fa-envelope fa-2x"></i>
+                                                    </button>
+                                                    </IonCol>
+                                                    }
+
+                                                    {!openEvent && hasJoinRequest && <IonCol size="2">
+                                                        <i className="fa  fa-info fa-2x mx-2" style={{ transform: "scaleX(-1)" }}></i>
+                                                        בקשת ההצטרפות שלך ממתינה לאישור
+                                                    </IonCol>
+                                                    }
+
+                                                    {openEvent && <IonCol size="2"> <button
+                                                        type="button"
+                                                        className="btn  btn-rounded btn-icon"
+                                                        style={{ transition: 'color 0.3s', color: 'white', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                        onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                                        onMouseLeave={(e) => (e.target.style.color = 'white')}
+                                                        onClick={() => addPraticipent()}
+                                                    >
+                                                        <i className="fa   fa-hand-peace-o fa-2x"> </i>
+                                                        <span style={{ fontSize: "small" }}>אני רוצה לבוא</span>
+                                                    </button>
+                                                    </IonCol>
+                                                    }</>
+                                            }
+                                            {praticipant && <IonCol size="2">
+                                                <i className="fa  fa-smile-o fa-2x mx-2" ></i>
+                                                {userInfo?.gender === "female" ? <span>אני באה</span> : <span>אני בא</span>}
+
+                                            </IonCol>}
+                                        </>
+                                    }
+
+                                    <IonCol size='6'> </IonCol>
+                                    <IonCol size="1"> <button
+                                        type="button"
+                                        className="btn  btn-rounded btn-icon"
+                                        style={{ transition: 'color 0.3s', color: 'white', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                        onMouseEnter={(e) => (e.target.style.color = 'red')}
+                                        onMouseLeave={(e) => (e.target.style.color = 'white')}
+                                        onClick={handleLike}
+                                    >
+                                        <i className="fa fa-heart fa-2x"></i>
+                                    </button>
+                                    </IonCol>
+                                    <IonCol size="1"> <button
+                                        type="button"
+                                        className="btn  btn-rounded btn-icon "
+                                        style={{ transition: 'color 0.3s', color: 'white', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                        onMouseEnter={(e) => (e.target.style.color = 'blue')}
+                                        onMouseLeave={(e) => (e.target.style.color = 'white')}
+                                    >
+                                        <i className="fa fa-comments fa-2x"></i>
+                                    </button>
+                                    </IonCol>
+
+                                    <IonCol size="1"> <button
+                                        type="button"
+                                        className="btn  btn-rounded btn-icon"
+                                        style={{ transition: 'color 0.3s', color: 'white', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                        onMouseEnter={(e) => (e.target.style.color = 'yellow')}
+                                        onMouseLeave={(e) => (e.target.style.color = 'white')}
+                                        onClick={() => setDisplayReviews(!displayReviews)}
+                                    >
+                                        <i className="fa  fa-star fa-2x"></i>
+                                    </button>
+                                    </IonCol>
+
+
+                                    <IonCol size="1"> <button
+                                        type="button"
+                                        className="btn  btn-rounded btn-icon"
+                                        style={{ transition: 'color 0.3s', color: 'white', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                        onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                        onMouseLeave={(e) => (e.target.style.color = 'white')}
+                                    >
+                                        <i className="fa  fa-users fa-2x"></i>
+                                    </button>
+                                    </IonCol>
+
+
+                                </IonRow>
+                            </IonGrid>
+                        </div>
+                        <div className='col border p-0 '>
+                            <div className='row me-2'>
+                                {event && <div style={{ backgroundImage: `url(${event.images.length > 0 ? event.images[0] : "https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out', height: "500px" }}></div>}
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             {/* <div className='container card p-0 ' style={{ backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out' }}> */}
             <div style={{ position: "relative" }} className='container-fluid d-flex flex-column justify-content-center align-items-center'>
                 <div className=' container d-flex justify-content-center align-items-center' style={{ position: "relative" }}>
@@ -473,7 +674,7 @@ const EventCard = ({ socket }) => {
                             <></>
                     ))}
                     {displayReviews && reviews.map((review, index) => (
-                        review?.user_id?._id !== user_id ? <></> :
+                        review?.user_id?._id === user_id ? <></> :
                             <ReviewCard
                                 key={index}
                                 review={review}
