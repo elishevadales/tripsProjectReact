@@ -8,6 +8,11 @@ import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage
 import { storage } from '../../../firebase/config';
 import { useSelector } from 'react-redux';
 import uniqid from 'uniqid';
+import { tripsCategories } from '../../../constants/tripsSubcategories'
+import { attractionsCategories } from '../../../constants/attractionsSubcategories'
+import { Modal } from 'react-bootstrap';
+import EventLocation from './eventLocation'
+
 
 
 
@@ -22,12 +27,15 @@ const NewEvent = () => {
   const [isFree, setIsFree] = useState(true);
   const [isRequiredEquipment, setIsRequiredEquipment] = useState(false);
   const [images, setImages] = useState([]);
+  const [category, setCategory] = useState();
   const [imagesUrls, setImagesUrls] = useState([]);
+  const [isSenddingForm, setIsSenddingForm] = useState(false)
   const userInfo = useSelector((myStore) => myStore.userInfoSlice);
-  const { register, handleSubmit, formState: { errors }, getValues } = useForm()
+  const { register, handleSubmit, formState: { errors }, getValues, setValue } = useForm()
   const nav = useNavigate()
 
   const onSub = async (data) => {
+    setIsSenddingForm(true)
     const uploadedUrls = await uploadImages(images);
     data.images = uploadedUrls;
     console.log(data);
@@ -50,7 +58,7 @@ const NewEvent = () => {
     if (!data.accessibility) {
       delete data.accessibility
     }
-    if(!isRequiredEquipment){
+    if (!isRequiredEquipment) {
       data.required_equipment = "none"
     }
 
@@ -61,6 +69,7 @@ const NewEvent = () => {
     delete data.child
 
     // doApiCreateEvent(data)
+    setIsSenddingForm(false)
 
   }
 
@@ -76,6 +85,13 @@ const NewEvent = () => {
 
   }
 
+  const handleChangeCategory = (e) => {
+    setCategory(e.target.value)
+    // setValue("category", e.target.value)
+    setValue("sub_category", "")
+
+  }
+
   const handleCancelPopUp = () => {
     setPopup(false)
     nav("/user/newEvent")
@@ -87,7 +103,8 @@ const NewEvent = () => {
 
 
   const nameRef = register("event_name", { required: true, minLength: 2, maxLength: 50 })
-  const categoryRef = register("category", { required: true })
+  const categoryRef = register("category", { required: "יש לבחור קטגוריה" })
+  const subCategoryRef = register("sub_category", { minLength: 0, maxLength: 100 })
   const freeRef = register("free", { required: "יש לסמן חינם/בתשלום" })
   const adultPriceRef = register("adult", { min: 0, max: 10000 })
   const studentOrSoldierPriceRef = register("studentOrSoldier", { min: 0, max: 10000 })
@@ -139,28 +156,51 @@ const NewEvent = () => {
               {/* category */}
               <div className="d-flex flex-row align-items-center mb-4">
                 <div className="form-outline flex-fill mb-0">
-                  <label className='h5 '
+
+                  <label className='h5'
                   >קטגוריה
                     <span className='text-danger'>*</span>
-
                   </label>
 
-                  <select className='form-select' {...categoryRef}>
+                  <select {...categoryRef} onChange={(handleChangeCategory)} className='form-select' >
                     <option value="" defaultValue>בחר קטגוריה</option>
                     <option value="trip">טיול</option>
                     <option value="attraction">אטרקציה</option>
                   </select>
-                  {errors.category && <div className='text-danger'>* יש לבחור קטגוריה</div>}
+                  {errors.category && <div className='text-danger'>*{errors.category.message}</div>}
                 </div>
               </div>
 
+              {/* sub category */}
+              <div>
+                <select className='form-select' {...subCategoryRef} disabled={!category}>
+                  <option value="" defaultValue>בחר תת קטגוריה (אופציונאלי)</option>
+                  {
+                    category === "trip" &&
+                    tripsCategories.map((category, i) => {
+                      return (
+                        <option key={i} value={category}>{category}</option>
+                      )
+                    })
+                  }
+                  {
+                    category === "attraction" &&
+                    attractionsCategories.map((category, i) => {
+                      return (
+                        <option key={i} value={category}>{category}</option>
+                      )
+                    })
 
+                  }
+
+                </select>
+              </div>
 
               {/* price */}
               <div className="d-flex flex-row align-items-center mb-4">
                 <div className="form-outline flex-fill mb-0">
-                  <p className="h5 mb-3"
-                  >כניסה
+                  <p className="h5 my-3"
+                  >עלות כניסה
                     <span className='text-danger'>*</span>
                   </p>
                   <fieldset className="mb-3">
@@ -172,7 +212,7 @@ const NewEvent = () => {
                       <input {...freeRef} onChange={() => { setIsFree(false) }} className="form-check-input" type="radio" id="pricePayment" value={false} />
                       <label className="form-check-label mx-2" htmlFor="pricePayment">כניסה בתשלום</label>
                     </div>
-                    {errors.free && <div className='text-danger'>{errors.free.message}</div>}
+                    {errors.free && <div className='text-danger'>*{errors.free.message}</div>}
 
                   </fieldset>
                 </div>
@@ -233,7 +273,7 @@ const NewEvent = () => {
                   <input {...parkingRef} className="form-check-input" type="radio" id="payment" value="payment" />
                   <label className="form-check-label mx-2" htmlFor="payment"> חנייה בתשלום  </label>
                 </div>
-                {errors.parking && <div className='text-danger'>יש לסמן האם יש חנייה</div>}
+                {errors.parking && <div className='text-danger'>*יש לסמן האם יש חנייה</div>}
 
               </fieldset>
 
@@ -269,7 +309,7 @@ const NewEvent = () => {
                   <input {...openEventRef} className="form-check-input" type="radio" id="openEventFalse" value={false} />
                   <label className="form-check-label mx-2" htmlFor="openEventFalse">לא</label>
                 </div>
-                {errors.open_event && <div className='text-danger'>יש לסמן האם האירוע פתוח</div>}
+                {errors.open_event && <div className='text-danger'>*יש לסמן האם האירוע פתוח</div>}
 
               </fieldset>
 
@@ -280,34 +320,34 @@ const NewEvent = () => {
               <textarea {...placeInfoRef} className='form-control'>
 
               </textarea>
-              {errors.place_info && <div className='text-danger'> יש למלא בין 2 ל500 תווים</div>}
+              {errors.place_info && <div className='text-danger'> יש למלא בין 2 ל500 תווים*</div>}
 
               {/* trip details */}
-              <p className="h5 mb-3"
+              <p className="h5 my-3"
               > אז מה בתכנית:
               </p>
               <textarea {...tripDetailsRef} className='form-control' />
-              {errors.trip_details && <div className='text-danger'> יש למלא בין 2 ל1000 תווים</div>}
+              {errors.trip_details && <div className='text-danger'> יש למלא בין 2 ל1000 תווים*</div>}
 
               {/* during */}
-              <p className="h5 mb-3"
+              <p className="h5 my-3"
               >  משך זמן האירוע
                 <span className='text-danger'>*</span>
 
               </p>
               <textarea {...duringRef} className='form-control' />
-              {errors.during && <div className='text-danger'> {errors.during.message}</div>}
+              {errors.during && <div className='text-danger'> *{errors.during.message}</div>}
 
               {/* date */}
-              <p className="h5 mb-3"
+              <p className="h5 my-3"
               > תאריך יציאה
                 <span className='text-danger'>*</span>
               </p>
               <input {...dateRef} className='form-control' type='date' />
-              {errors.date_and_time && <div className='text-danger'> {errors.date_and_time.message}</div>}
+              {errors.date_and_time && <div className='text-danger'> *{errors.date_and_time.message}</div>}
 
               {/* required equipment */}
-              <p className="h5 mb-3"
+              <p className="h5 my-3"
               > האם יש צורך להביא ציוד מסויים לאירוע?
               </p>
               <fieldset className="mb-3">
@@ -331,13 +371,15 @@ const NewEvent = () => {
 
                   </textarea>
                 </div>
-
               }
+
+              {/* location */}
+              <EventLocation/>
 
 
               {/* create button */}
-              <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                <button className="btn btn-warning btn-lg">
+              <div className="d-flex justify-content-center mx-4 my-4 mb-lg-4">
+                <button type="submit" className="btn btn-warning btn-lg">
                   צור אירוע
                 </button>
               </div>
@@ -353,6 +395,11 @@ const NewEvent = () => {
           onCancel={handleCancelPopUp}
         />
       )}
+      <Modal show={isSenddingForm} backdrop="static" centered>
+        <Modal.Body className='text-center'>
+          <p>יוצר אירוע...</p>
+        </Modal.Body>
+      </Modal>
     </section>
   )
 }

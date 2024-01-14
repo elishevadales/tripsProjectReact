@@ -223,7 +223,7 @@ ion-card-header {
     -webkit-filter: blur(10px);
 }
 .background-login{
-  background-image: url(images/group2.jpg);
+  /* background-image: url(images/group2.jpg); */
 
 }
 .background-signup{

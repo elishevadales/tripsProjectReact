@@ -63,7 +63,7 @@ function App() {
 
           </Route>
 
-          <Route path='/admin' element={<HeaderUser
+          <Route path='/admin' element={<HeaderUser socket={socket}
             links={[
               { title: 'פוסטים', path: '/admin/events' },
               { title: 'עדכון-פרופיל', path: '/admin/myInfo' },

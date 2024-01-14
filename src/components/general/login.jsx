@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { API_URL, TOKEN_NAME, doApiGet, doApiMethod } from '../../services/apiService'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import InfoPopUp from './infoPopUp'
 import { useDispatch } from 'react-redux'
 import { updateUserInfo } from '../reducer/userInfoSlice'
@@ -90,12 +90,11 @@ const Login = () => {
 
 
   return (
-    // <section className="py-5" style={{ backgroundImage: `url(${require('../../images/background.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: "center", backgroundAttachment: "fixed" }}>
-    <section className="py-5" >
+    <section className="py-5" style={{ backdropFilter: "blur(20px)" }} >
       <div className='background-login'></div>
       <div className="container h-100 my-5 py-5 ">
-        <div className='row pt-5'>
-          <div className='col-12 col-md-5' style={{ backgroundImage: `url(${require('../../images/group2.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'right', backgroundRepeat: 'no-repeat' }}></div>
+        <div className='row pt-5 justify-content-center'>
+          {/* <div className='col-12 col-md-5' style={{ backgroundImage: `url(${require('../../images/group2.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'right', backgroundRepeat: 'no-repeat' }}></div> */}
           <div className='col-12 col-md-7 m-0 p-0 py-5 bg-white' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
             <div className="text-black px-5" >
               <div className="m-0 p-5">
@@ -117,10 +116,12 @@ const Login = () => {
                       <input {...passRef} type="password" id="form3Example4c" className="form-control p-2" />
                     </div>
                   </div>
-                  <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4 mt-2">
-                    <button className="btn  btn-lg" style={{ borderRadius: 0, background: "#5C7D84", boxShadow: "9px 9px 55px -12px rgba(0,0,0,0.75)" }}>
+                  <div className="d-flex justify-content-center flex-column text-center mx-4 mb-3 mb-lg-4 mt-2">
+                    <button className="btn  btn-lg text-white mt-4" style={{ borderRadius: 0, background: "#5C7D84", boxShadow: "9px 9px 55px -12px rgba(0,0,0,0.75)" }}>
                       כניסה
                     </button>
+                    
+                    <p className='mt-4'>עדיין אין לך חשבון? <Link to="/signUp">לחץ כאן</Link></p>
                   </div>
                 </form>
               </div>
