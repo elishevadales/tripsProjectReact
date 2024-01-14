@@ -4,26 +4,6 @@ import uniqid from 'uniqid';
 
 const EventImages = (props) => {
 
-    // //good code - no option to delete images
-
-    // const register = props.register;
-    // const [previewURL, setPreviewURL] = useState(null);
-    // // const imgRef = register(`image${props.index}`)
-
-
-    // const handleImageChange = (e) => {
-    //     console.log("image file", e.target.files[0])
-    //     const selectedImage = e.target.files[0];
-    //     props.setImages((prevImages) => [...prevImages, selectedImage])
-
-    //     // Show preview of the selected image
-    //     const reader = new FileReader();
-    //     reader.onloadend = () => {
-    //         setPreviewURL(reader.result);
-    //     };
-    //     reader.readAsDataURL(selectedImage);
-    // };
-
 
     const [previewURL, setPreviewURL] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -31,10 +11,15 @@ const EventImages = (props) => {
 
     const handleImageChange = (e) => {
 
+        // update selectedImage
         const newSelectedImage = e.target.files[0];
         newSelectedImage.filename = `file_${props.index}`;
         setSelectedImage(newSelectedImage);
 
+        //update images array
+        props.setImages((prevImages) =>
+            prevImages.filter((image) => image.filename !== `file_${props.index}`)
+        );
         props.setImages((prevImages) => [...prevImages, newSelectedImage]);
 
         // Show preview of the selected image

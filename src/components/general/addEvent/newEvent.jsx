@@ -20,6 +20,7 @@ const NewEvent = () => {
   const [showPopup, setPopup] = useState(false);
   const [textPopUp, setTextPopUp] = useState();
   const [isFree, setIsFree] = useState(true);
+  const [isRequiredEquipment, setIsRequiredEquipment] = useState(false);
   const [images, setImages] = useState([]);
   const [imagesUrls, setImagesUrls] = useState([]);
   const userInfo = useSelector((myStore) => myStore.userInfoSlice);
@@ -40,14 +41,17 @@ const NewEvent = () => {
         child: data.child
       }
     }
-    else{
-      data.price ={
-        free:data.free
+    else {
+      data.price = {
+        free: data.free
       }
     }
-    
+
     if (!data.accessibility) {
       delete data.accessibility
+    }
+    if(!isRequiredEquipment){
+      data.required_equipment = "none"
     }
 
 
@@ -91,8 +95,18 @@ const NewEvent = () => {
   const parkingRef = register("parking", { required: true })
   const accessibilityRef = register("accessibility")
   const openEventRef = register("open_event", { required: true })
-  const placeInfoRef =register("place_info",{ minLength: 2, maxLength:500 })
-  const dateRef = register("date_and_time",{required: "יש לבחור תאריך" })
+  const placeInfoRef = register("place_info", { minLength: 2, maxLength: 500 })
+  const tripDetailsRef = register("trip_details", { minLength: 2, maxLength: 1000 })
+  const dateRef = register("date_and_time", { required: "יש לבחור תאריך" })
+  const duringRef = register(
+    "during",
+    {
+      minLength: { value: 2, message: "יש להזין לפחות 2 תווים" },
+      maxLength: { value: 300, message: "יש להזין עד 300 תווים" },
+      required: "יש לפרט מה הצפי למשך הטיול"
+    }
+  )
+  const requiredEquipmentRef = register("required_equipment", { minLength: 2, maxLength: 300 })
 
 
 
@@ -261,23 +275,64 @@ const NewEvent = () => {
 
               {/* place info */}
               <p className="h5 mb-3"
-              > מידע נוסף על המקום:
+              > קצת על המקום:
               </p>
               <textarea {...placeInfoRef} className='form-control'>
 
               </textarea>
-                {errors.place_info && <div className='text-danger'> יש למלא בין 2 ל500 תווים</div>}
+              {errors.place_info && <div className='text-danger'> יש למלא בין 2 ל500 תווים</div>}
 
-                {/* date */}
-                <p className="h5 mb-3"
-              > תאריך יציאה
-                                  <span className='text-danger'>*</span>
+              {/* trip details */}
+              <p className="h5 mb-3"
+              > אז מה בתכנית:
+              </p>
+              <textarea {...tripDetailsRef} className='form-control' />
+              {errors.trip_details && <div className='text-danger'> יש למלא בין 2 ל1000 תווים</div>}
+
+              {/* during */}
+              <p className="h5 mb-3"
+              >  משך זמן האירוע
+                <span className='text-danger'>*</span>
 
               </p>
-              <input {...dateRef} className='form-control' type='date'/>
+              <textarea {...duringRef} className='form-control' />
+              {errors.during && <div className='text-danger'> {errors.during.message}</div>}
+
+              {/* date */}
+              <p className="h5 mb-3"
+              > תאריך יציאה
+                <span className='text-danger'>*</span>
+              </p>
+              <input {...dateRef} className='form-control' type='date' />
               {errors.date_and_time && <div className='text-danger'> {errors.date_and_time.message}</div>}
 
-            
+              {/* required equipment */}
+              <p className="h5 mb-3"
+              > האם יש צורך להביא ציוד מסויים לאירוע?
+              </p>
+              <fieldset className="mb-3">
+                <div>
+                  <input onChange={() => { setIsRequiredEquipment(false) }} name="requiredEquipment" className="form-check-input" type="radio" id="requiredEquipmentFalse" />
+                  <label className="form-check-label mx-2" htmlFor="requiredEquipmentFalse">לא</label>
+                </div>
+                <div>
+                  <input onChange={() => { setIsRequiredEquipment(true) }} name="requiredEquipment" className="form-check-input" type="radio" id="requiredEquipmentTrue" />
+                  <label className="form-check-label mx-2" htmlFor="requiredEquipmentTrue"> כן</label>
+                </div>
+
+              </fieldset>
+
+              {isRequiredEquipment &&
+                <div>
+                  <p className="h6 mb-3"
+                  > פירוט הציוד שיש להביא:
+                  </p>
+                  <textarea {...requiredEquipmentRef} className='form-control'>
+
+                  </textarea>
+                </div>
+
+              }
 
 
               {/* create button */}
