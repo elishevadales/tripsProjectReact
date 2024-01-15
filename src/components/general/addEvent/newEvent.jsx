@@ -14,13 +14,7 @@ import { Modal } from 'react-bootstrap';
 import EventLocation from './eventLocation'
 
 
-
-
-
-
 const NewEvent = () => {
-
-
 
   const [showPopup, setPopup] = useState(false);
   const [textPopUp, setTextPopUp] = useState();
@@ -30,6 +24,8 @@ const NewEvent = () => {
   const [category, setCategory] = useState();
   const [imagesUrls, setImagesUrls] = useState([]);
   const [isSenddingForm, setIsSenddingForm] = useState(false)
+  const [coordinates, setCoordinates] = useState({});
+  const [address, setAddress] = useState();
   const userInfo = useSelector((myStore) => myStore.userInfoSlice);
   const { register, handleSubmit, formState: { errors }, getValues, setValue } = useForm()
   const nav = useNavigate()
@@ -40,7 +36,8 @@ const NewEvent = () => {
     data.images = uploadedUrls;
     console.log(data);
 
-
+    data.coordinates = coordinates;
+    data.address = address;
 
     if (!isFree) {
       data.price = {
@@ -115,6 +112,7 @@ const NewEvent = () => {
   const placeInfoRef = register("place_info", { minLength: 2, maxLength: 500 })
   const tripDetailsRef = register("trip_details", { minLength: 2, maxLength: 1000 })
   const dateRef = register("date_and_time", { required: "יש לבחור תאריך" })
+  const coordinatesRef = register("coordinates");
   const duringRef = register(
     "during",
     {
@@ -135,7 +133,7 @@ const NewEvent = () => {
           <div className='col-12 d-flex align-items-center justify-content-center display-3' style={{ height: "300px", backgroundImage: `url(${require('../../../images/addEvent.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
             <p className='p-3 m-2 text-center' style={{ borderRadius: "20px", background: "rgba(255, 255, 255, 0.477)" }}>יצירת אירוע חדש</p>
           </div>
-          <div className='col-12 m-0  p-5 bg-white py-3' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
+          <div className='col-12 m-0  p-2 p-sm-4 bg-white py-3' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
 
             <form onSubmit={handleSubmit(onSub)} className="mx-1 mx-md-4">
 
@@ -374,12 +372,12 @@ const NewEvent = () => {
               }
 
               {/* location */}
-              <EventLocation/>
+              <EventLocation setCoordinates={setCoordinates} setAddress={setAddress} />
 
 
               {/* create button */}
               <div className="d-flex justify-content-center mx-4 my-4 mb-lg-4">
-                <button type="submit" className="btn btn-warning btn-lg">
+                <button type="submit" className="btn btn-lg text-white" style={{background: '#077F7A'}}>
                   צור אירוע
                 </button>
               </div>
