@@ -135,8 +135,8 @@ const PreviewPostItem = (props) => {
                         </div>
                     </Box>
 
-                    <p className='display-5'>{event.event_name}</p>
-                    <p className='lead'>{event.category ? event.category : 'קטגוריה'}</p>
+                    <p className='h5'>{event.event_name}</p>
+                    <p className='h6'>{event.category =="trip" ? "טיול" : 'אטרקציה'}</p>
                     <p className='lead'>{event.participants.length} משתתפים</p>
                     <p className='lead' style={{ fontSize: "14px" }}>תאריך יציאה: {event.date_and_time && typeof event.date_and_time === 'string' ? event.date_and_time.split('T')[0] : 'N/A'}</p>
 

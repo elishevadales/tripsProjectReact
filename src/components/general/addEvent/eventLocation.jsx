@@ -78,7 +78,7 @@ const EventLocation = ({ setCoordinates , setAddress }) => {
 
 
     return (
-        <div>
+        <div className='mt-3'>
             <p className="h5 mb-3 d-flex align-items-center"
             >מיקום האירוע
             {

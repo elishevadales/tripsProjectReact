@@ -14,6 +14,8 @@ import { Modal } from 'react-bootstrap';
 import EventLocation from './eventLocation'
 
 
+
+
 const NewEvent = () => {
 
   const [showPopup, setPopup] = useState(false);
@@ -24,26 +26,41 @@ const NewEvent = () => {
   const [category, setCategory] = useState();
   const [imagesUrls, setImagesUrls] = useState([]);
   const [isSenddingForm, setIsSenddingForm] = useState(false)
-  const [coordinates, setCoordinates] = useState({});
+  const [coordinates, setCoordinates] = useState();
   const [address, setAddress] = useState();
   const userInfo = useSelector((myStore) => myStore.userInfoSlice);
   const { register, handleSubmit, formState: { errors }, getValues, setValue } = useForm()
   const nav = useNavigate()
 
   const onSub = async (data) => {
+    if(!address){
+      setPopup(true)
+      setTextPopUp("יש להזין מיקום של האירוע")
+      return
+    }
+
     setIsSenddingForm(true)
     const uploadedUrls = await uploadImages(images);
     data.images = uploadedUrls;
-    console.log(data);
 
-    data.coordinates = coordinates;
-    data.address = address;
 
+    
+    if(coordinates){
+      data.coordinates = coordinates;
+    }else{
+      delete data.coordinates;
+    }
+
+    if (address) {
+      data.address = address;
+
+    }
     if (!isFree) {
       data.price = {
         adult: data.adult,
         studentOrSoldier: data.studentOrSoldier,
-        child: data.child
+        child: data.child,
+        free: false
       }
     }
     else {
@@ -59,13 +76,13 @@ const NewEvent = () => {
       data.required_equipment = "none"
     }
 
-
     delete data.free
     delete data.adult
     delete data.studentOrSoldier
     delete data.child
 
-    // doApiCreateEvent(data)
+    console.log(data);
+    await doApiCreateEvent(data)
     setIsSenddingForm(false)
 
   }
@@ -91,15 +108,26 @@ const NewEvent = () => {
 
   const handleCancelPopUp = () => {
     setPopup(false)
-    nav("/user/newEvent")
+    nav(`/${userInfo.user.role}/newEvent`)
   }
 
   const doApiCreateEvent = async (bodyData) => {
+    let url = API_URL + "/events"
+    try {
+      let resp = await doApiMethod(url, "POST", bodyData);
+      console.log(resp)
 
+      setTextPopUp("האירוע נוצר בהצלחה")
+      setPopup(true)
+      // nav(`/${userInfo.user.role}/events`)
+    }
+    catch (err) {
+      console.log(err.response.data[0]);
+    }
   }
 
 
-  const nameRef = register("event_name", { required: true, minLength: 2, maxLength: 50 })
+  const nameRef = register("event_name", { required: "יש להזין שם לאירוע", minLength: { value: 2, message: "יש להזין לפחות 2 תווים" }, maxLength: { value: 30, message: "יש להזין עד 30 תווים" } })
   const categoryRef = register("category", { required: "יש לבחור קטגוריה" })
   const subCategoryRef = register("sub_category", { minLength: 0, maxLength: 100 })
   const freeRef = register("free", { required: "יש לסמן חינם/בתשלום" })
@@ -126,7 +154,7 @@ const NewEvent = () => {
 
 
   return (
-    <section className="py-4" >
+    <section className="py-4" style={{ backdropFilter: "blur(20px)" }}>
       <div className='background-signup'></div>
       <div className="container h-100 ">
         <div className='pt-4'>
@@ -146,7 +174,7 @@ const NewEvent = () => {
 
                   </label>
                   <input {...nameRef} type="text" id="form3Example1c" className="form-control p-2" />
-                  {errors.event_name && <div className='text-danger'>* השם צריך להיות בין 2 ל50 תווים</div>}
+                  {errors.event_name && <div className='text-danger'>* {errors.event_name.message}</div>}
                 </div>
               </div>
 
@@ -377,7 +405,7 @@ const NewEvent = () => {
 
               {/* create button */}
               <div className="d-flex justify-content-center mx-4 my-4 mb-lg-4">
-                <button type="submit" className="btn btn-lg text-white" style={{background: '#077F7A'}}>
+                <button type="submit" className="btn btn-lg text-white" style={{ background: '#077F7A' }}>
                   צור אירוע
                 </button>
               </div>

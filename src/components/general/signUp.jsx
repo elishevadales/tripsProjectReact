@@ -62,7 +62,7 @@ const SignUp = () => {
   return (
 
 
-    <section className="py-4" >
+    <section className="py-4" style={{ backdropFilter: "blur(20px)" }}>
       <div className='background-signup'></div>
       <div className="container h-100 my-5 py-5 ">
         <div className='row pt-5'>
