@@ -33,7 +33,11 @@ const NewEvent = () => {
   const nav = useNavigate()
 
   const onSub = async (data) => {
-    if(!address){
+
+    console.log("coordinates:",coordinates)
+    
+
+    if (!address) {
       setPopup(true)
       setTextPopUp("יש להזין מיקום של האירוע")
       return
@@ -43,18 +47,13 @@ const NewEvent = () => {
     const uploadedUrls = await uploadImages(images);
     data.images = uploadedUrls;
 
+    data.coordinates = {};
+    data.coordinates.lat = coordinates.lat
+    data.coordinates.lon = coordinates.lon
 
-    
-    if(coordinates){
-      data.coordinates = coordinates;
-    }else{
-      delete data.coordinates;
-    }
+    data.address = address;
 
-    if (address) {
-      data.address = address;
 
-    }
     if (!isFree) {
       data.price = {
         adult: data.adult,
@@ -81,7 +80,8 @@ const NewEvent = () => {
     delete data.studentOrSoldier
     delete data.child
 
-    console.log(data);
+    console.log("data:",data);
+
     await doApiCreateEvent(data)
     setIsSenddingForm(false)
 
@@ -115,7 +115,7 @@ const NewEvent = () => {
     let url = API_URL + "/events"
     try {
       let resp = await doApiMethod(url, "POST", bodyData);
-      console.log(resp)
+      console.log("resp:",resp.data)
 
       setTextPopUp("האירוע נוצר בהצלחה")
       setPopup(true)
@@ -140,7 +140,7 @@ const NewEvent = () => {
   const placeInfoRef = register("place_info", { minLength: 2, maxLength: 500 })
   const tripDetailsRef = register("trip_details", { minLength: 2, maxLength: 1000 })
   const dateRef = register("date_and_time", { required: "יש לבחור תאריך" })
-  const coordinatesRef = register("coordinates");
+  // const coordinatesRef = register("coordinates");
   const duringRef = register(
     "during",
     {

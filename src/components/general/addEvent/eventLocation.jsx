@@ -57,6 +57,7 @@ const EventLocation = ({ setCoordinates , setAddress }) => {
     }
 
     const confirmLocation = () => {
+        console.log("center:",center)
         setCoordinates(
             {
                 lat: center[0],
@@ -71,7 +72,7 @@ const EventLocation = ({ setCoordinates , setAddress }) => {
     }
 
     const removeLocation = () => {
-        setCoordinates({})
+        setCoordinates(null)
         setLocationConfirmed(false)
 
     }

@@ -25,6 +25,7 @@ import socketIO from 'socket.io-client'
 import { API_URL } from './services/apiService'
 import NewEvent from './components/general/addEvent/newEvent';
 import UserCard from './components/general/userCard';
+import EventsMap from './components/general/eventsMap';
 
 const  socket = socketIO.connect(API_URL)
 function App() {
@@ -50,6 +51,7 @@ function App() {
               { title: 'פוסטים', path: '/user/events' },
               { title: 'עדכון-פרופיל', path: '/user/myInfo' },
               { title: 'אירוע-חדש', path: '/user/newEvent' },
+              { title: 'מפת-אירועים', path: '/user/eventsMap' },
             ]}
             color={"bg-warning"}
            />
@@ -60,6 +62,7 @@ function App() {
             <Route path='/user/events/eventCard' element={<EventCard socket={socket} />} />
             <Route path='/user/newEvent' element={<NewEvent/>} />
             <Route path='/user/userInfo' element={<UserCard/>} />
+            <Route path='/user/eventsMap' element={<EventsMap/>} />
 
           </Route>
 
@@ -68,7 +71,9 @@ function App() {
               { title: 'פוסטים', path: '/admin/events' },
               { title: 'עדכון-פרופיל', path: '/admin/myInfo' },
               { title: 'משתמשים', path: '/admin/usersList' },
-              { title: 'אירוע-חדש', path: '/admin/newEvent' }
+              { title: 'אירוע-חדש', path: '/admin/newEvent' },
+              { title: 'מפת-אירועים', path: '/admin/eventsMap' }
+
             ]}
             color={"bg-dark"}
            />}>
@@ -79,6 +84,8 @@ function App() {
             <Route path='/admin/events/eventCard' element={<EventCard socket={socket} />} />
             <Route path='/admin/newEvent' element={<NewEvent/>} />
             <Route path='/admin/userInfo' element={<UserCard/>} />
+            <Route path='/admin/eventsMap' element={<EventsMap/>} />
+
 
 
           </Route>
