@@ -348,35 +348,35 @@ const EventCard = ({ socket }) => {
 
                             {event?.active &&
 
-                            <div className='row'>
-                                {myEvent ?
-                                    <IonCol size="2">
-                                        <button
-                                            type="button"
-                                            className="btn  btn-rounded btn-icon"
-                                            style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-                                            onMouseEnter={(e) => (e.target.style.color = 'yellow')}
-                                            onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                        // onClick={() => editEvent()}
-                                        >
-                                            <i className="fa  fa-pencil fa-2x"></i>
-                                        </button> </IonCol> :
-                                    <>
-                                        {!praticipant &&
-                                            <>
-                                                {!openEvent && !hasJoinRequest && <IonCol size="2"> <span style={{ fontSize: "small" }}>בקשת הצטרפות</span>
-                                                    <button
-                                                        type="button"
-                                                        className="btn  btn-rounded btn-icon"
-                                                        style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-                                                        onMouseEnter={(e) => (e.target.style.color = 'green')}
-                                                        onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                                        onClick={() => sendJoinRequest()}
-                                                    >
-                                                        <i className="fa  fa-envelope fa-2x"></i>
-                                                    </button>
-                                                </IonCol>
-                                                }
+                                <div className='row'>
+                                    {myEvent ?
+                                        <IonCol size="2">
+                                            <button
+                                                type="button"
+                                                className="btn  btn-rounded btn-icon"
+                                                style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                onMouseEnter={(e) => (e.target.style.color = 'yellow')}
+                                                onMouseLeave={(e) => (e.target.style.color = 'black')}
+                                            // onClick={() => editEvent()}
+                                            >
+                                                <i className="fa  fa-pencil fa-2x"></i>
+                                            </button> </IonCol> :
+                                        <>
+                                            {!praticipant &&
+                                                <>
+                                                    {!openEvent && !hasJoinRequest && <IonCol size="2"> <span style={{ fontSize: "small" }}>בקשת הצטרפות</span>
+                                                        <button
+                                                            type="button"
+                                                            className="btn  btn-rounded btn-icon"
+                                                            style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                            onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                                            onMouseLeave={(e) => (e.target.style.color = 'black')}
+                                                            onClick={() => sendJoinRequest()}
+                                                        >
+                                                            <i className="fa  fa-envelope fa-2x"></i>
+                                                        </button>
+                                                    </IonCol>
+                                                    }
 
                                                     {!openEvent && hasJoinRequest && <IonCol size="2">
                                                         <i className="fa  fa-info fa-2x mx-2" style={{ transform: "scaleX(-1)" }}></i>
@@ -416,7 +416,6 @@ const EventCard = ({ socket }) => {
                                     type="button"
                                     className="btn  btn-rounded btn-icon"
                                     style={{ transition: 'color 0.3s', color: 'red', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-
                                     onClick={handleLike}
                                 >
                                     <i className="fa fa-heart fa-2x" style={{ color: 'red' }}></i>
@@ -447,43 +446,46 @@ const EventCard = ({ socket }) => {
                     </div>
 
                     <div className='row mt-4'>
-                        <div className='col-12 col-md-4  p-0 ps-3 chat' style={{ maxHeight: '650px', }}>
+                        <div className='col-12 col-md-4 p-0'>
+                            <div className='px-2 chat border ms-md-3 mb-4 mb-md-0' style={{ maxHeight: '650px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', background: 'rgba(255, 255, 255, 0.505)' }}>
+                                <p className='text-center p-3 h4 m-4' style={{ color: "#077F7A", borderBottom: "1px solid #077F7A" }}>דירוגים:</p>
 
-                            {!hasReview &&
-                                <button
-                                    type="button"
-                                    className="btn  btn-rounded btn-icon d-flex align-items-center"
-                                    style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-                                    onMouseEnter={(e) => (e.target.style.color = 'green')}
-                                    onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                    onClick={() => addReview()}
-                                >
-                                    <i className="fa  fa-plus fa-2x"></i>
-                                    <span className='me-2'>דרג את האירוע</span>
-                                </button>}
+                                {!hasReview &&
+                                    <button
+                                        type="button"
+                                        className="btn btn-rounded btn-icon d-flex align-items-center"
+                                        style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                        onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                        onMouseLeave={(e) => (e.target.style.color = 'black')}
+                                        onClick={() => addReview()}
+                                    >
+                                        <i className="fa fa-plus" style={{fontSize:"24px"}}></i>
+                                    </button>}
 
-                            {reviews.length > 0 && reviews.map((review, index) => (
-                                review?.user_id?._id === user_id ?
-                                    <MyReview
-                                        key={index}
-                                        index={index}
-                                        review={review}
-                                        removeReviews={removeReviews}
-                                        editReview={editReview}
-                                        setReviews={setReviews}
-                                    />
-                                    :
-                                    <></>
-                            ))}
-                            {reviews.length > 0 && reviews.map((review, index) => (
-                                review?.user_id?._id === user_id ? <></> :
-                                    <ReviewCard
-                                        key={index}
-                                        review={review}
+                                {reviews.length > 0 && reviews.map((review, index) => (
+                                    review?.user_id?._id === user_id ?
+                                        <MyReview
+                                            key={index}
+                                            index={index}
+                                            review={review}
+                                            removeReviews={removeReviews}
+                                            editReview={editReview}
+                                            setReviews={setReviews}
+                                        />
+                                        :
+                                        <></>
+                                ))}
+                                {reviews.length > 0 && reviews.map((review, index) => (
+                                    review?.user_id?._id === user_id ? <></> :
+                                        <ReviewCard
+                                            key={index}
+                                            review={review}
 
-                                    />
-                            ))}
+                                        />
+                                ))}
+                            </div>
                         </div>
+
                         <div className='col-12 col-md-8 border p-0'>
 
                             {
