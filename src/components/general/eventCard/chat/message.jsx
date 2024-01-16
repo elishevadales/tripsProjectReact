@@ -28,7 +28,7 @@ const Message = ({ message, last, alignLeft , index}) => {
                         alt={message?.user_id?.nick_name}
                         title={message?.user_id?.nick_name}
                         onClick={() => profile(message?.user_id?._id)}
-                        style={{ width: '40px', height: '40px', borderRadius: '50%', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }}
+                        style={{ cursor: 'pointer',width: '40px', height: '40px', borderRadius: '50%', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }}
                     />) : null}
                 </div>
                 <div className="col d-flex p-0 ">

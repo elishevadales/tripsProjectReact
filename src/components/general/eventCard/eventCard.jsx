@@ -340,7 +340,7 @@ const EventCard = ({ socket }) => {
                                             style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
                                             onMouseEnter={(e) => (e.target.style.color = 'yellow')}
                                             onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                        // onClick={() => setDisplayReviews(!displayReviews)}
+                                        // onClick={() => editEvent()}
                                         >
                                             <i className="fa  fa-pencil fa-2x"></i>
                                         </button> </IonCol> :

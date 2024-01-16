@@ -9,9 +9,9 @@ import Page404 from './components/general/404page';
 import HeaderUser from './components/user/headerUser';
 import HomeUser from './components/user/homeUser';
 import HomeAdmin from './components/admin/homeAdmin';
-
+import SignUpMessage from './components/general/signUpMessage'
 import EventCard from './components/general/eventCard/eventCard'
-
+import ResetPassword from './components/general/resetPassword'
 // redux
 import { configureStore } from "@reduxjs/toolkit"
 import { Provider } from 'react-redux';
@@ -44,6 +44,8 @@ function App() {
             <Route path="/" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signUp" element={<SignUp />} />
+            <Route path="/confirmRegistration" element={<SignUpMessage />} />
+            <Route path='/resetPassword/:token' element={<ResetPassword />} />
           </Route>
 
           <Route path='/user' element={<HeaderUser socket={socket}

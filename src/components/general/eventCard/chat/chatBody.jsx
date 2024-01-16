@@ -37,6 +37,9 @@ const ChatBody = ({ socket, userId, oldMessages }) => {
         style={{ flex: 1, overflowY: 'auto' }}
       >
 
+<div className='d-flex justify-content-center align-items-center'>
+  <span className='text-muted text-center' style={{ maxWidth: '180px' }}>הודעות אלו גליות לכול המשתמשים באתר</span>
+</div>
 
 
         {messages.map((message, index) => (

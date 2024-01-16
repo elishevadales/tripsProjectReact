@@ -150,22 +150,24 @@ const Profile = ({ myProfile = false }) => {
                         <div className='position-relative' style={{ backgroundImage: `url(${user?.background_image ? user?.background_image : "../../../images/bg.jpg"})`, backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '300px', backdropFilter: 'blur(20px)' }}>
                             <div className='row d-flex text-center  justify-content-center flex-column align-items-center p-5 m-0' style={{ background: 'rgba(255, 255, 255, 0.505)' }}>
                                 {/* Profile Image and Info */}
-                                <Avatar variant="soft" sx={{ width: 150, height: 150 }} color="neutral" src={user?.profile_image ? user?.profile_image : "https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"} style={{ boxShadow: '0 4px 8px rgba(137,137,137,0.75)', }} />
-                                {/* <div className='p-5'
+
+                                <div
                                     style={{
-                                        width: '150px',
+                                        // cursor: 'pointer',
                                         height: '150px',
-                                        borderRadius: '50%',
-                                        boxShadow: '0 4px 8px rgba(137,137,137,0.75)',
-                                        background: `url(${user?.profile_image ? user?.profile_image : "https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"})`,
-                                        backgroundSize: 'cover',
+                                        border: '8px solid white',
+                                        width: '150px',
+                                        borderRadius: '100px',
+                                        backgroundImage: `url(${user?.profile_image})`,
                                         backgroundPosition: 'center',
+                                        backgroundSize: 'cover',
                                         backgroundRepeat: 'no-repeat',
-                                        display: 'block',
-                                        margin: '0 auto',
+                                        boxShadow: '0 4px 8px rgba(137,137,137,0.75)',
+                                        border: 'none'
                                     }}
-                                    alt={user?.nick_name}
-                                /> */}
+                                />
+
+
                                 {/* User Info */}
                                 <p>
                                     <span className='h3 px-1'>{user?.nick_name}</span>
@@ -224,9 +226,9 @@ const Profile = ({ myProfile = false }) => {
                             </div>
                             <div className='p-0 d-flex flex-column align-items-center' style={{ position: 'absolute', bottom: '-20px', width: '100%' }}>
                                 <div>
-                                    {currentUser && <button disabled={user?.my_join_events?.length === 0} className='btn px-3 mx-3' style={{ background: '#BBE4E2', color: "black", border: 'none', borderRadius: '40px', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }} onClick={() => handleMyJointedEventClick(false)}>אירועים שהייתי </button>}
+                                    {currentUser && <button className='btn px-3 mx-3' style={{ background: '#BBE4E2', color: "black", border: 'none', borderRadius: '40px', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }} onClick={() => handleMyJointedEventClick(false)}>אירועים שהייתי </button>}
                                     <button disabled={user?.my_created_events?.length === 0} className='btn px-3 ' style={{ background: '#077F7A', color: "white", border: 'none', borderRadius: '40px', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }} onClick={handleEventListClick}>האירועים שלי </button>
-                                    {currentUser && <button disabled={user?.my_join_events?.length === 0} className='btn px-3 mx-3' style={{ background: '#BBE4E2', color: "black", border: 'none', borderRadius: '40px', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }} onClick={() => handleMyJointedEventClick(true)}>אירועים עתידיים </button>}
+                                    {currentUser && <button className='btn px-3 mx-3' style={{ background: '#BBE4E2', color: "black", border: 'none', borderRadius: '40px', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }} onClick={() => handleMyJointedEventClick(true)}>אירועים עתידיים </button>}
                                 </div>
                             </div>
 
@@ -252,7 +254,7 @@ const Profile = ({ myProfile = false }) => {
                     {currentUser && <div className='grid mt-2 p-5' style={{ backgroundImage: `url(${user?.background_image ? user?.background_image : "../../../images/bg.jpg"})`, backgroundSize: 'cover', backgroundPosition: 'center', boxShadow: '0 4px 8px rgba(137,137,137,0.75)', backgroundColor: 'white' }}>
 
                         <div className='row p-5 m-0' style={{ background: 'rgba(255, 255, 255, 0.505)' }}>
-
+                            <h3>יומן אירועים</h3>
                             <CalendarView events={user?.my_created_events?.concat(user?.my_join_events) || []} />
 
 

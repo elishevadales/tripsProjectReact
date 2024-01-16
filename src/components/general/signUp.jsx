@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { API_URL, TOKEN_NAME, doApiMethod } from '../../services/apiService'
-import { useNavigate } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import InfoPopUp from './infoPopUp'
 
 const SignUp = () => {
@@ -29,8 +29,9 @@ const SignUp = () => {
       let resp = await doApiMethod(url, "POST", bodyData);
       console.log(resp)
 
-      setTextPopUp("החשבון נוצר בהצלחה")
-      setPopup(true)
+      nav("/confirmRegistration")
+      // setTextPopUp("החשבון נוצר בהצלחה")
+      // setPopup(true)
 
       delete bodyData.gender;
       delete bodyData.name;
@@ -135,6 +136,7 @@ const SignUp = () => {
                 </div>
               </div>
               <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+              <p className='mt-4'> יש לך כבר חשבון? <Link to="/login">לחץ כאן</Link></p>
                 <button className="btn btn-warning btn-lg">
                   רשום אותי
                 </button>

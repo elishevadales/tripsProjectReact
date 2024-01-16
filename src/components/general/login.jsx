@@ -60,6 +60,10 @@ const Login = () => {
         setTextPopUp("החשבון שלך חסום. פנה למנהל האתר")
         setPopup(true)
       }
+      else if (err.response?.data?.code == 5) {
+        setTextPopUp("עליך לאשר את החשבון במייל")
+        setPopup(true)
+      }
       else {
         setTextPopUp("היתה בעיה להיכנס למערכת. נסו שוב מאוחר יותר")
         setPopup(true)

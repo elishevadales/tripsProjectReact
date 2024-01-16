@@ -22,8 +22,8 @@ const ChatInput = ({ onSendMessage }) => {
 
   return (
     <div className={` container ${isFocused ? 'focused' : ''}  m-0 `} >
-      <div className="row  p-1 ">
-      <div className="col-2"></div>
+      <div className="row  p-1  mb-3">
+      <div className="col-3"></div>
         <div className="col-6 d-flex justify-content-start p-0 pe-5 py-2 ">
           <textarea
             value={message}
@@ -31,7 +31,7 @@ const ChatInput = ({ onSendMessage }) => {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onKeyDown={handleKeyDown}
-            className="form-control border-0 shadow-none example px-3 py-2 bg-white "
+            className="form-control border-0 shadow-none example px-3 pb-1 pt-3 bg-white "
             style={{
               borderRadius: "30px",
               width: '400px',
@@ -40,7 +40,7 @@ const ChatInput = ({ onSendMessage }) => {
               maxHeight: '100px',
               resize: 'none',
             }}
-            placeholder="Type your message..."
+            placeholder="הקלד את ההודעה שלך ..."
             id="chatTextarea"
             maxLength={5000}
           />

@@ -30,7 +30,7 @@ const ParticipantsList = ({ participants, isOpen, onClose }) => {
                 <div className='chat' style={{ maxHeight: '400px' }}></div>
                     {participants.map((participant) => (
                         <IonRow key={participant?._id} className='border-top border-bottom'>
-                            <IonCol size="3" onClick={() => profile(participant?._id)}>
+                            <IonCol size="3" onClick={() => profile(participant?._id)} style={{cursor: 'pointer'}}>
                                 <img
                                     src={participant?.profile_image ? participant?.profile_image : "https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"}
                                     alt={participant?.nick_name}
