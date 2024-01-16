@@ -411,7 +411,7 @@ const EventCard = ({ socket }) => {
 
                         </div>
                         {event &&
-                            <div className='col border me-3 p-4' style={{ backgroundImage: event.images.length > 0 ? `url(${event.images[currentImageIndex]})` : `url(${require('../../../images/bus.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out', minHeight: '300px' }}>
+                            <div className='col border me-md-3 p-4' style={{ backgroundImage: event.images.length > 0 ? `url(${event.images[currentImageIndex]})` : `url(${require('../../../images/bus.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out', minHeight: '300px' }}>
                                 <button
                                     type="button"
                                     className="btn  btn-rounded btn-icon"
