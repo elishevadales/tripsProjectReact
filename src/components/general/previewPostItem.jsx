@@ -53,41 +53,24 @@ const PreviewPostItem = (props) => {
     }
 
     const onClickNickName = () => {
-        if (userInfo.user.role == "admin") {
-            nav("/admin/userInfo",
-                {
-                    state: {
-                        userId: event.user_id
-                    }
-                })
-        }
-        else {
-            nav("/user/userInfo",
-                {
-                    state: {
-                        userId: event.user_id
-                    }
-                })
-        }
+
+        nav(`/${userInfo.user.role}/userInfo`,
+            {
+                state: {
+                    userId: event.user_id
+                }
+            })
     }
 
     const onClickCard = () => {
-        if (userInfo.user.role == "admin") {
-            nav("/admin/events/eventCard",
-                {
-                    state: {
-                        event: event
-                    }
-                })
-        }
-        else {
-            nav("/user/events/eventCard", {
+
+        nav(`/${userInfo.user.role}/events/eventCard`,
+            {
                 state: {
                     event: event
                 }
             })
-
-        }
+            
         localStorage.setItem("eventId", event._id);
     }
 
@@ -135,8 +118,8 @@ const PreviewPostItem = (props) => {
                         </div>
                     </Box>
 
-                    <p className='display-5'>{event.event_name}</p>
-                    <p className='lead'>{event.category ? event.category : 'קטגוריה'}</p>
+                    <p className='h5'>{event.event_name}</p>
+                    <p className='h6'>{event.category == "trip" ? "טיול" : 'אטרקציה'}</p>
                     <p className='lead'>{event.participants.length} משתתפים</p>
                     <p className='lead' style={{ fontSize: "14px" }}>תאריך יציאה: {event.date_and_time && typeof event.date_and_time === 'string' ? event.date_and_time.split('T')[0] : 'N/A'}</p>
 

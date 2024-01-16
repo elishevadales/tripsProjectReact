@@ -8,37 +8,58 @@ import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage
 import { storage } from '../../../firebase/config';
 import { useSelector } from 'react-redux';
 import uniqid from 'uniqid';
-
+import { tripsCategories } from '../../../constants/tripsSubcategories'
+import { attractionsCategories } from '../../../constants/attractionsSubcategories'
+import { Modal } from 'react-bootstrap';
+import EventLocation from './eventLocation'
 
 
 
 
 const NewEvent = () => {
 
-
-
   const [showPopup, setPopup] = useState(false);
   const [textPopUp, setTextPopUp] = useState();
   const [isFree, setIsFree] = useState(true);
   const [isRequiredEquipment, setIsRequiredEquipment] = useState(false);
   const [images, setImages] = useState([]);
+  const [category, setCategory] = useState();
   const [imagesUrls, setImagesUrls] = useState([]);
+  const [isSenddingForm, setIsSenddingForm] = useState(false)
+  const [coordinates, setCoordinates] = useState();
+  const [address, setAddress] = useState();
   const userInfo = useSelector((myStore) => myStore.userInfoSlice);
-  const { register, handleSubmit, formState: { errors }, getValues } = useForm()
+  const { register, handleSubmit, formState: { errors }, getValues, setValue } = useForm()
   const nav = useNavigate()
 
   const onSub = async (data) => {
+
+    console.log("coordinates:",coordinates)
+    
+
+    if (!address) {
+      setPopup(true)
+      setTextPopUp("יש להזין מיקום של האירוע")
+      return
+    }
+
+    setIsSenddingForm(true)
     const uploadedUrls = await uploadImages(images);
     data.images = uploadedUrls;
-    console.log(data);
 
+    data.coordinates = {};
+    data.coordinates.lat = coordinates.lat
+    data.coordinates.lon = coordinates.lon
+
+    data.address = address;
 
 
     if (!isFree) {
       data.price = {
         adult: data.adult,
         studentOrSoldier: data.studentOrSoldier,
-        child: data.child
+        child: data.child,
+        free: false
       }
     }
     else {
@@ -50,17 +71,19 @@ const NewEvent = () => {
     if (!data.accessibility) {
       delete data.accessibility
     }
-    if(!isRequiredEquipment){
+    if (!isRequiredEquipment) {
       data.required_equipment = "none"
     }
-
 
     delete data.free
     delete data.adult
     delete data.studentOrSoldier
     delete data.child
 
-    // doApiCreateEvent(data)
+    console.log("data:",data);
+
+    await doApiCreateEvent(data)
+    setIsSenddingForm(false)
 
   }
 
@@ -76,18 +99,37 @@ const NewEvent = () => {
 
   }
 
+  const handleChangeCategory = (e) => {
+    setCategory(e.target.value)
+    // setValue("category", e.target.value)
+    setValue("sub_category", "")
+
+  }
+
   const handleCancelPopUp = () => {
     setPopup(false)
-    nav("/user/newEvent")
+    nav(`/${userInfo.user.role}/newEvent`)
   }
 
   const doApiCreateEvent = async (bodyData) => {
+    let url = API_URL + "/events"
+    try {
+      let resp = await doApiMethod(url, "POST", bodyData);
+      console.log("resp:",resp.data)
 
+      setTextPopUp("האירוע נוצר בהצלחה")
+      setPopup(true)
+      // nav(`/${userInfo.user.role}/events`)
+    }
+    catch (err) {
+      console.log(err.response.data[0]);
+    }
   }
 
 
-  const nameRef = register("event_name", { required: true, minLength: 2, maxLength: 50 })
-  const categoryRef = register("category", { required: true })
+  const nameRef = register("event_name", { required: "יש להזין שם לאירוע", minLength: { value: 2, message: "יש להזין לפחות 2 תווים" }, maxLength: { value: 30, message: "יש להזין עד 30 תווים" } })
+  const categoryRef = register("category", { required: "יש לבחור קטגוריה" })
+  const subCategoryRef = register("sub_category", { minLength: 0, maxLength: 100 })
   const freeRef = register("free", { required: "יש לסמן חינם/בתשלום" })
   const adultPriceRef = register("adult", { min: 0, max: 10000 })
   const studentOrSoldierPriceRef = register("studentOrSoldier", { min: 0, max: 10000 })
@@ -98,6 +140,7 @@ const NewEvent = () => {
   const placeInfoRef = register("place_info", { minLength: 2, maxLength: 500 })
   const tripDetailsRef = register("trip_details", { minLength: 2, maxLength: 1000 })
   const dateRef = register("date_and_time", { required: "יש לבחור תאריך" })
+  // const coordinatesRef = register("coordinates");
   const duringRef = register(
     "during",
     {
@@ -111,14 +154,13 @@ const NewEvent = () => {
 
 
   return (
-    <section className="py-4" >
-      <div className='background-signup'></div>
+    <section className="py-4" style={{ backdropFilter: "blur(20px)" }}>
       <div className="container h-100 ">
         <div className='pt-4'>
-          <div className='col-12 d-flex align-items-center justify-content-center display-3' style={{ height: "300px", backgroundImage: `url(${require('../../../images/addEvent.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
-            <p className='p-3 m-2 text-center' style={{ borderRadius: "20px", background: "rgba(255, 255, 255, 0.477)" }}>יצירת אירוע חדש</p>
+          <div className='col-12 d-flex align-items-center justify-content-center display-3' style={{ height: "300px", backgroundImage: `url(${require('../../../images/addEvent.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat',borderTopLeftRadius:"15px" ,borderTopRightRadius:"15px"}}>
+            <p className='p-3 m-2 text-center' style={{ borderRadius: "20px", background: "rgba(255, 255, 255, 0.477)" }}>יצירת אירוע </p>
           </div>
-          <div className='col-12 m-0  p-5 bg-white py-3' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
+          <div className='col-12 m-0  p-2 p-sm-4 bg-white py-3' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
 
             <form onSubmit={handleSubmit(onSub)} className="mx-1 mx-md-4">
 
@@ -131,7 +173,7 @@ const NewEvent = () => {
 
                   </label>
                   <input {...nameRef} type="text" id="form3Example1c" className="form-control p-2" />
-                  {errors.event_name && <div className='text-danger'>* השם צריך להיות בין 2 ל50 תווים</div>}
+                  {errors.event_name && <div className='text-danger'>* {errors.event_name.message}</div>}
                 </div>
               </div>
 
@@ -139,28 +181,51 @@ const NewEvent = () => {
               {/* category */}
               <div className="d-flex flex-row align-items-center mb-4">
                 <div className="form-outline flex-fill mb-0">
-                  <label className='h5 '
+
+                  <label className='h5'
                   >קטגוריה
                     <span className='text-danger'>*</span>
-
                   </label>
 
-                  <select className='form-select' {...categoryRef}>
+                  <select {...categoryRef} onChange={(handleChangeCategory)} className='form-select' >
                     <option value="" defaultValue>בחר קטגוריה</option>
                     <option value="trip">טיול</option>
                     <option value="attraction">אטרקציה</option>
                   </select>
-                  {errors.category && <div className='text-danger'>* יש לבחור קטגוריה</div>}
+                  {errors.category && <div className='text-danger'>*{errors.category.message}</div>}
                 </div>
               </div>
 
+              {/* sub category */}
+              <div>
+                <select className='form-select' {...subCategoryRef} disabled={!category}>
+                  <option value="" defaultValue>בחר תת קטגוריה (אופציונאלי)</option>
+                  {
+                    category === "trip" &&
+                    tripsCategories.map((category, i) => {
+                      return (
+                        <option key={i} value={category}>{category}</option>
+                      )
+                    })
+                  }
+                  {
+                    category === "attraction" &&
+                    attractionsCategories.map((category, i) => {
+                      return (
+                        <option key={i} value={category}>{category}</option>
+                      )
+                    })
 
+                  }
+
+                </select>
+              </div>
 
               {/* price */}
               <div className="d-flex flex-row align-items-center mb-4">
                 <div className="form-outline flex-fill mb-0">
-                  <p className="h5 mb-3"
-                  >כניסה
+                  <p className="h5 my-3"
+                  >עלות כניסה
                     <span className='text-danger'>*</span>
                   </p>
                   <fieldset className="mb-3">
@@ -172,7 +237,7 @@ const NewEvent = () => {
                       <input {...freeRef} onChange={() => { setIsFree(false) }} className="form-check-input" type="radio" id="pricePayment" value={false} />
                       <label className="form-check-label mx-2" htmlFor="pricePayment">כניסה בתשלום</label>
                     </div>
-                    {errors.free && <div className='text-danger'>{errors.free.message}</div>}
+                    {errors.free && <div className='text-danger'>*{errors.free.message}</div>}
 
                   </fieldset>
                 </div>
@@ -233,7 +298,7 @@ const NewEvent = () => {
                   <input {...parkingRef} className="form-check-input" type="radio" id="payment" value="payment" />
                   <label className="form-check-label mx-2" htmlFor="payment"> חנייה בתשלום  </label>
                 </div>
-                {errors.parking && <div className='text-danger'>יש לסמן האם יש חנייה</div>}
+                {errors.parking && <div className='text-danger'>*יש לסמן האם יש חנייה</div>}
 
               </fieldset>
 
@@ -269,7 +334,7 @@ const NewEvent = () => {
                   <input {...openEventRef} className="form-check-input" type="radio" id="openEventFalse" value={false} />
                   <label className="form-check-label mx-2" htmlFor="openEventFalse">לא</label>
                 </div>
-                {errors.open_event && <div className='text-danger'>יש לסמן האם האירוע פתוח</div>}
+                {errors.open_event && <div className='text-danger'>*יש לסמן האם האירוע פתוח</div>}
 
               </fieldset>
 
@@ -280,34 +345,34 @@ const NewEvent = () => {
               <textarea {...placeInfoRef} className='form-control'>
 
               </textarea>
-              {errors.place_info && <div className='text-danger'> יש למלא בין 2 ל500 תווים</div>}
+              {errors.place_info && <div className='text-danger'> יש למלא בין 2 ל500 תווים*</div>}
 
               {/* trip details */}
-              <p className="h5 mb-3"
+              <p className="h5 my-3"
               > אז מה בתכנית:
               </p>
               <textarea {...tripDetailsRef} className='form-control' />
-              {errors.trip_details && <div className='text-danger'> יש למלא בין 2 ל1000 תווים</div>}
+              {errors.trip_details && <div className='text-danger'> יש למלא בין 2 ל1000 תווים*</div>}
 
               {/* during */}
-              <p className="h5 mb-3"
+              <p className="h5 my-3"
               >  משך זמן האירוע
                 <span className='text-danger'>*</span>
 
               </p>
               <textarea {...duringRef} className='form-control' />
-              {errors.during && <div className='text-danger'> {errors.during.message}</div>}
+              {errors.during && <div className='text-danger'> *{errors.during.message}</div>}
 
               {/* date */}
-              <p className="h5 mb-3"
+              <p className="h5 my-3"
               > תאריך יציאה
                 <span className='text-danger'>*</span>
               </p>
               <input {...dateRef} className='form-control' type='date' />
-              {errors.date_and_time && <div className='text-danger'> {errors.date_and_time.message}</div>}
+              {errors.date_and_time && <div className='text-danger'> *{errors.date_and_time.message}</div>}
 
               {/* required equipment */}
-              <p className="h5 mb-3"
+              <p className="h5 my-3"
               > האם יש צורך להביא ציוד מסויים לאירוע?
               </p>
               <fieldset className="mb-3">
@@ -331,13 +396,15 @@ const NewEvent = () => {
 
                   </textarea>
                 </div>
-
               }
+
+              {/* location */}
+              <EventLocation setCoordinates={setCoordinates} setAddress={setAddress} />
 
 
               {/* create button */}
-              <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                <button className="btn btn-warning btn-lg">
+              <div className="d-flex justify-content-center mx-4 my-4 mb-lg-4">
+                <button type="submit" className="btn btn-lg text-white" style={{ background: '#077F7A' }}>
                   צור אירוע
                 </button>
               </div>
@@ -353,6 +420,11 @@ const NewEvent = () => {
           onCancel={handleCancelPopUp}
         />
       )}
+      <Modal show={isSenddingForm} backdrop="static" centered>
+        <Modal.Body className='text-center'>
+          <p>יוצר אירוע...</p>
+        </Modal.Body>
+      </Modal>
     </section>
   )
 }

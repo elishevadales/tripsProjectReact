@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import CalendarView from './calendarView'
 
 import PreviewPostItem from './previewPostItem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Posts = () => {
@@ -18,6 +18,8 @@ const Posts = () => {
   const [parking, setParking] = useState(false); // Default to false
   const [accessibility, setAccessibility] = useState(false);
   const [openEvent, setOpenEvent] = useState(false);
+
+  const nav = useNavigate()
 
   const userInfo = useSelector((myStore) =>
     myStore.userInfoSlice
@@ -73,8 +75,8 @@ const Posts = () => {
 
 
   return (
-    <div style={{ position: "relative", backdropFilter: "blur(20px)" }}>
-      
+    <div style={{ position: "relative", backdropFilter: "blur(20px)", minHeight: "100vh" }}>
+
       <div className="container pt-4">
         <div className="search d-flex border shadow bg-white">
           <div className="filters col-9 d-flex justify-content-around" style={{ color: "grey" }}>
@@ -156,9 +158,23 @@ const Posts = () => {
         )}
 
       </div>
-      <Link to={userInfo.user.role == "admin" ? "http://localhost:3001/admin/newEvent" : "http://localhost:3001/user/newEvent"}>
-        <i className="fa fa-plus p-4 text-white fa-3x " aria-hidden="true" style={{ boxShadow: '0 4px 8px rgba(137,137,137,0.75)', background: "#077F7A", borderRadius: "100%", border: "solid white 2 px", position: "sticky", right: "50px", bottom: "50px", cursor: "pointer" }}></i>
-      </Link>
+      
+      <i
+        onClick={() => { nav(`/${userInfo.user.role}/newEvent`) }}
+        className="fa fa-plus p-4 text-white h2 d-flex align-items-center justify-content-center"
+        aria-hidden="true"
+        style={{
+          width: "80px",
+          height: "80px",
+          background: "#077F7A",
+          borderRadius: "100%",
+          border: "solid white 2 px",
+          position: "sticky",
+          right: "50px",
+          bottom: "50px",
+          cursor: "pointer"
+        }} />
+
     </div>
 
   )
