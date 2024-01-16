@@ -147,25 +147,23 @@ const Profile = ({ myProfile = false }) => {
             <div className='container-fluid pt-3' >
                 <div className='container p-5' >
                     <div className='grid' style={{ boxShadow: '0 4px 8px rgba(137,137,137,0.75)', background: 'white' }}>
-                        <div className='position-relative' style={{ backgroundImage: `url(${user?.background_image ? user?.background_image : "../../../images/bg.jpg"})`, backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '300px', backdropFilter: 'blur(20px)' }}>
+                        <div className='position-relative' style={{ backgroundImage: `url(${user?.background_image})`, backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '300px', backdropFilter: 'blur(20px)' }}>
                             <div className='row d-flex text-center  justify-content-center flex-column align-items-center p-5 m-0' style={{ background: 'rgba(255, 255, 255, 0.505)' }}>
                                 {/* Profile Image and Info */}
-                                <Avatar variant="soft" sx={{ width: 150, height: 150 }} color="neutral" src={user?.profile_image ? user?.profile_image : "https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"} style={{ boxShadow: '0 4px 8px rgba(137,137,137,0.75)', }} />
-                                {/* <div className='p-5'
-                                    style={{
-                                        width: '150px',
-                                        height: '150px',
-                                        borderRadius: '50%',
-                                        boxShadow: '0 4px 8px rgba(137,137,137,0.75)',
-                                        background: `url(${user?.profile_image ? user?.profile_image : "https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"})`,
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                        backgroundRepeat: 'no-repeat',
-                                        display: 'block',
-                                        margin: '0 auto',
-                                    }}
-                                    alt={user?.nick_name}
-                                /> */}
+                                <div
+                                        style={{
+                                            cursor: 'pointer',
+                                            height: '150px',
+                                            width: '150px',
+                                            borderRadius: '100px',
+                                            backgroundImage: `url(${user?.profile_image})`,
+                                            backgroundPosition: 'center',
+                                            backgroundSize: 'cover',
+                                            backgroundRepeat: 'no-repeat',
+                                            right: '75px',
+                                            bottom: '-65px',
+                                        }}
+                                    />
                                 {/* User Info */}
                                 <p>
                                     <span className='h3 px-1'>{user?.nick_name}</span>

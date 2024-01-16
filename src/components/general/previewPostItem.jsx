@@ -54,12 +54,9 @@ const PreviewPostItem = (props) => {
 
     const onClickNickName = () => {
 
-        nav(`/${userInfo.user.role}/userInfo`,
-            {
-                state: {
-                    userId: event.user_id
-                }
-            })
+        localStorage.setItem("userProfileId", event.user_id._id);
+        nav(`/${userInfo.user.role}/profile`)
+
     }
 
     const onClickCard = () => {
@@ -118,7 +115,7 @@ const PreviewPostItem = (props) => {
                         </div>
                     </Box>
 
-                    <p className='h5'>{event.event_name}</p>
+                    <p className='h5' onClick={onClickCard} style={{cursor:"pointer"}}>{event.event_name}</p>
                     <p className='h6'>{event.category == "trip" ? "טיול" : 'אטרקציה'}</p>
                     <p className='lead'>{event.participants.length} משתתפים</p>
                     <p className='lead' style={{ fontSize: "14px" }}>תאריך יציאה: {event.date_and_time && typeof event.date_and_time === 'string' ? event.date_and_time.split('T')[0] : 'N/A'}</p>

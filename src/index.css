@@ -245,7 +245,7 @@ ion-card-header {
   content: "";
   position: absolute;
   width: 3px;
-  background-color: #277A76;
+  background-color: rgb(35, 140, 156);
   top: 0;
   bottom: 0;
   left: 50%;
@@ -266,7 +266,7 @@ ion-card-header {
   width: 25px;
   height: 25px;
   right: -11px;
-  background-color: #277A76;
+  background-color: rgb(35, 140, 156);
   top: 15px;
   border-radius: 50%;
   z-index: 1;
@@ -358,13 +358,13 @@ ion-card-header {
   position: absolute;
   left: 50%;
   margin-left: -30px;
-  bottom: 20px;
+  bottom: 32px;
 }
 
 .arrows path {
-  stroke:#FFC107;
+  stroke:rgb(35, 140, 156);
   fill: transparent;
-  stroke-width: 4px;  
+  stroke-width: 8px;  
   animation: arrow 2s infinite;
   -webkit-animation: arrow 2s infinite; 
 }

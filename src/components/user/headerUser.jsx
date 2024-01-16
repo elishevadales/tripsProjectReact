@@ -39,7 +39,7 @@ const HeaderUser = (props) => {
 
     const handleNotificationClose = () => {
         setShowNotification(false);
-      };
+    };
 
 
     useEffect(() => {
@@ -49,22 +49,20 @@ const HeaderUser = (props) => {
         }
         else {
             doApiMyInfo();
-           
+
         }
-        props.socket.on("new-notification", notification =>{
+        props.socket.on("new-notification", notification => {
             setNotifications(true)
             setShowNotification(true)
             dispatch(updateNotification({ notification: true }));
         })
 
         return () => {
-            props.socket.off("new-notification"); 
-          };
+            props.socket.off("new-notification");
+        };
     }, [props.socket])
 
-    const onClickLogo = () => {
-        nav("/")
-    }
+    
     const handleLogOutClick = () => {
         setShowLogOutPopup(true)
     }
@@ -85,7 +83,7 @@ const HeaderUser = (props) => {
         let url = API_URL + "/users/myInfo";
         try {
             let resp = await doApiGet(url);
-            console.log("my info:",resp.data);
+            console.log("my info:", resp.data);
             await dispatch(updateUserInfo({
                 update: resp.data
 
@@ -100,6 +98,9 @@ const HeaderUser = (props) => {
 
     }
 
+    const onClickLogo = () => {
+        nav(`/${userInfo.user.role}/events`)
+    }
 
     return (
         <>
@@ -117,17 +118,19 @@ const HeaderUser = (props) => {
                 }}
             >
                 <div className="container d-flex justify-content-between">
-                    <div className="logo d-flex" onClick={onClickLogo}>
-                        <i className="fa fa-car fa-2x text-white" aria-hidden="true"></i>
-                        <div className='mx-3'>
-                           {userInfo.notifications && 
-                           <StyledBadge color="error" overlap="circular" badgeContent=" " anchorOrigin={{ vertical: 'top', horizontal: 'right' }} variant="dot" >
-                                <Avatar variant="soft" color="neutral" src={userInfo?.user?.profile_image} style={{boxShadow: '0 4px 8px rgba(137,137,137,0.75)'}}/>
-                            </StyledBadge>} 
-                            {!userInfo.notifications && <Avatar variant="soft" color="neutral" src={userInfo?.user?.profile_image} />} 
+                    <div className='d-flex'>
+                        <div className="logo d-flex" style={{cursor:"pointer"}}>
+                            <i onClick={onClickLogo} className="fa fa-car fa-2x text-white" aria-hidden="true"></i>
                         </div>
-                        <h2 className='lead mr-3'> </h2>
+                        <div className='mx-3'>
+                            {userInfo.notifications &&
+                                <StyledBadge color="error" overlap="circular" badgeContent=" " anchorOrigin={{ vertical: 'top', horizontal: 'right' }} variant="dot" >
+                                    <Avatar variant="soft" color="neutral" src={userInfo?.user?.profile_image} style={{ boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }} />
+                                </StyledBadge>}
+                            {!userInfo.notifications && <Avatar variant="soft" color="neutral" src={userInfo?.user?.profile_image} />}
+                        </div>
                     </div>
+
 
 
 
@@ -145,17 +148,17 @@ const HeaderUser = (props) => {
             </header>
             {/* </div> */}
             <div>
-     
 
-      {/* Your other components */}
-    </div>
 
-    {showNotification && (
-        <Notification
-          message="קיבלת בקשת הצטרפות חדשה לאירוע שלך"
-          onClose={handleNotificationClose}
-        />
-      )}
+                {/* Your other components */}
+            </div>
+
+            {showNotification && (
+                <Notification
+                    message="קיבלת בקשת הצטרפות חדשה לאירוע שלך"
+                    onClose={handleNotificationClose}
+                />
+            )}
             <Outlet />
             {showLogOutPopup && (
                 <ConfirmPopUp
