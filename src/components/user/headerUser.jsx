@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import ConfirmPopUp from '../general/confirmPopUp';
-import { updateUserInfo } from '../reducer/userInfoSlice';
+import { updateUserInfo, updateNotification } from '../reducer/userInfoSlice';
 import { API_URL, TOKEN_NAME, doApiGet } from '../../services/apiService';
 import Avatar from '@mui/joy/Avatar';
-import Badge from '@mui/material/Badge';
+import StyledBadge from '@mui/material/Badge';
 import Notification from '../general/notification/notification';
 
 const HeaderUser = (props) => {
@@ -15,6 +15,7 @@ const HeaderUser = (props) => {
     const [showNotification, setShowNotification] = useState(false)
     const nav = useNavigate()
     const dispatch = useDispatch();
+
     const userInfo = useSelector((myStore) =>
         myStore.userInfoSlice
     )
@@ -26,6 +27,8 @@ const HeaderUser = (props) => {
 
             let resp = await doApiGet(url);
             setNotifications(resp.data)
+            dispatch(updateNotification({ notification: resp.data }));
+
         }
         catch (err) {
             console.log(err);
@@ -51,6 +54,7 @@ const HeaderUser = (props) => {
         props.socket.on("new-notification", notification =>{
             setNotifications(true)
             setShowNotification(true)
+            dispatch(updateNotification({ notification: true }));
         })
 
         return () => {
@@ -116,10 +120,11 @@ const HeaderUser = (props) => {
                     <div className="logo d-flex" onClick={onClickLogo}>
                         <i className="fa fa-car fa-2x text-white" aria-hidden="true"></i>
                         <div className='mx-3'>
-                           {notifications && <Badge color="error" overlap="circular" badgeContent=" " variant="dot" >
+                           {userInfo.notifications && 
+                           <StyledBadge color="error" overlap="circular" badgeContent=" " anchorOrigin={{ vertical: 'top', horizontal: 'right' }} variant="dot" >
                                 <Avatar variant="soft" color="neutral" src={userInfo?.user?.profile_image} style={{boxShadow: '0 4px 8px rgba(137,137,137,0.75)'}}/>
-                            </Badge>} 
-                            {!notifications && <Avatar variant="soft" color="neutral" src={userInfo?.user?.profile_image} />} 
+                            </StyledBadge>} 
+                            {!userInfo.notifications && <Avatar variant="soft" color="neutral" src={userInfo?.user?.profile_image} />} 
                         </div>
                         <h2 className='lead mr-3'> </h2>
                     </div>

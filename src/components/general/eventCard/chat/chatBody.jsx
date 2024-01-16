@@ -21,17 +21,15 @@ const ChatBody = ({ socket, userId, oldMessages }) => {
 
   return (<>
     <div
-      className='p-2  flex-column m-0'
+      className='px-4  flex-column m-0 py-2'
       style={{
-        width: '850px',
+        // width: '850px',
         height: '500px',
         display: 'flex',
         flexDirection: 'column',
-        // backgroundImage: `url('https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/Resources/art/bg_initial.jpg')`,
         backgroundSize: 'cover', // Adjust to your needs
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        // background:'rgba(255, 255, 255, 0.505)'
       }}
     >
       <div
@@ -46,7 +44,6 @@ const ChatBody = ({ socket, userId, oldMessages }) => {
             <MyMessage
               message={message}
               last={index === 0 || message?.user_id?._id !== oldMessages[index - 1].user_id?._id}
-              // last={index === oldMessages.length - 1 || message?.user_id?._id !== oldMessages[index + 1].user_id?._id}
               alignLeft={false}
               key={index}
               index={index}
@@ -55,7 +52,6 @@ const ChatBody = ({ socket, userId, oldMessages }) => {
             <Message
               message={message}
               last={index === 0 || message?.user_id?._id !== oldMessages[index - 1].user_id?._id}
-              // last={index === oldMessages.length - 1 || message?.user_id?._id !== oldMessages[index + 1].user_id?._id}
               alignLeft={true}
               key={index}
               index={index}
@@ -70,7 +66,6 @@ const ChatBody = ({ socket, userId, oldMessages }) => {
             <MyMessage
               message={message}
               last={index === 0 || message?.user_id?._id !== oldMessages[index - 1].user_id?._id}
-              // last={index === oldMessages.length - 1 || message?.user_id?._id !== oldMessages[index + 1].user_id?._id}
               alignLeft={false}
               key={index}
               index={index}
@@ -79,7 +74,6 @@ const ChatBody = ({ socket, userId, oldMessages }) => {
             <Message
               message={message}
               last={index === 0 || message?.user_id?._id !== oldMessages[index - 1].user_id?._id}
-              // last={index === oldMessages.length - 1 || message?.user_id?._id !== oldMessages[index + 1].user_id?._id}
               alignLeft={true}
               key={index}
               index={index}

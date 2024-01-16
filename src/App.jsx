@@ -19,14 +19,14 @@ import userInfoSlice from './components/reducer/userInfoSlice';
 import UsersListAdmin from './components/admin/usersListAdmin';
 import MyInfo from './components/general/myInfo/myInfo';
 import Posts from './components/general/posts';
-
+import Profile from './components/general/profile/profile';
 import socketIO from 'socket.io-client'
 
 import { API_URL } from './services/apiService'
 import NewEvent from './components/general/addEvent/newEvent';
 import UserCard from './components/general/userCard';
 
-const  socket = socketIO.connect(API_URL)
+const socket = socketIO.connect(API_URL)
 function App() {
 
   const myStore = configureStore({
@@ -47,40 +47,42 @@ function App() {
 
           <Route path='/user' element={<HeaderUser socket={socket}
             links={[
-              { title: 'פוסטים', path: '/user/events' },
-              { title: 'עדכון-פרופיל', path: '/user/myInfo' },
+              { title: 'אירועים', path: '/user/events' },
+              { title: 'פרופיל', path: '/user/myProfile' },
               { title: 'אירוע-חדש', path: '/user/newEvent' },
             ]}
             color={"bg-warning"}
-           />
+          />
           }>
             <Route path='/user/home' element={<HomeUser />} />
-            <Route path='/user/myInfo' element={<MyInfo />} />
+            <Route path='/user/myProfile' element={<Profile myProfile={true} />} />
             <Route path='/user/events' element={<Posts />} />
+            <Route path='/user/myInfo' element={<MyInfo />} />
             <Route path='/user/events/eventCard' element={<EventCard socket={socket} />} />
-            <Route path='/user/newEvent' element={<NewEvent/>} />
-            <Route path='/user/userInfo' element={<UserCard/>} />
+            <Route path='/user/newEvent' element={<NewEvent />} />
+            <Route path='/user/userInfo' element={<Profile myProfile={true} />} />
+            <Route path='/user/profile' element={<Profile />} />
 
           </Route>
 
-          <Route path='/admin' element={<HeaderUser
+          <Route path='/admin' element={<HeaderUser socket={socket}
             links={[
               { title: 'פוסטים', path: '/admin/events' },
-              { title: 'עדכון-פרופיל', path: '/admin/myInfo' },
+              { title: ' פרופיל', path: '/admin/myProfile' },
               { title: 'משתמשים', path: '/admin/usersList' },
               { title: 'אירוע-חדש', path: '/admin/newEvent' }
             ]}
             color={"bg-dark"}
-           />}>
+          />}>
             <Route path='/admin/home' element={<HomeAdmin />} />
             <Route path='/admin/usersList' element={<UsersListAdmin />} />
             <Route path='/admin/events' element={<Posts />} />
             <Route path='/admin/myInfo' element={<MyInfo />} />
+            <Route path='/admin/myProfile' element={<Profile myProfile={true} />} />
             <Route path='/admin/events/eventCard' element={<EventCard socket={socket} />} />
-            <Route path='/admin/newEvent' element={<NewEvent/>} />
-            <Route path='/admin/userInfo' element={<UserCard/>} />
-
-
+            <Route path='/admin/newEvent' element={<NewEvent />} />
+            <Route path='/admin/myProfile' element={<Profile myProfile={true} />} />
+            <Route path='/admin/profile' element={<Profile />} />
           </Route>
           <Route path="/*" element={<Page404 />} />
 

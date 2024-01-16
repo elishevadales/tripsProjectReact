@@ -1,7 +1,24 @@
 // Message.js
 import React from 'react';
+import { useNavigate } from 'react-router';
+
 
 const Message = ({ message, last, alignLeft , index}) => {
+
+    const nav = useNavigate()
+    const profile = (_id) => {
+        localStorage.setItem("userProfileId", _id);
+
+        // if (userInfo.user.role == "admin") {
+        //     nav("/admin/profile")
+        // }
+        // else {
+        nav("/user/profile")
+        // }
+
+    }
+
+
     return (
         <div className="container p-0 m-0 ">
             <div className="row  mt-1">
@@ -10,6 +27,7 @@ const Message = ({ message, last, alignLeft , index}) => {
                         src={message?.user_id?.profile_image ? message?.user_id?.profile_image : "https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"}
                         alt={message?.user_id?.nick_name}
                         title={message?.user_id?.nick_name}
+                        onClick={() => profile(message?.user_id?._id)}
                         style={{ width: '40px', height: '40px', borderRadius: '50%', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }}
                     />) : null}
                 </div>
@@ -20,7 +38,7 @@ const Message = ({ message, last, alignLeft , index}) => {
                                 }`}
                             style={{
                                 borderRadius: '20px 20px 0px 20px',
-                                maxWidth: '500px',
+                                maxWidth: '400px',
                                 minWidth: 'min-content',
                                 whiteSpace: 'pre-wrap',
                                 boxShadow: '0 4px 8px rgba(137,137,137,0.75)',
@@ -39,7 +57,7 @@ const Message = ({ message, last, alignLeft , index}) => {
                                     }`}
                                 style={{
                                     borderRadius: '20px 20px 20px 20px',
-                                    maxWidth: '500px',
+                                    maxWidth: '400px',
                                     minWidth: 'min-content',
                                     whiteSpace: 'pre-wrap',
                                     boxShadow: '0 4px 8px rgba(137,137,137,0.75)',

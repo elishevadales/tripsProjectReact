@@ -25,8 +25,8 @@ const TimeLine = () => {
     src="https://www.tel-aviv.gov.il/en/PublishingImages/1ab0eca3eb2649c1b9c8473c7bdee591.jpg"
     position="top"
     style={{
-        height: '300px',  // Set the desired height
-        objectFit: 'cover',  // Ensure the image covers the specified height
+        height: '300px',  
+        objectFit: 'cover', 
     }}
 />
           <MDBCardBody className="p-4"  dir="rtl">

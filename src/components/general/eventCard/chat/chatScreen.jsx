@@ -43,17 +43,13 @@ const ChatScreen = ({ eventId, userId, socket }) => {
 
     return (
         <div
-            className='flex-column p-3 m-3'
+            className='flex-column p-0 border'
             style={{
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                width: '905px',
+                // width: '700px',
                 height: '650px',
                 display: 'flex',
                 flexDirection: 'column',
-                // backgroundImage: `url('https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/Resources/art/bg_initial.jpg')`,
-                backgroundSize: 'cover', // Adjust to your needs
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
                 background:'rgba(255, 255, 255, 0.505)'
             }}
         >
@@ -61,19 +57,6 @@ const ChatScreen = ({ eventId, userId, socket }) => {
                 className='d-flex flex-column-reverse'
                 style={{ flex: 1, overflowY: 'auto' }}
             >
-
-                {/* {messages.map((message, index) => (
-                    message.user_id._id === userId ?
-                        <MyMessage message={message} last={true} alignLeft={false} key={index} /> : <Message message={message} last={true} alignLeft={true} key={index} />
-                ))} */}
-                {/* {messages.length > 0 && messages.map((message, index) => {
-                    // message.user_id === userId ?
-                    <Message message={message} last={true} alignLeft={true} key={index} />
-                    //     <MyMessage message={message} last={true} alignLeft={false} key={index} /> :
-                    //     <Message message={message} last={true} alignLeft={true} key={index} />
-
-                })} */}
-
             </div>
             <div>
                 <ChatBody socket={socket} userId={userId} oldMessages={messages} eventId={eventId} />

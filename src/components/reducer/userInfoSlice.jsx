@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit"
 const initValue = {
     user: {
 
-    }
+    },
+    notifications: false
 }
 
 const userInfoSlice = createSlice({
@@ -29,9 +30,13 @@ const userInfoSlice = createSlice({
                 background_image: action.payload.background_image
             };
         },
+        updateNotification: (state, action) => {
+            state.notifications = action.payload.notification
+        },
+
     }
 })
 
 
-export const { updateUserInfo, resetUserInfo, updateProfileImg,updateBackgroundImg } = userInfoSlice.actions;
+export const { updateUserInfo, resetUserInfo, updateProfileImg, updateBackgroundImg, updateNotification } = userInfoSlice.actions;
 export default userInfoSlice.reducer;

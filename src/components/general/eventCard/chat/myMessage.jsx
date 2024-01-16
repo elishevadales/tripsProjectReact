@@ -11,7 +11,7 @@ const MyMessage = ({ message, last, alignLeft }) => {
           }`}
           style={{
             borderRadius: '20px 20px 20px 20px',
-            maxWidth: '500px',
+            maxWidth: '400px',
             minWidth: 'min-content',
             whiteSpace: 'pre-wrap', 
             boxShadow: '0 4px 8px rgba(137,137,137,0.75)',
@@ -30,7 +30,7 @@ const MyMessage = ({ message, last, alignLeft }) => {
           style={{
             boxShadow: '0 4px 8px rgba(137,137,137,0.75)',
             borderRadius: '20px 20px 20px 0px',
-            maxWidth: '500px',
+            maxWidth: '400px',
             minWidth: 'min-content',
             whiteSpace: 'pre-wrap', // Preserve new lines
             background:'#BBE4E2'

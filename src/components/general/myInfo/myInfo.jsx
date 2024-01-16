@@ -7,20 +7,31 @@ import InfoPopUp from '../infoPopUp';
 import { API_URL, doApiGet, doApiMethod } from '../../../services/apiService';
 import EditAvatar from './editAvatar';
 import EditBackground from './editBackground';
+import Notification from '../notification/notification';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 const MyInfo = () => {
 
     const userInfo = useSelector((myStore) => myStore.userInfoSlice);
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
-
+    const [showNotification, setShowNotification] = useState(false)
     const [showPopup, setPopup] = useState(false);
     const [textPopUp, setTextPopUp] = useState(false);
     const [showPopupAvatar, setPopupAvatar] = useState(false);
     const [showPopupBackground, setPopupBackground] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState(" ")
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    const handleNotificationClose = () => {
+        setShowNotification(false);
+    };
+
 
     useEffect(() => {
         // Fetch user information and set default values
-        console.log("userId",userInfo.user._id)
+        console.log("userId", userInfo.user._id)
         const fetchData = async () => {
             try {
                 // Fetch user information
@@ -34,6 +45,8 @@ const MyInfo = () => {
                 setValue('age', userData.age);
                 setValue('district_address', userData.district_address);
                 setValue('about', userData.about);
+                const birthDate = new Date(userData.birth_date);
+                setSelectedDate(birthDate);
             } catch (error) {
                 console.error('Error fetching user information:', error);
             }
@@ -49,18 +62,30 @@ const MyInfo = () => {
     const onSub = (data) => {
         console.log(data);
 
-        if(!data.age){
-            data.age = ""
-        }else{
-            //"10" means decimel number:
-            data.age = parseInt(data.age,10);
+        if (selectedDate) {
+            data.birth_date = selectedDate.toISOString();
+            data.age = calculateAge(selectedDate)
         }
-
-          
         console.log(data);
 
         doApiUpdateUserInfo(data);
     };
+
+
+
+    const calculateAge = (birthDate) => {
+        const today = new Date();
+        const dob = new Date(birthDate);
+        let age = today.getFullYear() - dob.getFullYear();
+
+        // Adjust age if the birthday hasn't occurred yet this year
+        if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) {
+            age--;
+        }
+
+        return age;
+    };
+
 
     const doApiUpdateUserInfo = async (data) => {
         let url = API_URL + '/users/changeMyInfo';
@@ -69,7 +94,8 @@ const MyInfo = () => {
         try {
             let resp = await doApiMethod(url, 'PUT', data);
             console.log(resp.data);
-            alert('updated');
+            setShowNotification(true)
+            setNotificationMessage("הפרטים עודכנו בהצלחה")
         } catch (err) {
             console.log(err);
         }
@@ -89,9 +115,15 @@ const MyInfo = () => {
         setPopupBackground(false);
     };
 
-    return (
-        <div style={{backdropFilter: "blur(20px)"}}>
-        {/* <div style={{ backgroundImage: `url(${require('../../../images/background.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}> */}
+    return (<> {showNotification && (
+        <Notification
+            message={notificationMessage}
+            onClose={handleNotificationClose}
+        />
+    )}
+        <div style={{ backdropFilter: "blur(20px)" }}>
+
+            {/* <div style={{ backgroundImage: `url(${require('../../../images/background.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}> */}
             <section className="py-5">
                 <div className="container h-100 ">
                     <div className="row d-flex justify-content-center align-items-center h-100 ">
@@ -166,7 +198,7 @@ const MyInfo = () => {
                                                     </div>
                                                 </div>
                                                 <div className="d-flex flex-row align-items-center mb-4">
-                                                    <i className="fa fa-key fa-lg ms-3 fa-fw"></i>
+                                                    <i className="fa fa-venus-mars fa-lg ms-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
                                                         <label className="form-label">מין</label>
                                                         <select {...register('gender', { required: true })} className="form-select">
@@ -177,16 +209,28 @@ const MyInfo = () => {
                                                         {errors.gender && <div className="text-danger">* יש לבחור מין</div>}
                                                     </div>
                                                 </div>
+
                                                 <div className="d-flex flex-row align-items-center mb-4">
                                                     <i className="fa fa-user fa-lg ms-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
-                                                        <label className="form-label">גיל</label>
-                                                        <input {...register('age', { min: 1, max: 120 })} type="number" className="form-control" />
-                                                        {errors.age && <div className="text-danger">* הגיל צריך להיות בין 1-120</div>}
+                                                        <label className="form-label">תאריך לידה</label>
+                                                        <DatePicker
+                                                            selected={selectedDate}
+                                                            onChange={(date) => setSelectedDate(date)}
+                                                            dateFormat="dd/MM/yyyy"
+                                                            showYearDropdown
+                                                            scrollableYearDropdown
+                                                            yearDropdownItemNumber={120}
+                                                            maxDate={new Date(Date.now() - 5 * 365 * 24 * 60 * 60 * 1000)}
+                                                            minDate={new Date(Date.now() - 120 * 365 * 24 * 60 * 60 * 1000)}
+                                                            className="form-control"
+                                                        />
                                                     </div>
                                                 </div>
+
+
                                                 <div className="d-flex flex-row align-items-center mb-4">
-                                                    <i className="fa fa-user fa-lg ms-3 fa-fw"></i>
+                                                    <i className="fa fa-home fa-lg ms-3 fa-fw"></i>
                                                     <div className="form-outline flex-fill mb-0">
                                                         <label className="form-label">מקום מגורים</label>
                                                         <input {...register('district_address', { minLength: 2, maxLength: 100 })} type="text" className="form-control" />
@@ -217,6 +261,8 @@ const MyInfo = () => {
                 {showPopupBackground && <EditBackground show={showPopupBackground} onCancel={handleCancelPopUpBackground} />}
             </section>
         </div>
+    </>
+
     );
 };
 

@@ -19,7 +19,7 @@ const ReviewCard = ({ review }) => {
   };
 
   return (
-    <div className='border my-3 p-2 bg-white' style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+    <div className='border  mb-3 p-2 bg-white' style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
       <IonGrid>
         <IonRow>
           <IonCol size="10">{renderStars()}</IonCol>

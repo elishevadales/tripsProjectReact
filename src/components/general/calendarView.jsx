@@ -35,9 +35,12 @@ const CalendarView = ({ events }) => {
         title: event.event_name,
         start: new Date(event.date_and_time),
         end: new Date(event.date_and_time),
+        _id: event._id
     }));
 
     const onSelectEvent = (event) => {
+        localStorage.setItem("eventId", event._id);
+
         if (userInfo.user.role == "admin") {
             nav("/admin/events/eventCard",
                 {
@@ -55,11 +58,10 @@ const CalendarView = ({ events }) => {
             })
 
         }
-        localStorage.setItem("eventId", event._id);
     };
 
     return (
-        <div>
+        <div className='pt-5'>
             <div className="calendar-container">
                 <Calendar
                     localizer={localizer}
