@@ -184,12 +184,12 @@ const EventCard = ({ socket }) => {
                 setHasLike(true)
             }
 
-            if (resp.data?.join_requests.some( request => request._id === userInfo?.user?._id)) {
+            if (resp.data?.join_requests.some(request => request._id === userInfo?.user?._id)) {
                 setHasJoinRequest(true)
             }
 
 
-            if (resp.data?.participants?.some(participant =>participant._id === userInfo?.user?._id)) {
+            if (resp.data?.participants?.some(participant => participant._id === userInfo?.user?._id)) {
                 setPraticipant(true)
             }
 
@@ -240,11 +240,11 @@ const EventCard = ({ socket }) => {
                     <div className='row  pt-5'>
                         <div className='col-12 col-md-8  p-5 border' style={{ background: 'rgba(255, 255, 255, 0.505)' }}  >
 
-                            <div className='row'>
+                            <div>
                                 <div className='col-12 col-md-5 '>
                                     <p style={{
                                         color: ' rgba(0, 0, 0, 0.651)',
-                                        fontSize: '80px',
+                                        fontSize: '30px',
                                         fontWeight: 'bold',
                                     }}>{event?.event_name}</p>
                                 </div>
@@ -254,49 +254,66 @@ const EventCard = ({ socket }) => {
                                         color: ' black',
                                         fontSize: '20px',
                                         fontWeight: 'bold',
-                                    }}>{event?.place_info}</p>
+                                    }}> {event?.place_info}</p>
                                 </div>
                             </div>
 
                             <div className='row'>
-                                {event?.trip_details}
+                                <span>בתכנית: </span>
+                                <p>{event?.trip_details}</p>
+
                             </div>
 
                             <div className='row'>
-                                <div className='col-6 col-lg-4'>  <IonCol >
-                                    <IonRow className=''>
-                                        <IonCol size="3"> <i className="fa fa-map-marker fa-2x"></i></IonCol>
-                                        {/* <IonCol size="9"> {event?.address}</IonCol> */}
-                                    </IonRow>
-                                    {!event?.price?.free ? (
-                                        <>
-                                            <IonRow className=''>
-                                                {event?.price?.adult && <> <IonCol size="3"> <i className="fa fa-users fa-2x"></i></IonCol>
-                                                    <IonCol size="9"> {event?.price?.adult} ש"ח</IonCol> </>}
-                                            </IonRow>
-                                            <IonRow>
-                                            {event?.price?.studentOrSoldier  && <> <IonCol size="3"> <i className="fa fa-graduation-cap fa-2x"></i></IonCol>
-                                                <IonCol size="9">  {event?.price?.studentOrSoldier} ש"ח</IonCol> </>}
-                                            </IonRow>
-                                            <IonRow>
-                                            {event?.price?.child && <>  <IonCol size="3"> <i className="fa fa-child fa-2x"></i></IonCol>
-                                                <IonCol size="9">  {event?.price?.child} ש"ח</IonCol> </>}
-                                            </IonRow>
-                                        </>
-                                    ) : (
-                                        <IonRow className='pt-4'>
-                                            <IonCol size="3"> <i className="fa fa-pagelines fa-2x"></i></IonCol>
-                                            <IonCol size="9"> הכניסה חופשית</IonCol>
+                                <div className='col-6 col-lg-4'>
+                                    <IonCol >
+
+                                        <IonRow>
+                                            <IonCol size="3" className='d-flex'>
+                                                <i className="fa fa-map-marker fa-2x"></i>
+                                            </IonCol>
+                                            <IonCol size="9">
+                                                {event?.address?.state}
+                                            </IonCol>
                                         </IonRow>
-                                    )}
-                                </IonCol>
+
+                                        {!event?.price?.free ? (
+                                            <>
+                                                <IonRow>
+                                                    {event?.price?.adult &&
+                                                        <>
+                                                            <IonCol size="3"> <i className="fa fa-users fa-2x"></i></IonCol>
+                                                            <IonCol size="9"> {event?.price?.adult} ש"ח</IonCol>
+                                                        </>
+                                                    }
+                                                </IonRow>
+                                                <IonRow>
+                                                    {event?.price?.studentOrSoldier &&
+                                                        <>
+                                                            <IonCol size="3"> <i className="fa fa-graduation-cap fa-2x"></i></IonCol>
+                                                            <IonCol size="9">  {event?.price?.studentOrSoldier} ש"ח</IonCol>
+                                                        </>
+                                                    }
+                                                </IonRow>
+                                                <IonRow>
+                                                    {event?.price?.child && <>  <IonCol size="3"> <i className="fa fa-child fa-2x"></i></IonCol>
+                                                        <IonCol size="9">  {event?.price?.child} ש"ח</IonCol> </>}
+                                                </IonRow>
+                                            </>
+                                        ) : (
+                                            <IonRow className='pt-4'>
+                                                <IonCol size="3"> <i className="fa fa-pagelines fa-2x"></i></IonCol>
+                                                <IonCol size="9"> הכניסה חופשית</IonCol>
+                                            </IonRow>
+                                        )}
+                                    </IonCol>
                                 </div>
                                 <div className='col-6 col-lg-4'>
                                     <IonCol>
                                         <IonCol>
                                             <IonRow>
                                                 <IonCol size="3"> <i className="fa  fa-map-signs fa-2x"></i></IonCol>
-                                                <IonCol size="9"> {event?.required_equipment ? event?.required_equipment : "לא נדרש להביא ציוד" } </IonCol>
+                                                <IonCol size="9"> {event?.required_equipment ? event?.required_equipment : "לא נדרש להביא ציוד"} </IonCol>
                                             </IonRow>
                                             <IonRow>
                                                 <IonCol size="3"> <i className="fa fa-car fa-2x"></i></IonCol>
@@ -314,13 +331,13 @@ const EventCard = ({ socket }) => {
                                     </IonCol>
                                 </div>
                                 <div className='col-12 col-lg-4' style={{ textAlign: 'center' }}>
-                                    <div style={{ fontSize: '20px', fontWeight: 'bold' }} className='pt-4'>
+                                    <div style={{ fontSize: '24px', fontWeight: 'bold' }} className='pt-4'>
                                         SAVE THE DATE
                                     </div>
-                                    <div style={{ fontSize: '50px', fontWeight: 'bold' }}>
+                                    <div style={{ fontSize: '24px' }}>
                                         {new Date(event?.date_and_time).toLocaleDateString('en-GB')}
                                     </div>
-                                    <div style={{ fontSize: '30px' }}>
+                                    <div style={{ fontSize: '24px' }}>
                                         {new Date(event?.date_and_time).toLocaleTimeString('en-GB', {
                                             hour: '2-digit',
                                             minute: '2-digit',
@@ -329,72 +346,72 @@ const EventCard = ({ socket }) => {
                                 </div>
                             </div>
 
-{ event?.active &&
+                            {event?.active &&
 
-                            <div className='row'>
-                                {myEvent ?
-                                    <IonCol size="2">
-                                        <button
-                                            type="button"
-                                            className="btn  btn-rounded btn-icon"
-                                            style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-                                            onMouseEnter={(e) => (e.target.style.color = 'yellow')}
-                                            onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                        // onClick={() => setDisplayReviews(!displayReviews)}
-                                        >
-                                            <i className="fa  fa-pencil fa-2x"></i>
-                                        </button> </IonCol> :
-                                    <>
-                                        {!praticipant &&
-                                            <>
-                                                {!openEvent && !hasJoinRequest && <IonCol size="2"> <span style={{ fontSize: "small" }}>בקשת הצטרפות</span>
-                                                    <button
+                                <div className='row'>
+                                    {myEvent ?
+                                        <IonCol size="2">
+                                            <button
+                                                type="button"
+                                                className="btn  btn-rounded btn-icon"
+                                                style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                onMouseEnter={(e) => (e.target.style.color = 'yellow')}
+                                                onMouseLeave={(e) => (e.target.style.color = 'black')}
+                                            // onClick={() => setDisplayReviews(!displayReviews)}
+                                            >
+                                                <i className="fa  fa-pencil fa-2x"></i>
+                                            </button> </IonCol> :
+                                        <>
+                                            {!praticipant &&
+                                                <>
+                                                    {!openEvent && !hasJoinRequest && <IonCol size="2"> <span style={{ fontSize: "small" }}>בקשת הצטרפות</span>
+                                                        <button
+                                                            type="button"
+                                                            className="btn  btn-rounded btn-icon"
+                                                            style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                            onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                                            onMouseLeave={(e) => (e.target.style.color = 'black')}
+                                                            onClick={() => sendJoinRequest()}
+                                                        >
+                                                            <i className="fa  fa-envelope fa-2x"></i>
+                                                        </button>
+                                                    </IonCol>
+                                                    }
+
+                                                    {!openEvent && hasJoinRequest && <IonCol size="2">
+                                                        <i className="fa  fa-info fa-2x mx-2" style={{ transform: "scaleX(-1)" }}></i>
+                                                        בקשת ההצטרפות שלך ממתינה לאישור
+                                                    </IonCol>
+                                                    }
+
+                                                    {openEvent && <IonCol size="2"> <button
                                                         type="button"
                                                         className="btn  btn-rounded btn-icon"
                                                         style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
                                                         onMouseEnter={(e) => (e.target.style.color = 'green')}
                                                         onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                                        onClick={() => sendJoinRequest()}
+                                                        onClick={() => addPraticipent()}
                                                     >
-                                                        <i className="fa  fa-envelope fa-2x"></i>
+                                                        <i className="fa   fa-hand-peace-o fa-2x"> </i>
+                                                        <span style={{ fontSize: "small" }}>אני רוצה לבוא</span>
                                                     </button>
-                                                </IonCol>
-                                                }
+                                                    </IonCol>
+                                                    }
+                                                </>
+                                            }
+                                            {praticipant && <IonCol size="2">
+                                                <i className="fa  fa-smile-o fa-2x mx-2" ></i>
+                                                {userInfo?.gender === "female" ? <span>אני באה</span> : <span>אני בא</span>}
 
-                                                {!openEvent && hasJoinRequest && <IonCol size="2">
-                                                    <i className="fa  fa-info fa-2x mx-2" style={{ transform: "scaleX(-1)" }}></i>
-                                                    בקשת ההצטרפות שלך ממתינה לאישור
-                                                </IonCol>
-                                                }
-
-                                                {openEvent && <IonCol size="2"> <button
-                                                    type="button"
-                                                    className="btn  btn-rounded btn-icon"
-                                                    style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-                                                    onMouseEnter={(e) => (e.target.style.color = 'green')}
-                                                    onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                                    onClick={() => addPraticipent()}
-                                                >
-                                                    <i className="fa   fa-hand-peace-o fa-2x"> </i>
-                                                    <span style={{ fontSize: "small" }}>אני רוצה לבוא</span>
-                                                </button>
-                                                </IonCol>
-                                                }
-                                            </>
-                                        }
-                                        {praticipant && <IonCol size="2">
-                                            <i className="fa  fa-smile-o fa-2x mx-2" ></i>
-                                            {userInfo?.gender === "female" ? <span>אני באה</span> : <span>אני בא</span>}
-
-                                        </IonCol>}
-                                    </>
-                                }
-                            </div>
-}
+                                            </IonCol>}
+                                        </>
+                                    }
+                                </div>
+                            }
 
                         </div>
                         {event &&
-                            <div className='col border me-3 p-4' style={{ backgroundImage: event.images.length > 0 ? `url(${ event.images[currentImageIndex]})` : `url(${require('../../../images/bus.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out', minHeight: '300px' }}>
+                            <div className='col border me-3 p-4' style={{ backgroundImage: event.images.length > 0 ? `url(${event.images[currentImageIndex]})` : `url(${require('../../../images/bus.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out', minHeight: '300px' }}>
                                 <button
                                     type="button"
                                     className="btn  btn-rounded btn-icon"
@@ -432,16 +449,18 @@ const EventCard = ({ socket }) => {
                     <div className='row mt-4'>
                         <div className='col-12 col-md-4  p-0 ps-3 chat' style={{ maxHeight: '650px', }}>
 
-                            {!hasReview && <button
-                                type="button"
-                                className="btn  btn-rounded btn-icon"
-                                style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-                                onMouseEnter={(e) => (e.target.style.color = 'green')}
-                                onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                onClick={() => addReview()}
-                            >
-                                <i className="fa  fa-plus fa-2x"></i>
-                            </button>}
+                            {!hasReview &&
+                                <button
+                                    type="button"
+                                    className="btn  btn-rounded btn-icon d-flex align-items-center"
+                                    style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                    onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                    onMouseLeave={(e) => (e.target.style.color = 'black')}
+                                    onClick={() => addReview()}
+                                >
+                                    <i className="fa  fa-plus fa-2x"></i>
+                                    <span className='me-2'>דרג את האירוע</span>
+                                </button>}
 
                             {reviews.length > 0 && reviews.map((review, index) => (
                                 review?.user_id?._id === user_id ?
@@ -466,10 +485,14 @@ const EventCard = ({ socket }) => {
                             ))}
                         </div>
                         <div className='col-12 col-md-8 border p-0'>
+
                             {
                                 event?._id && user_id ?
-                                    <ChatScreen eventId={event?._id} userId={user_id} socket={socket}
-                                    />
+
+
+                                    <ChatScreen eventId={event?._id} userId={user_id} socket={socket} />
+
+
                                     : ""
                             }
                         </div>
