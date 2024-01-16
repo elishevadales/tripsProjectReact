@@ -155,11 +155,10 @@ const NewEvent = () => {
 
   return (
     <section className="py-4" style={{ backdropFilter: "blur(20px)" }}>
-      <div className='background-signup'></div>
       <div className="container h-100 ">
         <div className='pt-4'>
-          <div className='col-12 d-flex align-items-center justify-content-center display-3' style={{ height: "300px", backgroundImage: `url(${require('../../../images/addEvent.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
-            <p className='p-3 m-2 text-center' style={{ borderRadius: "20px", background: "rgba(255, 255, 255, 0.477)" }}>יצירת אירוע חדש</p>
+          <div className='col-12 d-flex align-items-center justify-content-center display-3' style={{ height: "300px", backgroundImage: `url(${require('../../../images/addEvent.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat',borderTopLeftRadius:"15px" ,borderTopRightRadius:"15px"}}>
+            <p className='p-3 m-2 text-center' style={{ borderRadius: "20px", background: "rgba(255, 255, 255, 0.477)" }}>יצירת אירוע </p>
           </div>
           <div className='col-12 m-0  p-2 p-sm-4 bg-white py-3' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
 

@@ -6,7 +6,7 @@ import Map from './map';
 
 
 
-const EventLocation = ({ setCoordinates , setAddress }) => {
+const EventLocation = ({ setCoordinates, setAddress }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [showLoading, setShowLoading] = useState(false)
     const [isLocationFound, setIsLocationFound] = useState(false)
@@ -57,7 +57,7 @@ const EventLocation = ({ setCoordinates , setAddress }) => {
     }
 
     const confirmLocation = () => {
-        console.log("center:",center)
+        console.log("center:", center)
         setCoordinates(
             {
                 lat: center[0],
@@ -82,14 +82,14 @@ const EventLocation = ({ setCoordinates , setAddress }) => {
         <div className='mt-3'>
             <p className="h5 mb-3 d-flex align-items-center"
             >מיקום האירוע
-            {
-                        locationConfirmed &&
-                        <i className="fa fa-check-circle text-success me-3" aria-hidden="true" style={{ fontSize: "36px" }}></i>
-                    }
+                {
+                    locationConfirmed &&
+                    <i className="fa fa-check-circle text-success me-3" aria-hidden="true" style={{ fontSize: "36px" }}></i>
+                }
             </p>
             <div className='border shadow p-3 d-flex align-items-center flex-column'>
-                <div className=' d-flex col-8 align-items-center'>
-                    
+                <div className=' d-flex flex-column flex-sm-row col-8 align-items-center justify-content-center'>
+
                     <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='form-control' placeholder='כתובת/מקום'></input>
                     <button type='button' onClick={onClickSearch} className='btn btn-warning'>חיפוש</button>
                 </div>
