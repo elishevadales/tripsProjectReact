@@ -22,8 +22,8 @@ const Welcome = () => {
                 }}
             >
                 <div className='pt-5'>
-                    <p className='display-3 text-warning text-center pt-5'>ברוכים הבאים!</p>
-                    <div onClick={start} className='btn  text-white px-5 py-3 display-5' style={{ background: "#4d938ec8", boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)", fontWeight: 'bold' }}>כניסה</div>
+                    <p className='display-3 text-white text-center pt-5'>ברוכים הבאים!</p>
+                    <div onClick={start} className='btn  text-white px-5 py-3 display-5' style={{ background: "rgb(35, 140, 156)", boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)", fontWeight: 'bold' }}>כניסה</div>
                 </div>
 
 

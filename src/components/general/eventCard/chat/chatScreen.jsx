@@ -47,12 +47,13 @@ const ChatScreen = ({ eventId, userId, socket }) => {
             style={{
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                 // width: '700px',
-                height: '650px',
+                minHeight: '650px',
                 display: 'flex',
                 flexDirection: 'column',
                 background:'rgba(255, 255, 255, 0.505)'
             }}
         >
+            <p className='text-center p-3 h4 m-4' style={{color:"#077F7A", borderBottom:"1px solid #077F7A"}}>התחל צ'אט:</p>
             <div
                 className='d-flex flex-column-reverse'
                 style={{ flex: 1, overflowY: 'auto' }}

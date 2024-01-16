@@ -75,6 +75,7 @@ const Posts = () => {
 
 
   return (
+    <div style={{backdropFilter: "blur(20px)"}}>
     <div style={{ position: "relative", backdropFilter: "blur(20px)", minHeight: "100vh" }}>
 
       <div className="container pt-4">
@@ -147,8 +148,8 @@ const Posts = () => {
 
         </div>
         {viewType === 'list' ? (
-          <div className='row my-3 mt-0 justify-content-around align-item-center mb-0'>
-            {eventsAr.length < 1 && <p className='display-4 text-center'>לא נמצאו אירועים</p>}
+          <div className='row mt-3 mt-0 justify-content-around align-item-center'>
+            {eventsAr.length < 1 && <p className='display-4 text-center text-white'>לא נמצאו אירועים</p>}
             {eventsAr.map((event, i) => (
               <PreviewPostItem event={event} key={i} imageInLeft={i % 2 === 0} />
             ))}
@@ -159,24 +160,25 @@ const Posts = () => {
 
       </div>
       
-      <i
-        onClick={() => { nav(`/${userInfo.user.role}/newEvent`) }}
-        className="fa fa-plus p-4 text-white h2 d-flex align-items-center justify-content-center"
-        aria-hidden="true"
-        style={{
-          width: "80px",
-          height: "80px",
-          background: "#077F7A",
-          borderRadius: "100%",
-          border: "solid white 2 px",
-          position: "sticky",
-          right: "50px",
-          bottom: "50px",
-          cursor: "pointer"
-        }} />
+      
 
     </div>
-
+    <i
+    onClick={() => { nav(`/${userInfo.user.role}/newEvent`) }}
+    className="fa fa-plus p-4 text-white h2 d-flex align-items-center justify-content-center"
+    aria-hidden="true"
+    style={{
+      width: "80px",
+      height: "80px",
+      background: "#077F7A",
+      borderRadius: "100%",
+      border: "solid white 2 px",
+      position: "sticky",
+      right: "50px",
+      bottom: "50px",
+      cursor: "pointer"
+    }} />
+</div>
   )
 }
 
