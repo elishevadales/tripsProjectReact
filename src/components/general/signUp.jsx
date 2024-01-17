@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { API_URL, TOKEN_NAME, doApiMethod } from '../../services/apiService'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import InfoPopUp from './infoPopUp'
 
 const SignUp = () => {
@@ -63,16 +63,16 @@ const SignUp = () => {
   return (
 
 
-    <section className="py-4" style={{ backdropFilter: "blur(20px)" }}>
-      <div className='background-signup'></div>
-      <div className="container h-100 my-5 py-5 ">
-        <div className='row pt-5'>
-          <div className='col-12 col-md-5' style={{ backgroundImage: `url(${require('../../images/kids.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}></div>
-          <div className='col-12 col-md-7 m-0  p-5 bg-white py-3' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
+    <section style={{ backdropFilter: "blur(20px)", paddingTop: "130px", paddingBottom: "80px" }}>
+      <div className="container">
+        <div className='row justify-content-center'>
+          <div className='col-11 col-md-5' style={{ backgroundImage: `url(${require('../../images/kids.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+          </div>
+          <div className='col-11 col-md-7 p-4 p-sm-5 bg-white' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
 
-            <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">רישום</p>
+            <p className="text-center h1 fw-bold pt-4 pt-sm-0">רישום</p>
 
-            <form onSubmit={handleSubmit(onSub)} className="mx-1 mx-md-4">
+            <form onSubmit={handleSubmit(onSub)}>
               <div className="d-flex flex-row align-items-center mb-4">
                 <div className="form-outline flex-fill mb-0">
                   <label className="form-label" htmlFor="form3Example1c">
@@ -135,8 +135,8 @@ const SignUp = () => {
                   {errors.gender && <div className='text-danger'>* יש לבחור מין</div>}
                 </div>
               </div>
-              <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-              <p className='mt-4'> יש לך כבר חשבון? <Link to="/login">לחץ כאן</Link></p>
+              <div className="d-flex flex-column align-items-center justify-content-center mx-4 mb-3 mb-lg-4">
+                <p className='mt-4'> יש לך כבר חשבון? <Link to="/login">לחץ כאן</Link></p>
                 <button className="btn btn-warning btn-lg">
                   רשום אותי
                 </button>

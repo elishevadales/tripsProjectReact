@@ -51,9 +51,7 @@ function App() {
           <Route path='/user' element={<HeaderUser socket={socket}
             links={[
               { title: 'אירועים', path: '/user/events' },
-              { title: 'פרופיל', path: '/user/myProfile' },
               { title: 'אירוע-חדש', path: '/user/newEvent' },
-              { title: 'מפת-אירועים', path: '/user/eventsMap' },
             ]}
             color={"bg-warning"}
           />
@@ -66,17 +64,14 @@ function App() {
             <Route path='/user/newEvent' element={<NewEvent />} />
             <Route path='/user/userInfo' element={<Profile myProfile={true} />} />
             <Route path='/user/profile' element={<Profile />} />
-            <Route path='/user/eventsMap' element={<EventsMap/>} />
 
           </Route>
 
           <Route path='/admin' element={<HeaderUser socket={socket}
             links={[
-              { title: 'פוסטים', path: '/admin/events' },
-              { title: ' פרופיל', path: '/admin/myProfile' },
+              { title: 'אירועים', path: '/admin/events' },
               { title: 'משתמשים', path: '/admin/usersList' },
               { title: 'אירוע-חדש', path: '/admin/newEvent' },
-              { title: 'מפת-אירועים', path: '/admin/eventsMap' }
 
             ]}
             color={"bg-dark"}
@@ -90,8 +85,6 @@ function App() {
             <Route path='/admin/newEvent' element={<NewEvent />} />
             <Route path='/admin/myProfile' element={<Profile myProfile={true} />} />
             <Route path='/admin/profile' element={<Profile />} />
-            <Route path='/admin/eventsMap' element={<EventsMap/>} />
-
 
 
           </Route>

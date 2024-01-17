@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom';
 import Notification from '../notification/notification';
 import ParticipantsList from './participantsList'
+import EventsMap from '../eventsMap';
 
 
 const EventCard = ({ socket }) => {
@@ -238,6 +239,10 @@ const EventCard = ({ socket }) => {
             <div className='container-fluid '>
                 <div className='container pb-4'>
                     <div className='row  pt-5'>
+
+
+
+                        {/* event information */}
                         <div className='col-12 col-md-8  p-5 border' style={{ background: 'rgba(255, 255, 255, 0.505)' }}  >
 
                             <div>
@@ -408,9 +413,13 @@ const EventCard = ({ socket }) => {
                                     }
                                 </div>
                             }
-
                         </div>
-                        {event &&
+
+
+
+                        {/* event images */}
+                        {
+                            event &&
                             <div className='col border me-md-3 p-4' style={{ backgroundImage: event.images.length > 0 ? `url(${event.images[currentImageIndex]})` : `url(${require('../../../images/bus.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out', minHeight: '300px' }}>
                                 <button
                                     type="button"
@@ -421,8 +430,6 @@ const EventCard = ({ socket }) => {
                                     <i className="fa fa-heart fa-2x" style={{ color: 'red' }}></i>
                                     {likes}
                                 </button>
-
-
                                 <br />
                                 <button
                                     type="button"
@@ -433,20 +440,35 @@ const EventCard = ({ socket }) => {
                                     <i className="fa fa-users fa-2x" style={{ color: 'blue' }}></i>
                                     {praticipants}
                                 </button>
+                            </div>
+                        }
 
-
-
-                            </div>}
-                        {event?.participants &&
+                        {
+                            event?.participants &&
                             <ParticipantsList
                                 participants={event?.participants}
                                 isOpen={showParticipantsModal}
                                 onClose={handleParticipantsModalClose}
-                            />}
+                            />
+                        }
                     </div>
 
-                    <div className='row mt-4'>
-                        <div className='col-12 col-md-4 p-0'>
+
+
+
+                    {/* event map */}
+                    {
+                        event &&
+                        <EventsMap events={[event]} />
+                    }
+
+
+                    <div className='row mt-4 '>
+
+
+
+                        {/* event reviews */}
+                        <div className=' col-12 col-md-4 p-0'>
                             <div className='px-2 chat border ms-md-3 mb-4 mb-md-0' style={{ maxHeight: '650px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', background: 'rgba(255, 255, 255, 0.505)' }}>
                                 <p className='text-center p-3 h4 m-4' style={{ color: "#077F7A", borderBottom: "1px solid #077F7A" }}>דירוגים:</p>
 
@@ -459,7 +481,7 @@ const EventCard = ({ socket }) => {
                                         onMouseLeave={(e) => (e.target.style.color = 'black')}
                                         onClick={() => addReview()}
                                     >
-                                        <i className="fa fa-plus" style={{fontSize:"24px"}}></i>
+                                        <i className="fa fa-plus" style={{ fontSize: "24px" }}></i>
                                     </button>}
 
                                 {reviews.length > 0 && reviews.map((review, index) => (
@@ -480,12 +502,14 @@ const EventCard = ({ socket }) => {
                                         <ReviewCard
                                             key={index}
                                             review={review}
-
                                         />
                                 ))}
                             </div>
                         </div>
 
+
+
+                        {/* event chat */}
                         <div className='col-12 col-md-8 border p-0'>
 
                             {

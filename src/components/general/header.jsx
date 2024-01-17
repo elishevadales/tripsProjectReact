@@ -29,7 +29,7 @@ const Header = () => {
   return (
     <>
       <header
-        className='container-fluid m-0 d-flex align-items-center'
+        className='container-fluid m-0 p-0 d-flex align-items-center'
         style={{
           boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)",
           // background: 'rgba(35, 140, 156, 0.66)',
