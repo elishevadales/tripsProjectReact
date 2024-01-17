@@ -129,7 +129,7 @@ const Posts = () => {
               </div>
             </div>
             <div onClick={handleSearch} className="text-white display-6 col-1 d-flex flex-column  justify-content-center text-center" style={{ background: "#BBE4E2", cursor: "pointer" }}>
-
+              
               <i onClick={() => toggleView('list')} style={{ color: "#077F7A", fontSize: "24px" }} className="fa fa-list-alt fa py-1" aria-hidden="true"></i>
               <i onClick={() => toggleView('calendar')} style={{ color: "#077F7A", fontSize: "24px" }} className="fa fa-calendar fa py-1" aria-hidden="true"></i>
               <i onClick={() => toggleView('map')} style={{ color: "#077F7A", fontSize: "32px" }} className="fa fa-map-marker fa py-1" aria-hidden="true"></i>
@@ -140,19 +140,25 @@ const Posts = () => {
               חיפוש
             </div>
 
-
           </div>
-          
-          {viewType === 'list' ? (
+
+
+          {viewType === 'list' &&
             <div className='row mt-3 mt-0 justify-content-around align-item-center'>
               {eventsAr.length < 1 && <p className='display-4 text-center text-white'>לא נמצאו אירועים</p>}
               {eventsAr.map((event, i) => (
                 <PreviewPostItem event={event} key={i} imageInLeft={i % 2 === 0} />
               ))}
             </div>
-          ) : (
+          }
+
+          {viewType === 'calendar' &&
             <CalendarView events={eventsAr} />
-          )}
+          }
+
+          {viewType === 'map' &&
+            <EventsMap events={eventsAr}/>
+          }
 
         </div>
 
