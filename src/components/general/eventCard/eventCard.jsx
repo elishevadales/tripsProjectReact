@@ -9,6 +9,10 @@ import { useLocation } from 'react-router-dom';
 import Notification from '../notification/notification';
 import ParticipantsList from './participantsList'
 import EventsMap from '../eventsMap';
+import Typography from '@mui/joy/Typography';
+import Avatar from '@mui/joy/Avatar';
+import Box from '@mui/joy/Box';
+
 
 
 const EventCard = ({ socket }) => {
@@ -245,6 +249,13 @@ const EventCard = ({ socket }) => {
                         {/* event information */}
                         <div className='col-12 col-md-8  p-5 border' style={{ background: 'rgba(255, 255, 255, 0.505)' }}  >
 
+
+                            <Box className="mb-3" sx={{ color: "grey", display: 'flex', gap: 1.5, alignItems: 'center' }}>
+                                <Avatar variant="soft" color="neutral" src={event?.user_id?.profile_image ? event?.user_id?.profile_image : "https://firebasestorage.googleapis.com/v0/b/tripsproject-de869.appspot.com/o/avatars%2FdefaultAvatar.png?alt=media&token=c9b52448-9c6e-4d7a-9743-5b5115767781"} />
+                                <Typography>{event?.user_id?.nick_name}</Typography>
+                            </Box>
+
+                            
                             <div>
                                 <div className='col-12 col-md-5 '>
                                     <p style={{
