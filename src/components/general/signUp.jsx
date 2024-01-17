@@ -52,6 +52,7 @@ const SignUp = () => {
   const nameRef = register("name", { required: true, minLength: 2, maxLength: 50 })
   const emailRef = register("email", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })
   const passRef = register("password", { required: true, minLength: 6, maxLength: 50 });
+  
   const passAgainRef = register("passwordAgain", {
     required: true, validate: (val) => {
       return val == getValues("password")
@@ -137,7 +138,7 @@ const SignUp = () => {
               </div>
               <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
               <p className='mt-4'> יש לך כבר חשבון? <Link to="/login">לחץ כאן</Link></p>
-                <button className="btn btn-warning btn-lg">
+                <button className="btn  btn-lg text-white mt-4" style={{ borderRadius: '3px', background: "#077F7A", boxShadow: "9px 9px 55px -12px rgba(0,0,0,0.75)"}}>
                   רשום אותי
                 </button>
               </div>

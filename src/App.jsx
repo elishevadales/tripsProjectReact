@@ -12,6 +12,7 @@ import HomeAdmin from './components/admin/homeAdmin';
 import SignUpMessage from './components/general/signUpMessage'
 import EventCard from './components/general/eventCard/eventCard'
 import ResetPassword from './components/general/resetPassword'
+import ResetPasswordMessage from './components/general/resetPasswordMessage'
 // redux
 import { configureStore } from "@reduxjs/toolkit"
 import { Provider } from 'react-redux';
@@ -26,6 +27,7 @@ import { API_URL } from './services/apiService'
 import NewEvent from './components/general/addEvent/newEvent';
 import UserCard from './components/general/userCard';
 import EventsMap from './components/general/eventsMap';
+import { from } from 'stylis';
 
 const socket = socketIO.connect(API_URL)
 function App() {
@@ -46,6 +48,7 @@ function App() {
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/confirmRegistration" element={<SignUpMessage />} />
             <Route path='/resetPassword/:token' element={<ResetPassword />} />
+            <Route path='/resetMyPassword' element={<ResetPasswordMessage />} />
           </Route>
 
           <Route path='/user' element={<HeaderUser socket={socket}

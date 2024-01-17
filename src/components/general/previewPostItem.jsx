@@ -95,7 +95,7 @@ const PreviewPostItem = (props) => {
                 </div>
                 <div className="text col-12 col-sm-6 p-4" style={{ order: imageInLeft ? 2 : 1, background: "#BBE4E2" }}>
                     <Box className="mb-3" sx={{ color: "grey", display: 'flex', gap: 1.5, mt: 'auto', alignItems: 'center' }}>
-                        <Avatar variant="soft" color="neutral" src={event.user_id.profile_image} />
+                        <Avatar variant="soft" color="neutral" src={event.user_id.profile_image} style={{ boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.52)',}}/>
                         <div>
                             <Typography level="body-xs">
                                 {event.date_created && typeof event.date_created === 'string' ? event.date_created.split('T')[0] : 'N/A'}

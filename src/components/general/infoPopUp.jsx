@@ -14,7 +14,7 @@ const InfoPopUp = ({ show, message, onCancel }) => {
         <Modal show={show} onHide={onCancel} backdrop="static" keyboard={false} centered>
             <Modal.Body className='text-center'>
                 <p className='m-3'>{message}</p>
-                <button className="btn btn-secondary col-3 " onClick={onCancel}>
+                <button className="btn  btn-lg text-white mt-4" style={{ borderRadius: '3px', background: "#077F7A", boxShadow: "9px 9px 55px -12px rgba(0,0,0,0.75)"}} onClick={onCancel}>
                     אישור
                 </button>
             </Modal.Body>

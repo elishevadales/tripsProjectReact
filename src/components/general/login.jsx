@@ -22,6 +22,7 @@ const Login = () => {
 
 
   const emailRef = register("email", { required: true })
+  
   const passRef = register("password", { required: true });
 
   const onSub = async (data) => {
@@ -30,6 +31,7 @@ const Login = () => {
     await doApiMyInfo();
 
   }
+
 
   const doApiLogin = async (bodyData) => {
     let url = API_URL + "/users/login"
@@ -121,11 +123,12 @@ const Login = () => {
                     </div>
                   </div>
                   <div className="d-flex justify-content-center flex-column text-center mx-4 mb-3 mb-lg-4 mt-2">
-                    <button className="btn  btn-lg text-white mt-4" style={{ borderRadius: 0, background: "#5C7D84", boxShadow: "9px 9px 55px -12px rgba(0,0,0,0.75)" }}>
+                    <button className="btn  btn-lg text-white mt-4" style={{ borderRadius: '3px', background: "#077F7A", boxShadow: "9px 9px 55px -12px rgba(0,0,0,0.75)"}}>
                       כניסה
                     </button>
                     
                     <p className='mt-4'>עדיין אין לך חשבון? <Link to="/signUp">לחץ כאן</Link></p>
+                    <p className='mt-4'> <Link to="/resetMyPassword">שכחתי סיסמא</Link></p>
                   </div>
                 </form>
               </div>

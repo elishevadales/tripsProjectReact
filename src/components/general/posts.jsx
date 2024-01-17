@@ -142,7 +142,7 @@ const Posts = () => {
             </button>
           </div>
 
-          <div onClick={handleSearch} className="button text-white display-6 p-3 col-2 d-flex alignItems-center justify-content-center" style={{ background: "#077F7A", cursor: "pointer" }}>
+          <div onClick={handleSearch} className="button text-white display-6 p-3 col-2 d-flex alignItems-center justify-content-center" style={{ background: "#077F7A", cursor: "pointer" , }}>
             חיפוש
           </div>
 
@@ -176,7 +176,8 @@ const Posts = () => {
       position: "sticky",
       right: "50px",
       bottom: "50px",
-      cursor: "pointer"
+      cursor: "pointer",
+      boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.52)'
     }} />
 </div>
   )
