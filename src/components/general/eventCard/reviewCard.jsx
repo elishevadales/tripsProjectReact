@@ -8,11 +8,11 @@ const ReviewCard = ({ review }) => {
     const blackStars = 5 - yellowStars;
 
     for (let i = 0; i < yellowStars; i++) {
-      stars.push(<i key={i} className="fa fa-star fa-2x ps-1" style={{ color: 'yellow' }} />);
+      stars.push(<i key={i} className="fa fa-star fa ps-1" style={{ color: 'yellow', fontSize: "18px" }} />);
     }
 
     for (let i = 0; i < blackStars; i++) {
-      stars.push(<i key={i + yellowStars} className="fa fa-star-o fa-2x ps-1" style={{ color: 'yellow' }} />);
+      stars.push(<i key={i + yellowStars} className="fa fa-star-o ps-1" style={{ color: 'yellow', fontSize: "18px" }} />);
     }
 
     return stars;
@@ -23,17 +23,25 @@ const ReviewCard = ({ review }) => {
       <IonGrid>
         <IonRow>
           <IonCol size="10">{renderStars()}</IonCol>
-          <IonCol size="2">{review?.user_id?.nick_name}</IonCol>
+          <IonCol size="2" className='h6'>{review?.user_id?.nick_name}</IonCol>
         </IonRow>
         <IonRow>
           <IonCol size="3">
-            <img
-              src={review?.user_id?.profile_image? review?.user_id?.profile_image:"https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png?f=webp"}
-              alt={review?.user_id?.nick_name}
-              style={{ width: '80px', height: '80px', borderRadius: '50%' , boxShadow: '0 4px 8px rgba(137,137,137,0.75)'}}
+            <div
+              style={{
+                height: '40px',
+                width: '40px',
+                borderRadius: '100px',
+                backgroundImage: `url(${review?.user_id?.profile_image})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                boxShadow: '0 4px 8px rgba(137,137,137,0.75)'
+              }}
             />
+
           </IonCol>
-          <IonCol size="9">{review?.comment}</IonCol>
+          <IonCol size="9" className='px-2 border'>{review?.comment}</IonCol>
         </IonRow>
       </IonGrid>
     </div>

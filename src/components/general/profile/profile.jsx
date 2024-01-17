@@ -173,7 +173,7 @@ const Profile = ({ myProfile = false }) => {
                                     <span className='h3 px-1'>{user?.nick_name}</span>
                                     {user?.gender === "female" ? <i className="fa fa-venus"></i> : <i className="fa fa-mars"></i>}
                                     <br />
-                                    <span className='h4 px-1'>{user.age}</span>
+                                    <span className='h4 px-1'>{user?.age}</span>
                                 </p>
                                 <div>
                                     <div className='row'>

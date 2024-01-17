@@ -8,6 +8,11 @@ import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom';
 import Notification from '../notification/notification';
 import ParticipantsList from './participantsList'
+import EventsMap from '../eventsMap';
+import Typography from '@mui/joy/Typography';
+import Avatar from '@mui/joy/Avatar';
+import Box from '@mui/joy/Box';
+
 
 
 const EventCard = ({ socket }) => {
@@ -238,8 +243,19 @@ const EventCard = ({ socket }) => {
             <div className='container-fluid '>
                 <div className='container pb-4'>
                     <div className='row  pt-5'>
+
+
+
+                        {/* event information */}
                         <div className='col-12 col-md-8  p-5 border' style={{ background: 'rgba(255, 255, 255, 0.505)' }}  >
 
+
+                            <Box className="mb-3" sx={{ color: "grey", display: 'flex', gap: 1.5, alignItems: 'center' }}>
+                                <Avatar variant="soft" color="neutral" src={event?.user_id?.profile_image ? event?.user_id?.profile_image : "https://firebasestorage.googleapis.com/v0/b/tripsproject-de869.appspot.com/o/avatars%2FdefaultAvatar.png?alt=media&token=c9b52448-9c6e-4d7a-9743-5b5115767781"} />
+                                <Typography>{event?.user_id?.nick_name}</Typography>
+                            </Box>
+
+                            
                             <div>
                                 <div className='col-12 col-md-5 '>
                                     <p style={{
@@ -348,35 +364,35 @@ const EventCard = ({ socket }) => {
 
                             {event?.active &&
 
-                            <div className='row'>
-                                {myEvent ?
-                                    <IonCol size="2">
-                                        <button
-                                            type="button"
-                                            className="btn  btn-rounded btn-icon"
-                                            style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-                                            onMouseEnter={(e) => (e.target.style.color = 'yellow')}
-                                            onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                        // onClick={() => editEvent()}
-                                        >
-                                            <i className="fa  fa-pencil fa-2x"></i>
-                                        </button> </IonCol> :
-                                    <>
-                                        {!praticipant &&
-                                            <>
-                                                {!openEvent && !hasJoinRequest && <IonCol size="2"> <span style={{ fontSize: "small" }}>בקשת הצטרפות</span>
-                                                    <button
-                                                        type="button"
-                                                        className="btn  btn-rounded btn-icon"
-                                                        style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-                                                        onMouseEnter={(e) => (e.target.style.color = 'green')}
-                                                        onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                                        onClick={() => sendJoinRequest()}
-                                                    >
-                                                        <i className="fa  fa-envelope fa-2x"></i>
-                                                    </button>
-                                                </IonCol>
-                                                }
+                                <div className='row'>
+                                    {myEvent ?
+                                        <IonCol size="2">
+                                            <button
+                                                type="button"
+                                                className="btn  btn-rounded btn-icon"
+                                                style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                onMouseEnter={(e) => (e.target.style.color = 'yellow')}
+                                                onMouseLeave={(e) => (e.target.style.color = 'black')}
+                                            // onClick={() => editEvent()}
+                                            >
+                                                <i className="fa  fa-pencil fa-2x"></i>
+                                            </button> </IonCol> :
+                                        <>
+                                            {!praticipant &&
+                                                <>
+                                                    {!openEvent && !hasJoinRequest && <IonCol size="2"> <span style={{ fontSize: "small" }}>בקשת הצטרפות</span>
+                                                        <button
+                                                            type="button"
+                                                            className="btn  btn-rounded btn-icon"
+                                                            style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                                            onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                                            onMouseLeave={(e) => (e.target.style.color = 'black')}
+                                                            onClick={() => sendJoinRequest()}
+                                                        >
+                                                            <i className="fa  fa-envelope fa-2x"></i>
+                                                        </button>
+                                                    </IonCol>
+                                                    }
 
                                                     {!openEvent && hasJoinRequest && <IonCol size="2">
                                                         <i className="fa  fa-info fa-2x mx-2" style={{ transform: "scaleX(-1)" }}></i>
@@ -408,22 +424,23 @@ const EventCard = ({ socket }) => {
                                     }
                                 </div>
                             }
-
                         </div>
-                        {event &&
-                            <div className='col border me-3 p-4' style={{ backgroundImage: event.images.length > 0 ? `url(${event.images[currentImageIndex]})` : `url(${require('../../../images/bus.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out', minHeight: '300px' }}>
+
+
+
+                        {/* event images */}
+                        {
+                            event &&
+                            <div className='col border me-md-3 p-4' style={{ backgroundImage: event.images.length > 0 ? `url(${event.images[currentImageIndex]})` : `url(${require('../../../images/bus.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', transition: 'background-image 5s ease-in-out', minHeight: '300px' }}>
                                 <button
                                     type="button"
                                     className="btn  btn-rounded btn-icon"
                                     style={{ transition: 'color 0.3s', color: 'red', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-
                                     onClick={handleLike}
                                 >
                                     <i className="fa fa-heart fa-2x" style={{ color: 'red' }}></i>
                                     {likes}
                                 </button>
-
-
                                 <br />
                                 <button
                                     type="button"
@@ -434,56 +451,76 @@ const EventCard = ({ socket }) => {
                                     <i className="fa fa-users fa-2x" style={{ color: 'blue' }}></i>
                                     {praticipants}
                                 </button>
+                            </div>
+                        }
 
-
-
-                            </div>}
-                        {event?.participants &&
+                        {
+                            event?.participants &&
                             <ParticipantsList
                                 participants={event?.participants}
                                 isOpen={showParticipantsModal}
                                 onClose={handleParticipantsModalClose}
-                            />}
+                            />
+                        }
                     </div>
 
-                    <div className='row mt-4'>
-                        <div className='col-12 col-md-4  p-0 ps-3 chat' style={{ maxHeight: '650px', }}>
 
-                            {!hasReview &&
-                                <button
-                                    type="button"
-                                    className="btn  btn-rounded btn-icon d-flex align-items-center"
-                                    style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
-                                    onMouseEnter={(e) => (e.target.style.color = 'green')}
-                                    onMouseLeave={(e) => (e.target.style.color = 'black')}
-                                    onClick={() => addReview()}
-                                >
-                                    <i className="fa  fa-plus fa-2x"></i>
-                                    <span className='me-2'>דרג את האירוע</span>
-                                </button>}
 
-                            {reviews.length > 0 && reviews.map((review, index) => (
-                                review?.user_id?._id === user_id ?
-                                    <MyReview
-                                        key={index}
-                                        index={index}
-                                        review={review}
-                                        removeReviews={removeReviews}
-                                        editReview={editReview}
-                                        setReviews={setReviews}
-                                    />
-                                    :
-                                    <></>
-                            ))}
-                            {reviews.length > 0 && reviews.map((review, index) => (
-                                review?.user_id?._id === user_id ? <></> :
-                                    <ReviewCard
-                                        key={index}
-                                        review={review}
 
-                                    />
-                            ))}
+                    {/* event map */}
+                    {
+                        event &&
+                        <EventsMap events={[event]} />
+                    }
+
+
+                    <div className='row mt-4 '>
+
+
+
+                        {/* event reviews */}
+                        <div className=' col-12 col-md-4 p-0'>
+                            <div className='px-2 chat border ms-md-3 mb-4 mb-md-0' style={{ maxHeight: '650px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', background: 'rgba(255, 255, 255, 0.505)' }}>
+                                <p className='text-center p-3 h4 m-4' style={{ color: "#077F7A", borderBottom: "1px solid #077F7A" }}>דירוגים:</p>
+
+                                {!hasReview &&
+                                    <button
+                                        type="button"
+                                        className="btn btn-rounded btn-icon d-flex align-items-center"
+                                        style={{ transition: 'color 0.3s', color: 'black', background: "rgba(0, 0, 0, 0)", borderRadius: '50%' }}
+                                        onMouseEnter={(e) => (e.target.style.color = 'green')}
+                                        onMouseLeave={(e) => (e.target.style.color = 'black')}
+                                        onClick={() => addReview()}
+                                    >
+                                        <i className="fa fa-plus" style={{ fontSize: "24px" }}></i>
+                                    </button>}
+
+                                {reviews.length > 0 && reviews.map((review, index) => (
+                                    review?.user_id?._id === user_id ?
+                                        <MyReview
+                                            key={index}
+                                            index={index}
+                                            review={review}
+                                            removeReviews={removeReviews}
+                                            editReview={editReview}
+                                            setReviews={setReviews}
+                                        />
+                                        :
+                                        <></>
+                                ))}
+                                {reviews.length > 0 && reviews.map((review, index) => (
+                                    review?.user_id?._id === user_id ? <></> :
+                                        <ReviewCard
+                                            key={index}
+                                            review={review}
+                                        />
+                                ))}
+                            </div>
                         </div>
+
+
+
+                        {/* event chat */}
                         <div className='col-12 col-md-8 border p-0'>
 
                             {

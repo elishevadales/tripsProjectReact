@@ -96,16 +96,16 @@ const Login = () => {
 
 
   return (
-    <section className="py-5" style={{ backdropFilter: "blur(20px)" }} >
+    <section className="py-4" style={{ backdropFilter: "blur(20px)" }} >
       <div className='background-login'></div>
       <div className="container h-100 my-5 py-5 ">
         <div className='row pt-5 justify-content-center'>
           {/* <div className='col-12 col-md-5' style={{ backgroundImage: `url(${require('../../images/group2.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'right', backgroundRepeat: 'no-repeat' }}></div> */}
-          <div className='col-12 col-md-7 m-0 p-0 py-5 bg-white' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
-            <div className="text-black px-5" >
+          <div className='col-11 col-md-7 m-0 p-0 py-5 bg-white' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
+            <div className="text-black" >
               <div className="m-0 p-5">
                 <p className="text-center h1 fw-bold">כניסה</p>
-                <form onSubmit={handleSubmit(onSub)} className="">
+                <form onSubmit={handleSubmit(onSub)}>
                   <div className="d-flex flex-row align-items-center mb-4">
                     <div className="form-outline flex-fill mb-0">
                       <label className="form-label font-weight-bold" htmlFor="form3Example3c">
@@ -127,8 +127,8 @@ const Login = () => {
                       כניסה
                     </button>
                     
-                    <p className='mt-4'>עדיין אין לך חשבון? <Link to="/signUp">לחץ כאן</Link></p>
-                    <p className='mt-4'> <Link to="/resetMyPassword">שכחתי סיסמא</Link></p>
+                    <p className='mt-4'>עדיין אין לך חשבון?<br></br>
+                     <Link to="/signUp">לחץ כאן</Link></p>
                   </div>
                 </form>
               </div>

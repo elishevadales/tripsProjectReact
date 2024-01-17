@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 
 
 
-const EventsMap = () => {
+const EventsMap = ({  events }) => {
 
     const [eventsAr, setEventsAr] = useState([]);
     const nav = useNavigate()
@@ -18,7 +18,8 @@ const EventsMap = () => {
     )
 
     useEffect(() => {
-        doApiGetAllEvents();
+            // doApiGetAllEvents();
+
     }, [])
 
     const doApiGetAllEvents = async () => {
@@ -48,7 +49,7 @@ const EventsMap = () => {
     });
 
     return (
-        <div className='pt-4' style={{ backdropFilter: "blur(20px)", minHeight: "100vh" }}>
+        <div className='pt-4' style={{ backdropFilter: "blur(20px)" }}>
             <div className="container">
                 <MapContainer
                     center={[32.43634, 35.122432]}
@@ -61,7 +62,8 @@ const EventsMap = () => {
                         attribution={'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
                     />
                     {
-                        eventsAr.map((event, i) => {
+                        // eventsAr.map((event, i) => {
+                        events.map((event, i) => {
                             console.log("event:", event)
                             return (
                                 event.coordinates && event.coordinates.lat && event.coordinates.lon &&
@@ -72,9 +74,9 @@ const EventsMap = () => {
                                             <>
                                                 <div onClick={() => { onClickPopup(event._id) }} className='p-2 d-sm-flex align-items-center justify-content-around text-sm-end text-center' style={{ background: "rgb(207, 205, 205)", cursor: "pointer", borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }}>
                                                     <div className='ps-3' style={{ color: "grey" }}>
-                                                        <p className='h5 m-0' style={{ color:"black" }}>{event.event_name} ({event.category == "trip" ? "טיול" : "אטרקציה"})</p>
+                                                        <p className='h5 m-0' style={{ color: "black" }}>{event.event_name} ({event.category == "trip" ? "טיול" : "אטרקציה"})</p>
                                                         <p className='h6'>
-                                          
+
                                                             יציאה בתאריך:
                                                             <br></br>
                                                             {event.date_and_time && typeof event.date_and_time === 'string' ? event.date_and_time.split('T')[0] : 'N/A'}
@@ -85,9 +87,9 @@ const EventsMap = () => {
                                                     <div style={{ borderRadius: "10px", backgroundImage: event.images[0] ? `url(${event.images[0]})` : "url(https://t3.ftcdn.net/jpg/05/63/76/92/360_F_563769202_XvjMvyMO593Wt70Um2OQPJ5CZrTXbT4t.jpg)", height: "120px", width: "120px", backgroundSize: "cover", backgroundPosition: "center" }} />
                                                 </div>
 
-                                                <div className={event.active?'bg-success text-white lead':'bg-danger text-white lead'}  style={{ height: "50px", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px",display:"flex", alignItems:"center",justifyContent:"center" }}>
-                                                    {event.active? <p>אירוע פעיל</p>
-                                                    : <p>אירוע לא פעיל</p>}
+                                                <div className={event.active ? 'bg-success text-white lead' : 'bg-danger text-white lead'} style={{ height: "50px", borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                    {event.active ? <p>אירוע פעיל</p>
+                                                        : <p>אירוע לא פעיל</p>}
                                                 </div>
                                             </>
                                         }

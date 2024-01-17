@@ -12,7 +12,7 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
     useEffect(() => {
         setHoveredStars(review?.rate)
         setStars(review?.rate)
-    },[]);
+    }, []);
 
     const edit = () => {
         editReview(index, { ...review, comment: editedComment, rate: stars })
@@ -23,41 +23,41 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
         const starsArr = [];
         const yellowStars = hoveredStars || stars;
         const blackStars = 5 - yellowStars;
-    
+
         for (let i = 0; i < yellowStars; i++) {
             starsArr.push(
                 <i
                     key={i}
-                    className="fa fa-star fa-2x ps-1"
-                    style={{ color: 'yellow' }}
+                    className="fa fa-star ps-1"
+                    style={{ color: 'yellow', fontSize: "18px" }}
                     onMouseEnter={() => setHoveredStars(i + 1)}
                     onMouseLeave={() => setHoveredStars(0)}
                     onClick={() => handleStarClick(i + 1)}
                 />
             );
         }
-    
+
         for (let i = 0; i < blackStars; i++) {
             starsArr.push(
                 <i
                     key={i + yellowStars}
-                    className="fa fa-star-o fa-2x ps-1"
-                    style={{ color: 'yellow' }}
+                    className="fa fa-star-o ps-1"
+                    style={{ color: 'yellow', fontSize: "18px" }}
                     onMouseEnter={() => setHoveredStars(yellowStars + i + 1)}
                     onMouseLeave={() => setHoveredStars(0)}
                     onClick={() => handleStarClick(yellowStars + i + 1)}
                 />
             );
         }
-    
+
         return starsArr;
     };
-    
-    
+
+
     const handleStarClick = (clickedStars) => {
         setHoveredStars(clickedStars);
         setStars(clickedStars)
-         // setOnEdit(false);
+        // setOnEdit(false);
         // setEditedComment(review?.comment);
 
     };
@@ -69,17 +69,21 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
         const blackStars = 5 - yellowStars;
 
         for (let i = 0; i < yellowStars; i++) {
-            stars.push(<i key={i} className="fa fa-star fa-2x ps-1" style={{ color: 'yellow' }} />);
+            stars.push(<i key={i} className="fa fa-star ps-1" style={{ color: 'yellow', fontSize: "18px" }} />);
         }
 
         for (let i = 0; i < blackStars; i++) {
-            stars.push(<i key={i + yellowStars} className="fa fa-star-o fa-2x ps-1" style={{ color: 'yellow' }} />);
+            stars.push(<i key={i + yellowStars} className="fa fa-star-o ps-1" style={{ color: 'yellow', fontSize: "18px" }} />);
         }
 
         return stars;
     };
     return (
-        <div className='border mb-3  p-2 bg-white' style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <div className=' mb-3 bg-white p-2' style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', border:"solid 2px rgb(35, 140, 156)" }}>
+            <div className='text-center text-white py-1 lead' style={{background:"rgba(35, 140, 156, 0.745)", borderRadius:"5px"}}>
+                הדירוג שלי:
+            </div>
+
             <IonGrid>
                 <IonRow>
                     {onEdit && <IonCol size="8">{renderStarsOnEdit()}</IonCol>}
@@ -92,7 +96,7 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
                         onMouseLeave={(e) => (e.target.style.color = 'black')}
                         onClick={() => setOnEdit(true)}
                     >
-                        <i className="fa  fa-pencil fa-2x"></i>
+                        <i className="fa fa-pencil" style={{ fontSize: "18px" }}></i>
                     </button>
                     </IonCol>}
                     {onEdit && <IonCol size="2"> <button
@@ -103,7 +107,7 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
                         onMouseLeave={(e) => (e.target.style.color = 'black')}
                         onClick={() => edit()}
                     >
-                        <i className="fa  fa-check fa-2x"></i>
+                        <i className="fa  fa-check" style={{fontSize:"18px"}}></i>
                     </button>
                     </IonCol>}
 
@@ -115,24 +119,32 @@ const MyReview = ({ index, review, removeReviews, editReview }) => {
                         onMouseLeave={(e) => (e.target.style.color = 'black')}
                         onClick={() => removeReviews(index)}
                     >
-                        <i className="fa  fa-trash fa-2x"></i>
+                        <i className="fa  fa-trash" style={{ fontSize: "18px" }}></i>
                     </button>
                     </IonCol>
 
                 </IonRow>
                 <IonRow>
                     <IonCol size="3">
-                        <img
-                            src={review?.user_id?.profile_image}
-                            alt={review?.user_id?.nick_name}
-                            style={{ width: '80px', height: '80px', borderRadius: '50%', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }}
+                        <div
+                            style={{
+                                height: '40px',
+                                width: '40px',
+                                borderRadius: '100px',
+                                backgroundImage: `url(${review?.user_id?.profile_image})`,
+                                backgroundPosition: 'center',
+                                backgroundSize: 'cover',
+                                backgroundRepeat: 'no-repeat',
+                                boxShadow: '0 4px 8px rgba(137,137,137,0.75)'
+                            }}
                         />
+                        
                     </IonCol>
-                    {!onEdit && <IonCol size="9">{review?.comment}</IonCol>}
+                    {!onEdit && <IonCol  className='px-2 border' size="9">{review?.comment}</IonCol>}
                     {onEdit && (
                         <IonCol size="9">
                             <textarea
-                                style={{ width: '250px', height: '80px' }}
+                                style={{ width: '100%', height: '80px' }}
                                 value={editedComment}
                                 onChange={(e) => setEditedComment(e.target.value)}
                                 maxLength={300}

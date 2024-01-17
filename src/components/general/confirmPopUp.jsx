@@ -4,7 +4,6 @@ import { Modal } from 'react-bootstrap';
 const ConfirmPopUp = ({ show, message, onConfirm, onCancel }) => {
   return (
     <Modal className='d-flex' show={show} onHide={onCancel} backdrop="static" keyboard={false} centered>
-      <Modal.Dialog>
         <Modal.Header className="d-flex justify-content-between">
           <Modal.Title>אישור</Modal.Title>
           <button className="btn" onClick={onCancel}>
@@ -26,7 +25,6 @@ const ConfirmPopUp = ({ show, message, onConfirm, onCancel }) => {
             כן
           </button>
         </Modal.Footer>
-      </Modal.Dialog>
     </Modal>
   );
 };
