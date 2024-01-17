@@ -139,23 +139,24 @@ const Posts = () => {
             <div onClick={handleSearch} className="button text-white display-6 p-3 col-2 d-flex alignItems-center justify-content-center" style={{ background: "#077F7A", cursor: "pointer" }}>
               חיפוש
             </div>
+
+
+          </div>
           
+          {viewType === 'list' ? (
+            <div className='row mt-3 mt-0 justify-content-around align-item-center'>
+              {eventsAr.length < 1 && <p className='display-4 text-center text-white'>לא נמצאו אירועים</p>}
+              {eventsAr.map((event, i) => (
+                <PreviewPostItem event={event} key={i} imageInLeft={i % 2 === 0} />
+              ))}
+            </div>
+          ) : (
+            <CalendarView events={eventsAr} />
+          )}
 
         </div>
-        {viewType === 'list' ? (
-          <div className='row mt-3 mt-0 justify-content-around align-item-center'>
-            {eventsAr.length < 1 && <p className='display-4 text-center text-white'>לא נמצאו אירועים</p>}
-            {eventsAr.map((event, i) => (
-              <PreviewPostItem event={event} key={i} imageInLeft={i % 2 === 0} />
-            ))}
-          </div>
-        ) : (
-          <CalendarView events={eventsAr} />
-        )}
 
-      </div>
-      
-      
+
 
       </div>
       <i
