@@ -10,8 +10,8 @@ const Logo = ({ withtext }) => {
     return (
         <div className='logo d-flex align-items-center justify-content-center' style={{ cursor: "pointer" }}>
             <i className='fa fa-car fa-2x' aria-hidden='true' style={{ color: "rgb(35, 140, 156)" }}></i>
-
-            <h2 className='me-1' style={{ color: "rgb(35, 140, 156)", fontSize: "32px", fontFamily: "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif" }}> trips</h2>
+       
+            <h2 className='me-1' style={{ color: "rgb(35, 140, 156)", fontSize: "32px", fontFamily: "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif" }}> TripMates</h2>
         </div>
     )
 }

@@ -178,7 +178,7 @@ const HeaderUser = (props) => {
                                 fontSize: "32px"
                             }}
                         >
-                            trips
+                            TripMates
                         </Typography>
 
 
@@ -230,6 +230,7 @@ const HeaderUser = (props) => {
                         <IconButton onClick={onClickLogo} sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
                             <i className='fa fa-car' aria-hidden='true' style={{ color: "rgb(35, 140, 156)", fontSize: '28px' }}></i>
                         </IconButton>
+                        
                         <Typography
                             onClick={onClickLogo}
                             variant="h5"
@@ -246,7 +247,7 @@ const HeaderUser = (props) => {
                                 fontSize: "32px"
                             }}
                         >
-                            trips
+                            TripMates
                         </Typography>
 
 

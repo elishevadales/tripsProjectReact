@@ -22,11 +22,7 @@ const ReviewCard = ({ review }) => {
     <div className='border  mb-3 p-2 bg-white' style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
       <IonGrid>
         <IonRow>
-          <IonCol size="10">{renderStars()}</IonCol>
-          <IonCol size="2" className='h6'>{review?.user_id?.nick_name}</IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol size="3">
+        <IonRow size="3">
             <div
               style={{
                 height: '40px',
@@ -39,8 +35,15 @@ const ReviewCard = ({ review }) => {
                 boxShadow: '0 4px 8px rgba(137,137,137,0.75)'
               }}
             />
+            
 
-          </IonCol>
+          </IonRow>
+          <IonCol size="2" className='h6'>{review?.user_id?.nick_name}</IonCol>
+
+          <IonCol size="5">{renderStars()}</IonCol>
+        </IonRow>
+        <IonRow>
+          
           <IonCol size="9" className='px-2 border'>{review?.comment}</IonCol>
         </IonRow>
       </IonGrid>

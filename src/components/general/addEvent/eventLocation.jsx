@@ -82,6 +82,8 @@ const EventLocation = ({ setCoordinates, setAddress }) => {
         <div className='mt-3'>
             <p className="h5 mb-3 d-flex align-items-center"
             >מיקום האירוע
+                <span className='text-danger'>*</span>
+
                 {
                     locationConfirmed &&
                     <i className="fa fa-check-circle text-success me-3" aria-hidden="true" style={{ fontSize: "36px" }}></i>
@@ -101,8 +103,8 @@ const EventLocation = ({ setCoordinates, setAddress }) => {
                                 <p>{locationData.address.state}</p>
                                 <p>{locationData.address.state_district}</p>
                                 <p>{locationData.address.town}</p>
-                                <p>{locationData.address.city}</p>
-                                <p>{locationData.address.road} {locationData.address.house_number}</p>
+                                <p>{locationData.address.city && "עיר: " + locationData.address.city}</p>
+                                <p> {locationData.address.road && "רחוב: "+locationData.address.road} {locationData.address.house_number}</p>
                             </div>
 
                         </div>

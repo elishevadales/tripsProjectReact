@@ -255,7 +255,7 @@ const EventCard = ({ socket }) => {
                                 <Typography>{event?.user_id?.nick_name}</Typography>
                             </Box>
 
-                            
+
                             <div>
                                 <div className='col-12 col-md-5 '>
                                     <p style={{
@@ -423,6 +423,10 @@ const EventCard = ({ socket }) => {
                                         </>
                                     }
                                 </div>
+                            }
+                            {
+                               !event?.active &&
+                               <div className='bg-danger text-white text-center p-2'>האירוע הסתיים / לא פעיל</div> 
                             }
                         </div>
 
