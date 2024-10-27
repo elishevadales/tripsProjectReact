@@ -6,8 +6,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: url('./images/bg.jpg') center center fixed; 
-  background-size: cover; 
 }
 
 
