@@ -257,7 +257,11 @@ ion-card-header {
   top: 15px;
   border-radius: 50%;
   z-index: 1;
+  transform: translateY(-50%); /* Adjust to center based on height */
+
+  transition: transform 0.7s ease; /* Smooth transitions */
 }
+
 
 /* Place the container to the left */
 .left-2 {
@@ -341,9 +345,6 @@ ion-card-header {
 
 .arrows {
   width: 60px;
-  height: 72px;
-  margin-left: -30px;
-  bottom: 32px;
 }
 
 .arrows path {

@@ -20,7 +20,7 @@ const Welcome = () => {
           minHeight: "100vh", // Use vh unit to represent 95% of the viewport height
         }}
       >
-        <div className="pt-5 me-4 d-flex flex-column">
+        <div className="pt-5 me-4 d-flex flex-column align-items-center">
           <p className="display-3 text-white text-start pt-5">
             טיול טוב מתחיל כאן
           </p>
@@ -36,7 +36,7 @@ const Welcome = () => {
             כניסה
           </div>
 
-          <svg className="arrows">
+          <svg className="arrows mt-5">
             <path className="a1" d="M0 0 L30 32 L60 0"></path>
             <path className="a2" d="M0 20 L30 52 L60 20"></path>
             <path className="a3" d="M0 40 L30 72 L60 40"></path>
