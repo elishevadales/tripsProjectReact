@@ -10,7 +10,7 @@ const TimeLine = () => {
   const steps = [
     {
       title: "בוחרים מקום",
-      description: "בשלה הראשון בחורים מקום אליו בא לכם לצאת. זה יכול להיות כול מקום, מסעדה, ים, טיפוס הרים או באולינג.",
+      description: "בשלב הראשון בחורים מקום אליו בא לכם לצאת. זה יכול להיות כול מקום, מסעדה, ים, טיפוס הרים או באולינג.",
       stage: "שלב 1",
       image: "https://www.tel-aviv.gov.il/en/PublishingImages/1ab0eca3eb2649c1b9c8473c7bdee591.jpg",
     },

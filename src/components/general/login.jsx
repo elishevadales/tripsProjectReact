@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import InfoPopUp from './infoPopUp'
 import { useDispatch } from 'react-redux'
 import { updateUserInfo } from '../reducer/userInfoSlice'
-import { MDBInput } from "mdbreact";
 
 const Login = () => {
 
@@ -100,7 +99,6 @@ const Login = () => {
       <div className='background-login'></div>
       <div className="container h-100 my-5 py-5 ">
         <div className='row pt-5 justify-content-center'>
-          {/* <div className='col-12 col-md-5' style={{ backgroundImage: `url(${require('../../images/group2.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'right', backgroundRepeat: 'no-repeat' }}></div> */}
           <div className='col-11 col-md-7 m-0 p-0 py-5 bg-white' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>
             <div className="text-black" >
               <div className="m-0 p-5">

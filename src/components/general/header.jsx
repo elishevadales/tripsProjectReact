@@ -32,8 +32,7 @@ const Header = () => {
         className='container-fluid m-0 p-0 d-flex align-items-center'
         style={{
           boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)",
-          // background: 'rgba(35, 140, 156, 0.66)',
-          background: "rgba(255, 255, 255, 0.7)",
+          background: "rgba(255, 255, 255, 0.8)",
           position: visible ? 'fixed' : 'absolute',
           width: '100%',
           top: 0,

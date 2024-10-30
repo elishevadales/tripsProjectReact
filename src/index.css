@@ -1,17 +1,15 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -29,11 +27,9 @@ code {
   z-index: -1; /* Send the image to the background */
 }
 
-
 ion-card-header {
   background: transparent; /* Make the card header transparent */
 }
-
 
 .line {
   position: absolute;
@@ -54,42 +50,38 @@ ion-card-header {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-} */
-
-
-.custom-background {
-  background-color: rgba(0, 0, 0, 0.651)
-};
+}
+*/ .custom-background {
+  background-color: rgba(0, 0, 0, 0.651);
+}
 
 .btn-rounded {
   border-radius: 50%;
   margin: 5px;
-}  
-
+}
 
 /* .container{
   
   margin-top:100px;
 } */
 
-
 /* The ribbon */
 
-.ribbon{
+.ribbon {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: rgba(255, 255, 255, 0.248);
-  width:100px;
-  height:150px;
+  width: 100px;
+  height: 150px;
   background-color: white;
-  position:absolute;
-  left:80px;
-  top:-350px;
-  animation:drop forwards .8s 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  &:before{
-    content: '';
+  position: absolute;
+  left: 80px;
+  top: -350px;
+  animation: drop forwards 0.8s 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  &:before {
+    content: "";
     position: absolute;
     z-index: 2;
     left: 0;
@@ -98,53 +90,52 @@ ion-card-header {
     border-right: 50px solid white;
     border-bottom: 50px solid transparent;
   }
-  &:after{
-    content:'';
-    width:200px;
-    height:270px;
+  &:after {
+    content: "";
+    width: 200px;
+    height: 270px;
     position: absolute;
     z-index: -1;
     left: 0;
-    bottom:-120px;
-    transform:skewY(35deg) skewX(0);
+    bottom: -120px;
+    transform: skewY(35deg) skewX(0);
   }
 }
 
-@keyframes drop{
-  0%    { top:-350px; }
-  100%  { top:0; }
+@keyframes drop {
+  0% {
+    top: -350px;
+  }
+  100% {
+    top: 0;
+  }
 }
-
-
-
 
 #chatTextarea {
   overflow-y: hidden;
-  scrollbar-width:none
+  scrollbar-width: none;
 }
 
 .focused #chatTextarea {
   overflow-y: scroll;
-  scrollbar-width:none
+  scrollbar-width: none;
 }
 
-
-.example  {
+.example {
   /* width: 700px; */
   overflow-y: scroll; /* Add the ability to scroll */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .example::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .example {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
-
 
 .align-left {
   align-self: flex-start;
@@ -154,7 +145,6 @@ ion-card-header {
   align-self: flex-end;
 }
 
-
 .chat {
   /* width: 700px; */
   overflow-y: scroll; /* Add the ability to scroll */
@@ -162,15 +152,14 @@ ion-card-header {
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .chat::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .chat {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
-
 
 .cascading-right {
   margin-right: -50px;
@@ -181,7 +170,6 @@ ion-card-header {
     margin-right: 0;
   }
 }
-
 
 .rounded-t-5 {
   border-top-left-radius: 0.5rem;
@@ -195,32 +183,21 @@ ion-card-header {
   }
 }
 
-
-.background-login{
+.background-login {
   position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    margin: 0;
-    padding: 0;
-    background: #ffffff00;
-    background-position: top;
-    background-size: cover;
-    z-index: -1;
-    overflow: hidden;
-    filter: blur(10px);
-    -webkit-filter: blur(10px);
+  width: 100vw;
+  height: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  background-image: url("images/group2.jpg");
+  background-position: top;
+  background-size: cover;
+  z-index: -1;
+  overflow: hidden;
+  -webkit-filter: blur(10px);
 }
-.background-login{
-  /* background-image: url(images/group2.jpg); */
-
-}
-
-
-
-
-
 
 /* The actual timeline (the vertical ruler) */
 .main-timeline-2 {
@@ -261,7 +238,6 @@ ion-card-header {
 
   transition: transform 0.7s ease; /* Smooth transitions */
 }
-
 
 /* Place the container to the left */
 .left-2 {
@@ -342,50 +318,62 @@ ion-card-header {
   }
 }
 
-
 .arrows {
   width: 60px;
 }
 
 .arrows path {
-  stroke:rgb(35, 140, 156);
+  stroke: rgb(35, 140, 156);
   fill: transparent;
-  stroke-width: 8px;  
+  stroke-width: 8px;
   animation: arrow 2s infinite;
-  -webkit-animation: arrow 2s infinite; 
+  -webkit-animation: arrow 2s infinite;
 }
 
-@keyframes arrow
-{
-0% {opacity:0}
-40% {opacity:1}
-80% {opacity:0}
-100% {opacity:0}
+@keyframes arrow {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
-@-webkit-keyframes arrow /*Safari and Chrome*/
-{
-0% {opacity:0}
-40% {opacity:1}
-80% {opacity:0}
-100% {opacity:0}
+@-webkit-keyframes arrow /*Safari and Chrome*/ {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .arrows path.a1 {
-  animation-delay:-1s;
-  -webkit-animation-delay:-1s; /* Safari 和 Chrome */
+  animation-delay: -1s;
+  -webkit-animation-delay: -1s; /* Safari 和 Chrome */
 }
 
 .arrows path.a2 {
-  animation-delay:-0.5s;
-  -webkit-animation-delay:-0.5s; /* Safari 和 Chrome */
+  animation-delay: -0.5s;
+  -webkit-animation-delay: -0.5s; /* Safari 和 Chrome */
 }
 
-.arrows path.a3 { 
-  animation-delay:0s;
-  -webkit-animation-delay:0s; /* Safari 和 Chrome */
+.arrows path.a3 {
+  animation-delay: 0s;
+  -webkit-animation-delay: 0s; /* Safari 和 Chrome */
 }
-
 
 @keyframes countUp {
   from {
