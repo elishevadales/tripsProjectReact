@@ -7,7 +7,6 @@ import Login from './components/general/login';
 import SignUp from './components/general/signUp';
 import Page404 from './components/general/404page';
 import HeaderUser from './components/user/headerUser';
-import HomeUser from './components/user/homeUser';
 import HomeAdmin from './components/admin/homeAdmin';
 import SignUpMessage from './components/general/signUpMessage'
 import EventCard from './components/general/eventCard/eventCard'
@@ -59,7 +58,6 @@ function App() {
             color={"bg-warning"}
           />
           }>
-            <Route path='/user/home' element={<HomeUser />} />
             <Route path='/user/myProfile' element={<Profile myProfile={true} />} />
             <Route path='/user/events' element={<Posts />} />
             <Route path='/user/myInfo' element={<MyInfo />} />
