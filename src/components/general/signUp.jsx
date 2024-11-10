@@ -74,6 +74,7 @@ const SignUp = () => {
 
   return (
     <section className={styles.sec}>
+      <div className='genaral-background-1'></div>
       <div className={`container ${styles.container}`}>
         <div className="row justify-content-center">
           <div

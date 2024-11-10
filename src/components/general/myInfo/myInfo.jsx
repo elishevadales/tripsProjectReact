@@ -121,9 +121,8 @@ const MyInfo = () => {
             onClose={handleNotificationClose}
         />
     )}
-        <div style={{ backdropFilter: "blur(20px)" }}>
-
-            {/* <div style={{ backgroundImage: `url(${require('../../../images/background.jpg')})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}> */}
+        <div>
+        <div className='genaral-background-1'></div>
             <section className="py-5">
                 <div className="container h-100 ">
                     <div className="row d-flex justify-content-center align-items-center h-100 ">

@@ -1,8 +1,6 @@
 .sec{
-    background-image: url("../../images/bg.jpg");
-    background: #238C9C;
-    padding-top: 130px;
-    padding-bottom: 80px;
+    margin-top: 150px;
+    margin-bottom: 100px;
 }
 .container{
     box-shadow: -4px 7px 13px -2px rgba(0,0,0,0.75);

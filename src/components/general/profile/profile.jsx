@@ -117,6 +117,8 @@ const Profile = ({ myProfile = false }) => {
 
     return (
         <div style={{ position: "relative", backdropFilter: "blur(30px)" }}>
+                  <div className='genaral-background-1'></div>
+
             {showEventListModal && user?.my_created_events &&
                 <MyEventList
                     events={user?.my_created_events}

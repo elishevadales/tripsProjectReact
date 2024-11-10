@@ -96,7 +96,7 @@ const Login = () => {
 
   return (
     <section className="py-4" style={{ backdropFilter: "blur(20px)" }} >
-      <div className='background-login'></div>
+      <div className='genaral-background-1'></div>
       <div className="container h-100 my-5 py-5 ">
         <div className='row pt-5 justify-content-center'>
           <div className='col-11 col-md-7 m-0 p-0 py-5 bg-white' style={{ boxShadow: "-4px 7px 13px -2px rgba(0,0,0,0.75)" }}>

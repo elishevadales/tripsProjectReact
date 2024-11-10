@@ -269,15 +269,13 @@ const HeaderUser = (props) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <Typography className="text-center px-2">
-                  <span style={{ color: "grey" }}>{userInfo.user.name}</span>
-                </Typography>
+             
 
                 <Typography
                   className="text-center p-2"
                   style={{ borderBottom: "solid grey 1px" }}
                 >
-                  <span style={{ color: "grey" }}>{userInfo.user.email}</span>
+                  <span style={{ color: "grey" }}>{userInfo.user.name}</span>
                 </Typography>
                 {privateMenu.map((link, i) => (
                   <MenuItem

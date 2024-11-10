@@ -239,7 +239,8 @@ const EventCard = ({ socket }) => {
                 onClose={handleNotificationClose}
             />
         )}
-        <div style={{ position: "relative", backdropFilter: "blur(20px)" }}>
+        <div style={{ position: "relative" }}>
+        <div className='genaral-background-1'></div>
             <div className='container-fluid '>
                 <div className='container pb-4'>
                     <div className='row  pt-5'>

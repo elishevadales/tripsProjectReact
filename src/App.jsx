@@ -24,7 +24,6 @@ import socketIO from 'socket.io-client'
 
 import { API_URL } from './services/apiService'
 import NewEvent from './components/general/addEvent/newEvent';
-import UserCard from './components/general/userCard';
 import EventsMap from './components/general/eventsMap';
 import { from } from 'stylis';
 

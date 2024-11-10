@@ -76,8 +76,9 @@ const Posts = () => {
 
 
   return (
-    <div style={{ backdropFilter: "blur(20px)" }}>
-      <div style={{ position: "relative", backdropFilter: "blur(20px)", minHeight: "100vh" }}>
+    <div>
+      <div className='genaral-background-1'></div>
+      <div style={{ position: "relative", minHeight: "100vh" }}>
 
         <div className="container pt-4">
           <div className="search d-flex border shadow bg-white">
