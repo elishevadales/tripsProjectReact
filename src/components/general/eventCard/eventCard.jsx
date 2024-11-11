@@ -12,14 +12,12 @@ import EventsMap from "../eventsMap";
 import Typography from "@mui/joy/Typography";
 import Avatar from "@mui/joy/Avatar";
 import Box from "@mui/joy/Box";
+import LikeButton from "../likeButton";
 
 const EventCard = ({ socket }) => {
-  // Get the location object using the useLocation hook
   const location = useLocation();
-  // Access the state object from the location
   const { state } = location;
 
-  // Now, state should contain the data you passed during navigation
   const [event, setEvent] = useState();
   const [openEvent, setOpenEvent] = useState(false);
   const [praticipant, setPraticipant] = useState(false);
@@ -50,27 +48,7 @@ const EventCard = ({ socket }) => {
     setShowParticipantsModal(false);
   };
 
-  const handleLike = async () => {
-    try {
-      if (hasLike) {
-        const data = await doApiMethod(
-          API_URL + `/events/removeLike/${event?._id}`,
-          "patch"
-        );
-        setLikes(likes - 1);
-      } else {
-        const data = await doApiMethod(
-          API_URL + `/events/addLike/${event?._id}`,
-          "patch"
-        );
-        setLikes(likes + 1);
-      }
-      setHasLike(!hasLike);
-    } catch (err) {
-      console.log(err);
-      alert("יש בעיה בשליפת הנתונים. נסה שוב מאוחר יותר");
-    }
-  };
+ 
 
   const sendJoinRequest = async () => {
     try {
@@ -271,24 +249,28 @@ const EventCard = ({ socket }) => {
                     alignItems: "center",
                   }}
                 >
-                    <div className="d-flex align-items-center">
-                  <Avatar
-                  className="ms-2"
-                    variant="soft"
-                    color="neutral"
-                    src={
-                      event?.user_id?.profile_image
-                        ? event?.user_id?.profile_image
-                        : "https://firebasestorage.googleapis.com/v0/b/tripsproject-de869.appspot.com/o/avatars%2FdefaultAvatar.png?alt=media&token=c9b52448-9c6e-4d7a-9743-5b5115767781"
-                    }
-                  />
-                  <Typography>{event?.user_id?.nick_name}</Typography></div>
+                  <div className="d-flex align-items-center">
+                    <Avatar
+                      className="ms-2"
+                      variant="soft"
+                      color="neutral"
+                      src={
+                        event?.user_id?.profile_image
+                          ? event?.user_id?.profile_image
+                          : "https://firebasestorage.googleapis.com/v0/b/tripsproject-de869.appspot.com/o/avatars%2FdefaultAvatar.png?alt=media&token=c9b52448-9c6e-4d7a-9743-5b5115767781"
+                      }
+                    />
+                    <Typography>{event?.user_id?.nick_name}</Typography>
+                  </div>
 
                   {myEvent && (
-                      <IonCol size="1" title="עריכת אירוע" style={{cursor:"pointer"}}>
-                          <i className="fa  fa-pencil fa-2x"></i>
-                      </IonCol>
-                    
+                    <IonCol
+                      size="1"
+                      title="עריכת אירוע"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <i className="fa  fa-pencil fa-2x"></i>
+                    </IonCol>
                   )}
                 </Box>
 
@@ -568,7 +550,7 @@ const EventCard = ({ socket }) => {
               {/* event images */}
               {event && (
                 <div
-                  className="col border me-md-3 p-4"
+                  className="col border me-md-3 p-4 position-relative"
                   style={{
                     backgroundImage:
                       event.images.length > 0
@@ -580,24 +562,9 @@ const EventCard = ({ socket }) => {
                     minHeight: "300px",
                   }}
                 >
-                  <button
-                    type="button"
-                    className="btn  btn-rounded btn-icon"
-                    style={{
-                      transition: "color 0.3s",
-                      color: "red",
-                      background: "rgba(0, 0, 0, 0)",
-                      borderRadius: "50%",
-                    }}
-                    onClick={handleLike}
-                  >
-                    <i
-                      className="fa fa-heart fa-2x"
-                      style={{ color: "red" }}
-                    ></i>
-                    {likes}
-                  </button>
-                  <br />
+                  
+                  <LikeButton event={event} setEvent={setEvent} />
+<br />
                   <button
                     type="button"
                     className="btn  btn-rounded btn-icon"

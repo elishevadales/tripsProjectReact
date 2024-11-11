@@ -223,7 +223,7 @@ const HeaderUser = (props) => {
 
             {/* avatar */}
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title={userInfo.user.name}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   {userInfo.notifications && (
                     <StyledBadge

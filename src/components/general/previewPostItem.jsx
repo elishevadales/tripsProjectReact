@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
@@ -7,39 +6,13 @@ import { useSelector } from "react-redux";
 import Avatar from "@mui/joy/Avatar";
 import Box from "@mui/joy/Box";
 import Typography from "@mui/joy/Typography";
-
-
+import LikeButton from "./likeButton";
 
 const PreviewPostItem = (props) => {
   const userInfo = useSelector((myStore) => myStore.userInfoSlice);
-  const eventId = props.event._id;
   const imageInLeft = props.imageInLeft;
-
   const [event, setEvent] = useState(props.event);
-  const [isLiked, setIsLiked] = useState(
-    event.like_list.includes(userInfo.user._id)
-  );
-
   const nav = useNavigate();
-
-  const onClickLikeIcon = async () => {
-    await doApiAddLike();
-  };
-
-  const doApiAddLike = async () => {
-    let url = API_URL + "/events/addOrRemoveLike/" + eventId;
-
-    try {
-      let resp = await doApiMethod(url, "PATCH");
-      console.log("Updated event data:", resp.data.event);
-      console.log("User ID:", userInfo.user._id);
-      console.log("Like List:", resp.data.event.like_list);
-      setEvent(resp.data.event);
-      setIsLiked(resp.data.event.like_list.includes(userInfo.user._id));
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const onClickNickName = () => {
     localStorage.setItem("userProfileId", event.user_id._id);
@@ -57,20 +30,23 @@ const PreviewPostItem = (props) => {
   };
 
   return (
+
     <div className="col-md-6 p-0">
       <div
         className=" border shadow d-flex m-3 p-0 row"
         style={{ height: "300px" }}
       >
+
+        {/* event image */}
         <div
           onClick={onClickCard}
           className="image col-12 col-sm-6 p-0"
           style={{
             order: imageInLeft ? 1 : 2,
-            position: "relative",
             cursor: "pointer",
-            height: '300px', // Adjust as needed
-    overflow: 'hidden'
+            position:"relative",
+            height: "300px",
+            overflow: "hidden",
           }}
         >
           <img
@@ -83,30 +59,18 @@ const PreviewPostItem = (props) => {
             alt="trip image"
             style={{ objectFit: "cover", width: "100%", height: "100%" }}
           />
-          <i
-            style={{
-              position: "absolute",
-              left: 0,
-              bottom: 0,
-              color: isLiked ? "red" : "black",
-              borderRadius: "100%",
-              fontSize: "24px",
-              background: "white",
-            }}
-            className={
-              isLiked ? "fa fa-heart p-2 m-2" : "fa fa-heart-o p-2 m-2"
-            }
-            aria-hidden="true"
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent the click event from propagating to the container
-              onClickLikeIcon();
-            }}
-          >
-            {/* {event.like_list.length < 1 ? "" : event.like_list.length} */}
-            
-          </i>
+
+          {/* like icon */}
+          <div className="position-absolute start-0 bottom-0">
+                      <LikeButton event={event} setEvent={setEvent}/>
+
+          </div>
           
         </div>
+        
+
+
+        {/* event info */}
         <div
           className="text col-12 col-sm-6 p-4"
           style={{
@@ -145,7 +109,7 @@ const PreviewPostItem = (props) => {
                 onClick={onClickNickName}
                 style={{
                   textDecoration: "underline",
-                  transition: "blue 0.3s ease", // Add a smooth color transition
+                  transition: "blue 0.3s ease",
                   cursor: "pointer",
                 }}
                 className="hover-underline"
