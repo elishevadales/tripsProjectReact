@@ -131,9 +131,9 @@ const Posts = () => {
             </div>
             <div onClick={handleSearch} className="text-white display-6 col-1 d-flex flex-column  justify-content-center text-center" style={{ background: "#BBE4E2", cursor: "pointer" }}>
               
-              <i onClick={() => toggleView('list')} style={{ color: "#077F7A", fontSize: "24px" }} className="fa fa-list-alt fa py-1" aria-hidden="true"></i>
-              <i onClick={() => toggleView('calendar')} style={{ color: "#077F7A", fontSize: "24px" }} className="fa fa-calendar fa py-1" aria-hidden="true"></i>
-              <i onClick={() => toggleView('map')} style={{ color: "#077F7A", fontSize: "32px" }} className="fa fa-map-marker fa py-1" aria-hidden="true"></i>
+              <i title='פוסטים' onClick={() => toggleView('list')} style={{ color: "#077F7A", fontSize: "24px" }} className="fa fa-list-alt fa py-1" aria-hidden="true"></i>
+              <i title='לוח אירועים' onClick={() => toggleView('calendar')} style={{ color: "#077F7A", fontSize: "24px" }} className="fa fa-calendar fa py-1" aria-hidden="true"></i>
+              <i title='מפת אירועים' onClick={() => toggleView('map')} style={{ color: "#077F7A", fontSize: "32px" }} className="fa fa-map-marker fa py-1" aria-hidden="true"></i>
 
             </div>
 

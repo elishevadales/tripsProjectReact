@@ -25,7 +25,6 @@ const NewEvent = () => {
   const [isRequiredEquipment, setIsRequiredEquipment] = useState(false);
   const [images, setImages] = useState([]);
   const [category, setCategory] = useState();
-  const [imagesUrls, setImagesUrls] = useState([]);
   const [isSenddingForm, setIsSenddingForm] = useState(false);
   const [coordinates, setCoordinates] = useState();
   const [address, setAddress] = useState();
@@ -98,7 +97,6 @@ const NewEvent = () => {
       })
     );
 
-    setImagesUrls(urls);
     return urls; // Return the URLs to be used in onSub
   };
 

@@ -62,7 +62,7 @@ const CalendarView = ({ events }) => {
 
     return (
         <div className='pt-5'>
-            <div className="calendar-container">
+            <div className="calendar-container p-4" style={{background:"white",borderRadius:"15px",border:"10px solid rgb(35, 140, 156)"}}>
                 <Calendar
                     localizer={localizer}
                     events={eventList}

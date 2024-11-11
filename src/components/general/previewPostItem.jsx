@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
-import AspectRatio from "@mui/joy/AspectRatio";
-import Avatar from "@mui/joy/Avatar";
-import Box from "@mui/joy/Box";
-import Card from "@mui/joy/Card";
-import CardContent from "@mui/joy/CardContent";
-import CardOverflow from "@mui/joy/CardOverflow";
-import Divider from "@mui/joy/Divider";
-import Typography from "@mui/joy/Typography";
-import IconButton from "@mui/joy/IconButton";
-import Link from "@mui/joy/Link";
-import Favorite from "@mui/icons-material/Favorite";
 import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
+
+//material UI
+import Avatar from "@mui/joy/Avatar";
+import Box from "@mui/joy/Box";
+import Typography from "@mui/joy/Typography";
+
+
 
 const PreviewPostItem = (props) => {
   const userInfo = useSelector((myStore) => myStore.userInfoSlice);
@@ -107,7 +103,9 @@ const PreviewPostItem = (props) => {
             }}
           >
             {/* {event.like_list.length < 1 ? "" : event.like_list.length} */}
+            
           </i>
+          
         </div>
         <div
           className="text col-12 col-sm-6 p-4"
