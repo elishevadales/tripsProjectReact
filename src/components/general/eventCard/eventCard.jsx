@@ -48,8 +48,6 @@ const EventCard = ({ socket }) => {
     setShowParticipantsModal(false);
   };
 
- 
-
   const sendJoinRequest = async () => {
     try {
       const data = await doApiMethod(
@@ -432,7 +430,7 @@ const EventCard = ({ socket }) => {
                       style={{ fontSize: "24px", fontWeight: "bold" }}
                       className="pt-4"
                     >
-                      SAVE THE DATE
+                      תאריך יציאה
                     </div>
                     <div style={{ fontSize: "24px" }}>
                       {new Date(event?.date_and_time).toLocaleDateString(
@@ -550,7 +548,7 @@ const EventCard = ({ socket }) => {
               {/* event images */}
               {event && (
                 <div
-                  className="col border me-md-3 p-4 position-relative"
+                  className="col border me-md-3 p-4 position-relative d-flex flex-column align-items-start"
                   style={{
                     backgroundImage:
                       event.images.length > 0
@@ -562,26 +560,22 @@ const EventCard = ({ socket }) => {
                     minHeight: "300px",
                   }}
                 >
-                  
                   <LikeButton event={event} setEvent={setEvent} />
-<br />
-                  <button
-                    type="button"
-                    className="btn  btn-rounded btn-icon"
-                    style={{
-                      transition: "color 0.3s",
-                      color: "blue",
-                      background: "rgba(0, 0, 0, 0)",
-                      borderRadius: "50%",
-                    }}
+
+                  <i
                     onClick={handleParticipantsClick}
+                    className="fa fa-users fa-2x d-flex align-items-center p-2 m-2"
+                    title="משתתפים"
+                    style={{ 
+                      color: "blue",
+                      borderRadius: "30px",
+        fontSize: "24px",
+        background: "white",
+        cursor:"pointer"
+                    }}
                   >
-                    <i
-                      className="fa fa-users fa-2x"
-                      style={{ color: "blue" }}
-                    ></i>
-                    {praticipants}
-                  </button>
+                    <span className="lead me-1 text-dark">{praticipants}</span>
+                  </i>
                 </div>
               )}
 

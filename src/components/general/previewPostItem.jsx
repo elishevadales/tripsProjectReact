@@ -30,13 +30,11 @@ const PreviewPostItem = (props) => {
   };
 
   return (
-
     <div className="col-md-6 p-0">
       <div
         className=" border shadow d-flex m-3 p-0 row"
         style={{ height: "300px" }}
       >
-
         {/* event image */}
         <div
           onClick={onClickCard}
@@ -44,7 +42,7 @@ const PreviewPostItem = (props) => {
           style={{
             order: imageInLeft ? 1 : 2,
             cursor: "pointer",
-            position:"relative",
+            position: "relative",
             height: "300px",
             overflow: "hidden",
           }}
@@ -62,13 +60,9 @@ const PreviewPostItem = (props) => {
 
           {/* like icon */}
           <div className="position-absolute start-0 bottom-0">
-                      <LikeButton event={event} setEvent={setEvent}/>
-
+            <LikeButton event={event} setEvent={setEvent} />
           </div>
-          
         </div>
-        
-
 
         {/* event info */}
         <div
@@ -118,18 +112,19 @@ const PreviewPostItem = (props) => {
               </Typography>
             </div>
           </Box>
-
-          <p className="h5" onClick={onClickCard} style={{ cursor: "pointer" }}>
-            {event.event_name}
-          </p>
-          <p className="h6">{event.category == "trip" ? "טיול" : "אטרקציה"}</p>
-          <p className="lead">{event.participants.length} משתתפים</p>
-          <p className="lead" style={{ fontSize: "14px" }}>
-            תאריך יציאה:{" "}
-            {event.date_and_time && typeof event.date_and_time === "string"
-              ? event.date_and_time.split("T")[0]
-              : "N/A"}
-          </p>
+          <div onClick={onClickCard} style={{ cursor: "pointer" }}>
+            <p className="h5">{event.event_name}</p>
+            <p className="h6">
+              {event.category == "trip" ? "טיול" : "אטרקציה"}
+            </p>
+            <p className="lead">{event.participants.length} משתתפים</p>
+            <p className="lead" style={{ fontSize: "14px" }}>
+              תאריך יציאה:{" "}
+              {event.date_and_time && typeof event.date_and_time === "string"
+                ? event.date_and_time.split("T")[0]
+                : "N/A"}
+            </p>
+          </div>
           {event.open_event && (
             <div
               className="bg-success text-white text-center lead py-1"

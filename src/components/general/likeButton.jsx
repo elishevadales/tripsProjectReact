@@ -29,19 +29,24 @@ const LikeButton = (props) => {
     <i
       style={{
         color: isLiked ? "red" : "black",
-        borderRadius: "100%",
+        borderRadius: "30px",
         fontSize: "24px",
         background: "white",
         cursor:"pointer"
       }}
-      className={isLiked ? "fa fa-heart p-2 m-2" : "fa fa-heart-o p-2 m-2"}
+      title="לייקים"
+      className={`${isLiked ? "fa fa-heart " : "fa fa-heart-o"} d-flex align-items-center p-2 m-2`}
       aria-hidden="true"
       onClick={(e) => {
         e.stopPropagation(); // Prevent the click event from propagating to the container
         onClickLikeIcon();
       }}
     >
-      {event.like_list.length < 1 ? "" : event.like_list.length}
+      {
+      event.like_list.length < 1 
+      ? "" 
+      : <span className="lead me-1 text-dark">{event.like_list.length}</span>
+      }
     </i>
   );
 };
