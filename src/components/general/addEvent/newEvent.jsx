@@ -35,6 +35,7 @@ const NewEvent = () => {
     formState: { errors },
     getValues,
     setValue,
+     clearErrors
   } = useForm();
   const nav = useNavigate();
 
@@ -87,6 +88,11 @@ const NewEvent = () => {
     await doApiCreateEvent(data);
     setIsSenddingForm(false);
   };
+  const handleChangeFree = (value) => {
+    clearErrors("free");
+  
+    setIsFree(value);
+  };
 
   const uploadImages = async (images) => {
     const urls = await Promise.all(
@@ -97,12 +103,15 @@ const NewEvent = () => {
       })
     );
 
-    return urls; // Return the URLs to be used in onSub
+    return urls; 
   };
 
   const handleChangeCategory = (e) => {
-    setCategory(e.target.value);
-    // setValue("category", e.target.value)
+    const selectedValue = e.target.value;
+    if (selectedValue) {
+      clearErrors("category");
+    }
+    setCategory(selectedValue);
     setValue("sub_category", "");
   };
 
@@ -153,14 +162,13 @@ const NewEvent = () => {
     maxLength: 1000,
   });
   const dateRef = register("date_and_time", {
-    required: "יש לבחור תאריך",
+    required: "יש לבחור תאריך ושעה",
     validate: (value) => {
       const selectedDate = new Date(value);
       const currentDate = new Date();
-      currentDate.setHours(0, 0, 0, 0);
-      if (selectedDate < currentDate) {
-        return "תאריך לא יכול להיות עבר";
-      }
+        if (selectedDate < currentDate) {
+        return "יש להזין תאריך ושעה עתידיים";
+        }
       return true;
     },
   });
@@ -295,9 +303,7 @@ const NewEvent = () => {
                     <div>
                       <input
                         {...freeRef}
-                        onChange={() => {
-                          setIsFree(true);
-                        }}
+                        onChange={() => handleChangeFree(true)}
                         className="form-check-input"
                         type="radio"
                         id="priceFree"
@@ -561,14 +567,12 @@ const NewEvent = () => {
 
               {/* date */}
               <p className="h5 my-3">
-                {" "}
-                תאריך יציאה
+                תאריך ושעת יציאה
                 <span className="text-danger">*</span>
               </p>
-              <input {...dateRef} className="form-control" type="date" />
+              <input {...dateRef} className="form-control" type="datetime-local" />
               {errors.date_and_time && (
                 <div className="text-danger">
-                  {" "}
                   *{errors.date_and_time.message}
                 </div>
               )}
