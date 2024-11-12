@@ -118,6 +118,7 @@ const Login = () => {
                         סיסמה
                       </label>
                       <input {...passRef} type="password" id="form3Example4c" className="form-control p-2" />
+                      <Link to="/resetMyPassword">שכחת את הסיסמה?</Link>
                     </div>
                   </div>
                   <div className="d-flex justify-content-center flex-column text-center mx-4 mb-3 mb-lg-4 mt-2">
@@ -127,6 +128,7 @@ const Login = () => {
                     
                     <p className='mt-4'>עדיין אין לך חשבון?<br></br>
                      <Link to="/signUp">לחץ כאן</Link></p>
+                     
                   </div>
                 </form>
               </div>

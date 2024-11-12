@@ -21,11 +21,9 @@ import MyInfo from './components/general/myInfo/myInfo';
 import Posts from './components/general/posts';
 import Profile from './components/general/profile/profile';
 import socketIO from 'socket.io-client'
-
 import { API_URL } from './services/apiService'
 import NewEvent from './components/general/addEvent/newEvent';
-import EventsMap from './components/general/eventsMap';
-import { from } from 'stylis';
+
 
 const socket = socketIO.connect(API_URL)
 function App() {
