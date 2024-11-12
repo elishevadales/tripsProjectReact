@@ -193,9 +193,9 @@ const HeaderUser = (props) => {
             </Box>
 
             {/* logo*/}
-            <div className="logo d-none d-md-flex" onClick={onClickLogo}>
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }} className="logo d-md-flex" onClick={onClickLogo}>
               <Logo />
-            </div>
+            </Box>
 
             {/* menu LG */}
             <Box
