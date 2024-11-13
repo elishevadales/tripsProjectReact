@@ -23,7 +23,7 @@ import Logo from "../general/logo";
 
 const HeaderUser = (props) => {
   const userInfo = useSelector((myStore) => myStore.userInfoSlice);
-
+const notificationTitle ="יש לך התראות חדשות"
   // mui code:
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -32,6 +32,7 @@ const HeaderUser = (props) => {
   const privateMenu = [
     { title: "איזור אישי", path: `/${userInfo.user.role}/myInfo` },
     { title: "פרופיל", path: `/${userInfo.user.role}/profile` },
+    ...(userInfo.notifications ? [{ title: notificationTitle, path: `events` }] : [])
   ];
 
   const handleOpenNavMenu = (event) => {
@@ -72,6 +73,17 @@ const HeaderUser = (props) => {
   const handleNotificationClose = () => {
     setShowNotification(false);
   };
+  useEffect(() => {
+    if (anchorElUser || anchorElNav) {
+      // When menu is open, remove the padding-right from body
+      document.body.style.paddingRight = '0px';
+      document.body.style.overflow = 'auto'; // Make sure the body isn't overflow hidden
+    } else {
+      // Reset padding-right when the menu is closed
+      document.body.style.paddingRight = '';
+      document.body.style.overflow = '';
+    }
+  }, [anchorElUser,anchorElNav]);
 
   useEffect(() => {
     const token = localStorage.getItem(TOKEN_NAME);
@@ -171,7 +183,7 @@ const HeaderUser = (props) => {
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: "block", md: "none" },
+                  display: { xs: "block", md: "none" }
                 }}
               >
                 {props.links.map((link) => (
@@ -258,7 +270,7 @@ const HeaderUser = (props) => {
               </Tooltip>
 
               <Menu
-                sx={{ mt: "45px" }}
+                sx={{ mt: "45px"}}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
@@ -288,7 +300,7 @@ const HeaderUser = (props) => {
                     }}
                   >
                     <Typography textAlign="center">
-                      <span style={{ color: "rgb(35, 140, 156)" }}>
+                      <span style={{ color:link.title==notificationTitle? "rgb(211, 47, 47)": "rgb(35, 140, 156)" }}>
                         {link.title}
                       </span>
                     </Typography>
