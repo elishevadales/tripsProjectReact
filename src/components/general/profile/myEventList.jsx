@@ -37,7 +37,7 @@ const MyEventList = ({ events, isOpen, onClose , title}) => {
                                 <img
                                     src={event?.images.length > 0 ? event?.images[0] : '../../../images/bus.jpg'}
                                     alt={event?.event_name}
-                                    style={{ width: '70px', height: '70px', borderRadius: '5%', boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }}
+                                    style={{ width: '70px', height: '70px', borderRadius: '5%',cursor:"pointer", boxShadow: '0 4px 8px rgba(137,137,137,0.75)' }}
 
                                 />
                             </IonCol>

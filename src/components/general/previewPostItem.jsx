@@ -12,6 +12,7 @@ const PreviewPostItem = (props) => {
   const userInfo = useSelector((myStore) => myStore.userInfoSlice);
   const imageInLeft = props.imageInLeft;
   const [event, setEvent] = useState(props.event);
+  const borderRadiusPost = "10px";
   const nav = useNavigate();
 
   const onClickNickName = () => {
@@ -32,8 +33,8 @@ const PreviewPostItem = (props) => {
   return (
     <div className="col-md-6 p-0">
       <div
-        className=" border shadow d-flex m-3 p-0 row"
-        style={{ height: "300px" }}
+        className=" shadow d-flex m-3 p-0 row"
+        style={{ height: "300px", borderRadius: "15px" }}
       >
         {/* event image */}
         <div
@@ -45,6 +46,10 @@ const PreviewPostItem = (props) => {
             position: "relative",
             height: "300px",
             overflow: "hidden",
+            borderTopRightRadius: imageInLeft ? borderRadiusPost : "0",
+            borderBottomRightRadius: imageInLeft ? borderRadiusPost : "0",
+            borderTopLeftRadius: !imageInLeft ? borderRadiusPost : "0",
+            borderBottomLeftRadius: !imageInLeft ? borderRadiusPost : "0",
           }}
         >
           <img
@@ -71,6 +76,10 @@ const PreviewPostItem = (props) => {
             order: imageInLeft ? 2 : 1,
             background: "#BBE4E2",
             position: "relative",
+            borderTopRightRadius: !imageInLeft ? borderRadiusPost : "0",
+            borderBottomRightRadius: !imageInLeft ? borderRadiusPost : "0",
+            borderTopLeftRadius: imageInLeft ? borderRadiusPost : "0",
+            borderBottomLeftRadius: imageInLeft ? borderRadiusPost : "0",
           }}
         >
           <Box
