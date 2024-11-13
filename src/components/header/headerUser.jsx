@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
-import ConfirmPopUp from "../general/confirmPopUp";
+import ConfirmPopUp from "../general/popUps/confirmPopUp";
 import { updateUserInfo, updateNotification } from "../reducer/userInfoSlice";
 import { API_URL, TOKEN_NAME, doApiGet } from "../../services/apiService";
 import Notification from "../general/notification/notification";

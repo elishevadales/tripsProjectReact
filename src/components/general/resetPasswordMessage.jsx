@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form'
 import { API_URL, TOKEN_NAME, doApiGet, doApiMethod } from '../../services/apiService'
 import { Link, useNavigate } from 'react-router-dom'
-import InfoPopUp from './infoPopUp'
+import InfoPopUp from './popUps/infoPopUp'
 import { useDispatch } from 'react-redux'
 import { updateUserInfo } from '../reducer/userInfoSlice'
 import { MDBInput } from "mdbreact";

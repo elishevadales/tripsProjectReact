@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import Logo from './logo';
+import Logo from '../general/logo';
 
 const Header = () => {
   const nav = useNavigate();

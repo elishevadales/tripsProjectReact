@@ -8,7 +8,7 @@ import { API_URL, doApiMethod } from '../../../services/apiService';
 import { useDispatch } from 'react-redux'
 import { updateBackgroundImg } from '../../reducer/userInfoSlice'
 import { useSelector } from 'react-redux'
-import ConfirmPopUp from '../confirmPopUp';
+import ConfirmPopUp from '../popUps/confirmPopUp';
 import { defaultBackground } from '../../../constants/imagesUrls';
 
 

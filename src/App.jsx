@@ -1,12 +1,12 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import Header from './components/general/header';
+import Header from './components/header/header';
 import Welcome from './components/general/welcome';
 import Login from './components/general/login';
 import SignUp from './components/general/signUp';
 import Page404 from './components/general/404page';
-import HeaderUser from './components/user/headerUser';
+import HeaderUser from './components/header/headerUser';
 import HomeAdmin from './components/admin/homeAdmin';
 import SignUpMessage from './components/general/signUpMessage'
 import EventCard from './components/general/eventCard/eventCard'

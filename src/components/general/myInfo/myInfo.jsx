@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import InfoPopUp from '../infoPopUp';
+import InfoPopUp from '../popUps/infoPopUp';
 import { API_URL, doApiGet, doApiMethod } from '../../../services/apiService';
 import EditAvatar from './editAvatar';
 import EditBackground from './editBackground';

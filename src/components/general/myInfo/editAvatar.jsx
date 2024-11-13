@@ -7,7 +7,7 @@ import { API_URL, doApiMethod } from '../../../services/apiService';
 import { useDispatch } from 'react-redux'
 import { updateProfileImg } from '../../reducer/userInfoSlice'
 import { useSelector } from 'react-redux'
-import ConfirmPopUp from '../confirmPopUp';
+import ConfirmPopUp from '../popUps/confirmPopUp';
 import { defaultAvatar } from '../../../constants/imagesUrls';
 
 const EditAvatar = ({ show, onCancel }) => {

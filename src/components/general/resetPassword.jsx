@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form'
 import { API_URL, TOKEN_NAME, doApiGet, doApiMethod } from '../../services/apiService'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import InfoPopUp from './infoPopUp'
+import InfoPopUp from './popUps/infoPopUp'
 
 
 const ResetPassword = () => {

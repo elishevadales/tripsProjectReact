@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { API_URL, TOKEN_NAME, doApiMethod } from "../../services/apiService";
 import { Link, useNavigate } from "react-router-dom";
-import InfoPopUp from "./infoPopUp";
+import InfoPopUp from "./popUps/infoPopUp";
 import styles from "../css/signUp.module.css";
 
 const SignUp = () => {

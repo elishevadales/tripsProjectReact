@@ -1,6 +1,6 @@
 import { Modal } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
-import notificationSound from '../../sounds/alert.mp3';
+import notificationSound from '../../../sounds/alert.mp3';
 
 const InfoPopUp = ({ show, message, onCancel }) => {
     const [audio] = useState(new Audio(notificationSound));

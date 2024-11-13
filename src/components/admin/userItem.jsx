@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { API_URL, doApiMethod } from '../../services/apiService';
-import ConfirmPopUp from '../general/confirmPopUp';
+import ConfirmPopUp from '../general/popUps/confirmPopUp';
 
 const UserItem = (props) => {
     const [showDeletePopup, setShowDeletePopup] = useState(false);

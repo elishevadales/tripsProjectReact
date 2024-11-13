@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { API_URL, TOKEN_NAME, doApiMethod } from "../../../services/apiService";
 import { useNavigate } from "react-router-dom";
-import InfoPopUp from "../../general/infoPopUp";
+import InfoPopUp from "../popUps/infoPopUp";
 import EventImages from "./eventImages";
 import {
   ref,
