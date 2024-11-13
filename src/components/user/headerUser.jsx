@@ -193,7 +193,11 @@ const HeaderUser = (props) => {
             </Box>
 
             {/* logo*/}
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }} className="logo d-md-flex" onClick={onClickLogo}>
+            <Box
+              sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+              className="logo d-md-flex"
+              onClick={onClickLogo}
+            >
               <Logo />
             </Box>
 
@@ -269,8 +273,6 @@ const HeaderUser = (props) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-             
-
                 <Typography
                   className="text-center p-2"
                   style={{ borderBottom: "solid grey 1px" }}
