@@ -64,6 +64,24 @@ const EventCard = ({ socket }) => {
     }
   };
 
+  const removeJoinRequest = async () => {
+    try {
+      const data = await doApiMethod(
+        `${API_URL}/events/removeJoinRequest/${event?._id}/${userInfo?.user?._id}`,
+        "patch"
+      );
+      setHasJoinRequest(false);
+      setShowNotification(true);
+      setNotificationMessage("בקשת ההצטרפות נמחקה");
+      if (event?.user_id?._id) {
+        socket.emit("send-notification", event.user_id._id);
+      }
+    } catch (err) {
+      console.log(err);
+      alert("יש בעיה בשליפת הנתונים. נסה שוב מאוחר יותר");
+    }
+  };
+
   const addPraticipent = async () => {
     try {
       const data = await doApiMethod(
@@ -484,13 +502,23 @@ const EventCard = ({ socket }) => {
                             )}
 
                             {!openEvent && hasJoinRequest && (
-                              <IonCol size="2">
-                                <i
-                                  className="fa  fa-info fa-2x mx-2"
-                                  style={{ transform: "scaleX(-1)" }}
-                                ></i>
-                                בקשת ההצטרפות שלך ממתינה לאישור
-                              </IonCol>
+                              <>
+                                <IonCol size="2">
+                                  <i
+                                    className="fa  fa-info fa-2x mx-2"
+                                    style={{ transform: "scaleX(-1)" }}
+                                  ></i>
+                                  בקשת ההצטרפות שלך ממתינה לאישור
+                                  
+                                </IonCol>
+              <p
+                                    onClick={() => removeJoinRequest()}
+                                    className="text-danger"
+                                    style={{cursor:"pointer"}}
+                                  >
+                                    בטל את הבקשה
+                                  </p>
+                              </>
                             )}
 
                             {openEvent && (
@@ -566,12 +594,12 @@ const EventCard = ({ socket }) => {
                     onClick={handleParticipantsClick}
                     className="fa fa-users fa-2x d-flex align-items-center p-2 m-2"
                     title="משתתפים"
-                    style={{ 
+                    style={{
                       color: "blue",
                       borderRadius: "30px",
-        fontSize: "24px",
-        background: "white",
-        cursor:"pointer"
+                      fontSize: "24px",
+                      background: "white",
+                      cursor: "pointer",
                     }}
                   >
                     <span className="lead me-1 text-dark">{praticipants}</span>
